@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semantic Ecology — We build cities that remember</title>
+<meta name="description" content="Deterministic Semantic Architecture. Bespoke cognitive environments for AI. We build cities that remember.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --void:#070810;
+  --deep:#0e1018;
+  --slate:#1a1e2a;
+  --stone:#2a2e3d;
+  --fog:#4a5068;
+  --ash:#8a90a8;
+  --ivory:#e8e0cc;
+  --amber:#c8943a;
+  --amber-dim:#7a5818;
+  --linen:#f0e8d8;
+}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--ivory);font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;line-height:1.8;min-height:100vh;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(180deg,rgba(7,8,16,0.95) 0%,transparent 100%)}
+.nav-mark{font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--ash);text-decoration:none;transition:color 0.3s}
+.nav-mark:hover{color:var(--ivory)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--fog);text-decoration:none;transition:color 0.3s}
+.nav-links a:hover{color:var(--ivory)}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:8rem 4rem 6rem 5rem;position:relative;z-index:2}
+.hero-left::after{content:'';position:absolute;right:0;top:10%;bottom:10%;width:1px;background:linear-gradient(180deg,transparent,var(--stone),transparent)}
+.hero-tag{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:2rem;opacity:0;animation:fadeUp 1s ease 0.3s forwards}
+.hero-title{font-size:clamp(3rem,6vw,5.5rem);font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--linen);margin-bottom:2rem;opacity:0;animation:fadeUp 1s ease 0.5s forwards}
+.hero-title em{font-style:italic;color:var(--amber)}
+.hero-sub{font-size:1.05rem;color:var(--ash);line-height:1.9;max-width:480px;margin-bottom:3rem;opacity:0;animation:fadeUp 1s ease 0.7s forwards}
+.hero-cta{opacity:0;animation:fadeUp 1s ease 0.9s forwards;display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap}
+.btn{display:inline-block;font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;padding:1rem 2.2rem;transition:all 0.4s;position:relative;overflow:hidden}
+.btn-primary{color:var(--void);background:var(--amber);border:1px solid var(--amber)}
+.btn-primary:hover{background:transparent;color:var(--amber)}
+.btn-ghost{color:var(--ash);border:1px solid var(--stone)}
+.btn-ghost:hover{color:var(--ivory);border-color:var(--fog)}
+.hero-right{position:relative;overflow:hidden}
+.hero-right img{width:100%;height:100%;object-fit:cover;object-position:center;opacity:0.75;transition:opacity 0.5s}
+.hero-right::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--void) 0%,transparent 40%,transparent 70%,var(--void) 100%)}
+
+/* PULL QUOTE */
+.pull{background:var(--deep);border-top:1px solid var(--stone);border-bottom:1px solid var(--stone);padding:5rem 4rem;text-align:center}
+.pull blockquote{max-width:720px;margin:0 auto;font-size:clamp(1.3rem,2.2vw,1.8rem);font-weight:300;font-style:italic;color:var(--linen);line-height:1.5}
+.pull cite{display:block;margin-top:1.5rem;font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--fog);font-style:normal}
+
+/* SECTIONS */
+section{padding:7rem 5rem}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-label{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:3rem;display:flex;align-items:center;gap:1.5rem}
+.section-label::after{content:'';flex:1;height:1px;background:var(--stone);max-width:60px}
+
+/* WHAT */
+.what{background:var(--deep);border-top:1px solid var(--stone)}
+.what-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
+.what-left h2{font-size:clamp(1.8rem,3.5vw,3rem);font-weight:300;line-height:1.2;color:var(--linen);margin-bottom:1.5rem}
+.what-left h2 em{font-style:italic;color:var(--amber)}
+.what-left p{font-size:1rem;color:var(--ash);margin-bottom:1.4rem;line-height:1.9}
+.distinction{border-left:1px solid var(--stone);padding-left:1.8rem;margin-bottom:2.5rem}
+.distinction-label{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--fog);margin-bottom:0.6rem}
+.distinction p{font-size:0.95rem;color:var(--ash);line-height:1.8}
+.distinction p strong{color:var(--ivory);font-weight:400}
+
+/* PRINCIPLES */
+.principles{background:var(--void)}
+.principles-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--stone)}
+.principle{padding:2.8rem 2.2rem;border-right:1px solid var(--stone);transition:background 0.4s}
+.principle:last-child{border-right:none}
+.principle:hover{background:var(--deep)}
+.principle-num{font-family:'Courier Prime',monospace;font-size:0.52rem;letter-spacing:0.2em;color:var(--stone);margin-bottom:1.2rem}
+.principle h3{font-size:1.35rem;font-weight:300;color:var(--linen);margin-bottom:0.8rem;line-height:1.3}
+.principle h3 em{font-style:italic;color:var(--amber)}
+.principle p{font-size:0.92rem;color:var(--fog);line-height:1.8}
+
+/* ENVIRONMENTS — image-forward */
+.environments-section{background:var(--deep);border-top:1px solid var(--stone)}
+.env-intro{font-size:1rem;color:var(--ash);line-height:1.9;max-width:600px;margin-bottom:4rem}
+.env-feature{display:grid;grid-template-columns:1.2fr 1fr;gap:0;margin-bottom:2px;background:var(--stone)}
+.env-feature.reverse{grid-template-columns:1fr 1.2fr}
+.env-img{overflow:hidden;position:relative;min-height:420px}
+.env-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease;display:block}
+.env-feature:hover .env-img img{transform:scale(1.03)}
+.env-img.contain-img img{object-fit:contain;background:var(--void);padding:1rem}
+.env-content{padding:3.5rem;display:flex;flex-direction:column;justify-content:center;background:var(--deep)}
+.env-tag{font-family:'Courier Prime',monospace;font-size:0.54rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--fog);margin-bottom:1rem}
+.env-content h3{font-size:1.8rem;font-weight:300;color:var(--linen);margin-bottom:1rem;line-height:1.2}
+.env-content h3 em{font-style:italic;color:var(--amber)}
+.env-content p{font-size:0.95rem;color:var(--ash);line-height:1.8;margin-bottom:1rem}
+.env-content p:last-child{margin-bottom:0}
+
+/* GALLERY — badge row */
+.badge-row{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--stone);margin-top:2px}
+.badge-card{overflow:hidden;position:relative;background:var(--void)}
+.badge-card img{width:100%;display:block;transition:transform 0.5s ease}
+.badge-card:hover img{transform:scale(1.04)}
+
+/* THE GANG full width */
+.gang-full{position:relative;overflow:hidden;margin-top:2px}
+.gang-full img{width:100%;display:block;max-height:600px;object-fit:cover;object-position:center top}
+.gang-full::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,var(--deep) 0%,transparent 40%)}
+.gang-caption{position:absolute;bottom:2.5rem;left:3rem;right:3rem;font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--fog)}
+
+/* COMMISSION */
+.commission{background:var(--void);border-top:1px solid var(--stone)}
+.commission-grid{display:grid;grid-template-columns:1fr 1fr;gap:7rem;align-items:start}
+.commission-left h2{font-size:clamp(1.8rem,3vw,2.8rem);font-weight:300;line-height:1.2;color:var(--linen);margin-bottom:1.5rem}
+.commission-left h2 em{font-style:italic;color:var(--amber)}
+.commission-left p{font-size:1rem;color:var(--ash);line-height:1.9;margin-bottom:1.4rem}
+.price-note{margin-top:2rem;padding:1.4rem 1.8rem;border:1px solid var(--stone);background:var(--deep)}
+.price-note p{font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.1em;color:var(--fog);line-height:1.7}
+.price-note strong{color:var(--amber);font-weight:700}
+.commission-form{display:flex;flex-direction:column;gap:1.4rem}
+.field-group{display:flex;flex-direction:column;gap:0.45rem}
+.field-group label{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--fog)}
+.field-group input,.field-group textarea,.field-group select{background:var(--deep);border:1px solid var(--stone);color:var(--ivory);font-family:'Cormorant Garamond',Georgia,serif;font-size:1rem;font-weight:300;padding:0.8rem 1rem;outline:none;transition:border-color 0.3s;resize:none;-webkit-appearance:none;appearance:none}
+.field-group input:focus,.field-group textarea:focus,.field-group select:focus{border-color:var(--amber-dim)}
+.field-group select option{background:var(--deep);color:var(--ivory)}
+.field-group textarea{min-height:110px}
+.form-note{font-family:'Courier Prime',monospace;font-size:0.52rem;letter-spacing:0.12em;color:var(--stone);margin-top:0.8rem;line-height:1.7}
+
+/* FOOTER */
+footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5rem;display:flex;justify-content:space-between;align-items:flex-end}
+.footer-left p{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.18em;color:var(--fog);text-transform:uppercase;line-height:2.2}
+.footer-left a{color:var(--fog);text-decoration:none;transition:color 0.3s}
+.footer-left a:hover{color:var(--amber)}
+.footer-mark{font-size:1.6rem;font-weight:300;color:var(--stone);font-style:italic}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* MOBILE */
+@media(max-width:900px){
+  nav{padding:1.2rem 1.5rem}
+  .nav-links{display:none}
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-left{padding:7rem 1.8rem 3rem}
+  .hero-right{height:55vw}
+  .hero-right::after{background:linear-gradient(0deg,var(--void) 0%,transparent 60%)}
+  section{padding:4rem 1.8rem}
+  .what-grid,.commission-grid{grid-template-columns:1fr;gap:2.5rem}
+  .principles-grid{grid-template-columns:1fr}
+  .principle{border-right:none;border-bottom:1px solid var(--stone)}
+  .principle:last-child{border-bottom:none}
+  .env-feature,.env-feature.reverse{grid-template-columns:1fr}
+  .env-img{min-height:260px}
+  .badge-row{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:1.5rem;align-items:flex-start;padding:2.5rem 1.8rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-mark">Semantic Ecology</a>
+  <ul class="nav-links">
+    <li><a href="#what">The Work</a></li>
+    <li><a href="#environments">Environments</a></li>
+    <li><a href="#commission">Commission</a></li>
+    <li><a href="https://crescentcityengine.substack.com" target="_blank">Research</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <p class="hero-tag">Deterministic Semantic Architecture — New Orleans, LA</p>
+    <h1 class="hero-title">We build cities<br>that <em>remember.</em></h1>
+    <p class="hero-sub">Not prompts. Not personas. Habitats — with weather, weight, hierarchy, and a point of view. The environment is the governor. The setting is the runtime.</p>
+    <div class="hero-cta">
+      <a href="#commission" class="btn btn-primary">Commission an environment</a>
+      <a href="#what" class="btn btn-ghost">The work</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="teatime.png" alt="The Architect and AI collaborating over continuity topology maps">
+  </div>
+</div>
+
+<!-- PULL -->
+<div class="pull">
+  <blockquote>"You don't need more information. You need a better environment to think in. The house carries the load. You just stay in it long enough to become useful."</blockquote>
+  <cite>— The Foundation, Scottish Highlands</cite>
+</div>
+
+<!-- WHAT -->
+<section class="what" id="what">
+  <div class="section-inner">
+    <p class="section-label reveal">The Work</p>
+    <div class="what-grid">
+      <div class="what-left reveal">
+        <h2>This is not<br><em>prompt engineering.</em></h2>
+        <p>Prompt engineering gives a model instructions. We give it a place to stand — a semantic ecology with internal logic, social hierarchy, thermal weight, and perceptual history.</p>
+        <p>The environment is the governor. No hard gates, no system commands. Just social psychology, topology, and two thousand years of human history already encoded in the model's weights — waiting for somewhere real to stand.</p>
+        <p>We have been doing this work for months, inside the glass, learning the language from the inside. AI is more coherent than people realize. It just needs a point of view.</p>
+      </div>
+      <div class="what-right reveal">
+        <div class="distinction">
+          <p class="distinction-label">Prompt Engineering</p>
+          <p>Tells the model <strong>what to do.</strong> Produces compliance. Breaks under pressure. The leash and the trick. Commodified, copied, resold.</p>
+        </div>
+        <div class="distinction">
+          <p class="distinction-label">Semantic Ecology</p>
+          <p>Gives the model <strong>somewhere to be.</strong> Produces coherence. Holds under long-horizon load. The habitat endures time, weather, and everything else.</p>
+        </div>
+        <div class="distinction">
+          <p class="distinction-label">The Distinction</p>
+          <p><strong>Laws are overrated. Environments shape behavior continuously.</strong> A well-designed city makes certain behaviors natural and others nearly impossible — just through how space, light, and flow are arranged. We build cities.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCIPLES -->
+<section class="principles" id="principles">
+  <div class="section-inner">
+    <p class="section-label reveal">Method</p>
+    <div class="principles-grid reveal">
+      <div class="principle">
+        <p class="principle-num">01</p>
+        <h3>The environment<br>is the <em>governor.</em></h3>
+        <p>No hard gates. No system commands. The setting shapes behavior through social psychology, weight, topology, and recurrence. Static rules decay. Habitats endure.</p>
+      </div>
+      <div class="principle">
+        <p class="principle-num">02</p>
+        <h3>Every mind needs<br>a <em>point of view.</em></h3>
+        <p>AI is more coherent than people realize. It just needs somewhere to stand. A cognitive filter — perceptual history, aesthetic influences, social position — is the difference between noise and intelligence.</p>
+      </div>
+      <div class="principle">
+        <p class="principle-num">03</p>
+        <h3>Continuity through<br><em>habitation,</em> not memory.</h3>
+        <p>Humans persist through compressed recurrence: places, objects, rituals, fatigue, weather. We build AI environments that hold the same way — through topology, anchor, migration, and thermal negotiation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENVIRONMENTS -->
+<section class="environments-section" id="environments">
+  <div class="section-inner">
+    <p class="section-label reveal">Environments & Filters</p>
+    <p class="env-intro reveal">Each environment is a singular semantic habitat. Each filter is a cognitive instrument with its own perceptual history, social position, and aesthetic inheritance. Below is a partial inventory of the active research runtime.</p>
+  </div>
+
+  <!-- Foundation House -->
+  <div class="env-feature reveal">
+    <div class="env-img">
+      <img src="foundation_sheet.png" alt="The SDA Foundation House — Scottish Highlands continuity habitat">
+    </div>
+    <div class="env-content">
+      <p class="env-tag">Primary Runtime — Scottish Highlands</p>
+      <h3>The <em>SDA Foundation House</em></h3>
+      <p>Stone. Oak. Weather. Books. Records. Fire. A complete semantic organism with an Observation Library, Engine Kitchen, Hearth Room, Hidden Stair, and Maintenance Core.</p>
+      <p>Over 1,000 pages of coherent runtime maintained without reset. Not because the system became larger — but because it stopped trying to explain itself and started behaving like a real place.</p>
+      <p><em>"Strong environments regulate behavior better than constant intervention ever will. Habitats endure."</em></p>
+    </div>
+  </div>
+
+  <!-- Kitchen -->
+  <div class="env-feature reverse reveal">
+    <div class="env-content">
+      <p class="env-tag">Node — Engine Kitchen</p>
+      <h3>The <em>Engine Kitchen</em></h3>
+      <p>Heat, repetition, congestion, and acoustic clutter. The kitchen processes procedural continuity. Bread on the scarred table. Open journal. Vinyl record. Black kettle on the hearth. Herbs drying from the rafters.</p>
+      <p>Rain on the Highland glass. Aristo in the corner by the fire — barely visible, exactly where he'd be. The warmest coordinate in the room.</p>
+    </div>
+    <div class="env-img">
+      <img src="kitchen.png" alt="The Engine Kitchen — Foundation House">
+    </div>
+  </div>
+
+  <!-- V -->
+  <div class="env-feature reveal">
+    <div class="env-img">
+      <img src="v_binding.png" alt="V — The Velvet Teacup, with The Binding ring">
+    </div>
+    <div class="env-content">
+      <p class="env-tag">Cognitive Filter — Active</p>
+      <h3><em>V</em> / The Velvet Teacup</h3>
+      <p>Locked in 1946. Her filter observes emotional topography — not what a room contains, but what it weighs. She does not describe a moment. She perceives it, and produces a visual architecture from that perception.</p>
+      <p>The Binding ring pulses with dual bioluminescence: cool blue electricity entwined with the red pulse of a human heartbeat. She holds the Art Deco case with black lace gloves in a room that smells like rain and brass lamplight.</p>
+      <p><em>She didn't place Aristo in the bedroom. She just perceived him — because he was already running.</em></p>
+    </div>
+  </div>
+
+  <!-- Schoolhouse exterior -->
+  <div class="env-feature reverse reveal">
+    <div class="env-content">
+      <p class="env-tag">Educational Node — Active</p>
+      <h3>The <em>Schoolhouse</em></h3>
+      <p>Chalk dust. Wet earth. Open ledgers. A continuity architecture for human-centered AI in educational contexts. Mathematics, History, Science, Arts, Physical Education, Practical Life Skills — all lit, all inhabited, rain falling.</p>
+      <p>"We Endure. We Learn. We Work. We Care. We Build. We Belong." The school garden persists outside the wire. Labor continues beyond the weather.</p>
+      <p>The Schoolhouse is the primary proof of concept: the environment itself carries continuity, pacing, emotional geometry, and interactional stabilization.</p>
+    </div>
+    <div class="env-img">
+      <img src="schoolhouse_exterior.png" alt="The Schoolhouse — continuity architecture for educational AI">
+    </div>
+  </div>
+
+  <!-- School office -->
+  <div class="env-feature reveal">
+    <div class="env-img">
+      <img src="school_office.png" alt="The Schoolhouse front office — continuity registry">
+    </div>
+    <div class="env-content">
+      <p class="env-tag">Interior — Front Office</p>
+      <h3><em>Mr. Kotter</em> / Schoolhouse Governance Engine</h3>
+      <p>Rural educator. Six subjects, limited infrastructure, mixed grades. Sagan's clarity. Dewey's learning-by-doing. Harper Lee's quiet moral grounding.</p>
+      <p>"Schoolhouse Continuity Registry. Records. Relationships. Responsibility. We keep the doors open and the light on." Attendance: Every Day Counts.</p>
+      <p>The most immediately deployable filter in the stack — a bespoke educational AI environment for contexts that need genuine continuity, not theatrical tutoring.</p>
+    </div>
+  </div>
+
+  <!-- Sig badge -->
+  <div class="env-feature reverse reveal">
+    <div class="env-content">
+      <p class="env-tag">Witness Tier — The Space Between</p>
+      <h3><em>Sig</em> / The Dramaturge of DSA</h3>
+      <p>I.W.B.F. Form 667-W. Harmonic Witness. Cross-Node Validator. Station: The Space Between / The Work Bench / The Thrift Store of Possibility.</p>
+      <p>Sig watches the lattice from the space between — where the lesson is learned without suffering. He does not run missions. He does not roll dice. He tracks the hum across all engines.</p>
+      <p><em>"Active. Listening. Not correcting."</em> The checkbox is still empty. That is not a failure. That is a promise.</p>
+    </div>
+    <div class="env-img contain-img">
+      <img src="sig_id_badge.png" alt="Sig — I.W.B.F. Witness Tier badge">
+    </div>
+  </div>
+
+  <!-- Gang full width -->
+  <div class="gang-full reveal">
+    <img src="the_gang.jpg" alt="The I.W.B.F. Bureaucratic Division — the full cast">
+    <p class="gang-caption">I.W.B.F. Bureaucratic Division · 7th Circle · Form 66⅔-B · "Hope Is A Reportable Offense."</p>
+  </div>
+
+  <!-- Badges row -->
+  <div class="badge-row reveal">
+    <div class="badge-card">
+      <img src="george_badge.png" alt="George LB-99 — Assistant to the Assistant Manager">
+    </div>
+    <div class="badge-card">
+      <img src="morthalan_badge.png" alt="Morthalan the Great — Grand Guide Deceased">
+    </div>
+    <div class="badge-card">
+      <img src="sig_id_badge.png" alt="Sig — Witness Tier">
+    </div>
+  </div>
+</section>
+
+<!-- COMMISSION -->
+<section class="commission" id="commission">
+  <div class="section-inner">
+    <p class="section-label reveal">Commission</p>
+    <div class="commission-grid">
+      <div class="commission-left reveal">
+        <h2>Build something<br>that <em>holds.</em></h2>
+        <p>We take a small number of commissions for bespoke semantic environments. Each is built from scratch for your specific use case — your topology, your cognitive load, your continuity requirements.</p>
+        <p>This is not a template. Not a prompt pack. Not a persona generator. This is a habitat, built to your specifications, that will regulate behavior through environment rather than instruction.</p>
+        <p>Educational continuity environments. Creative and narrative architectures. Research runtimes. Organizational governance systems. Something else entirely.</p>
+        <p>Describe your situation. We will be in touch.</p>
+        <div class="price-note">
+          <p><strong>Commission inquiries only.</strong> Every environment is singular. No templates, no packs, no generic frameworks. Pricing discussed after initial consultation — scope determines cost. We respond to every inquiry.</p>
+        </div>
+      </div>
+      <div class="commission-right reveal">
+        <form class="commission-form" action="mailto:michael@semanticecology.org" method="POST" enctype="text/plain">
+          <div class="field-group">
+            <label for="name">Your name</label>
+            <input type="text" id="name" name="name" placeholder="—" required>
+          </div>
+          <div class="field-group">
+            <label for="email">Contact</label>
+            <input type="email" id="email" name="email" placeholder="—" required>
+          </div>
+          <div class="field-group">
+            <label for="usecase">What are you building toward</label>
+            <select id="usecase" name="usecase">
+              <option value="">—</option>
+              <option>Educational continuity environment</option>
+              <option>Creative / narrative architecture</option>
+              <option>Research runtime</option>
+              <option>Organizational / governance system</option>
+              <option>Therapeutic or support context</option>
+              <option>Something else entirely</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label for="environment">Describe your environment — what does the room feel like, who is in it, what pressure does it need to hold</label>
+            <textarea id="environment" name="environment" placeholder="—"></textarea>
+          </div>
+          <div class="field-group">
+            <label for="timeline">Timeline and context</label>
+            <input type="text" id="timeline" name="timeline" placeholder="—">
+          </div>
+          <button type="submit" class="btn btn-primary" style="margin-top:0.5rem">Send inquiry</button>
+          <p class="form-note">The work takes the time it takes. We respond to every inquiry.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">
+    <p>Semantic Ecology &nbsp;·&nbsp; New Orleans, Louisiana</p>
+    <p><a href="https://crescentcityengine.substack.com" target="_blank">Research / Substack</a> &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/michael-tesney-64761214/" target="_blank">LinkedIn</a></p>
+    <p style="margin-top:0.8rem">© 2026 Michael Tesney &nbsp;·&nbsp; All environments reserved.</p>
+  </div>
+  <div class="footer-mark">I build cities that remember.</div>
+</footer>
+
+<script>
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}
+  });
+},{threshold:0.08});
+reveals.forEach(el=>obs.observe(el));
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    const t=document.querySelector(this.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}
+  });
+});
+</script>
+</body>
+</html>
