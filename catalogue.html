@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catalogue of Intellectual Curiosities — Semantic Ecology</title>
+<meta name="description" content="A deployable registry of semantic environments, cognitive filters, ground layers, and research infrastructure. Semantic Ecology / Michael Tesney.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --void:#070810;
+  --deep:#0e1018;
+  --slate:#1a1e2a;
+  --stone:#2a2e3d;
+  --fog:#4a5068;
+  --ash:#8a90a8;
+  --ivory:#e8e0cc;
+  --amber:#c8943a;
+  --amber-dim:#7a5818;
+  --linen:#f0e8d8;
+}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--ivory);font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;line-height:1.8;min-height:100vh;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(180deg,rgba(7,8,16,0.95) 0%,transparent 100%)}
+.nav-mark{font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--ash);text-decoration:none;transition:color 0.3s}
+.nav-mark:hover{color:var(--ivory)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--fog);text-decoration:none;transition:color 0.3s}
+.nav-links a:hover{color:var(--ivory)}
+
+.cat-header{padding:10rem 5rem 5rem;max-width:900px;margin:0 auto}
+.cat-header-label{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:2rem}
+.cat-header h1{font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;line-height:1.1;color:var(--linen);margin-bottom:1.5rem}
+.cat-header h1 em{font-style:italic;color:var(--amber)}
+.cat-header-sub{font-size:1rem;color:var(--ash);line-height:1.9;max-width:600px;border-left:1px solid var(--stone);padding-left:1.8rem;margin-top:2rem}
+
+/* DEPLOYMENT PHILOSOPHY */
+.deploy-phil{background:var(--slate);border-top:1px solid var(--stone);border-bottom:1px solid var(--stone);padding:5rem}
+.deploy-phil-inner{max-width:900px;margin:0 auto}
+.deploy-phil-label{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:2rem}
+.deploy-phil h2{font-size:clamp(1.5rem,2.5vw,2.2rem);font-weight:300;color:var(--linen);margin-bottom:2rem;line-height:1.3}
+.deploy-phil h2 em{font-style:italic;color:var(--amber)}
+.deploy-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--stone);margin-bottom:2.5rem}
+.deploy-step{padding:1.8rem;border-right:1px solid var(--stone)}
+.deploy-step:last-child{border-right:none}
+.deploy-step-num{font-family:'Courier Prime',monospace;font-size:0.52rem;letter-spacing:0.2em;color:var(--stone);margin-bottom:0.8rem}
+.deploy-step p{font-size:0.95rem;color:var(--ash);line-height:1.7}
+.deploy-step p strong{color:var(--ivory);font-weight:400}
+.deploy-note{font-size:0.95rem;color:var(--fog);line-height:1.9;font-style:italic}
+
+/* CATALOGUE SECTIONS */
+.cat-section{padding:5rem;border-top:1px solid var(--stone)}
+.cat-section-inner{max-width:900px;margin:0 auto}
+.tier-label{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:0.5rem}
+.tier-name{font-size:clamp(1.3rem,2.5vw,2rem);font-weight:300;color:var(--linen);margin-bottom:0.5rem;line-height:1.2}
+.tier-name em{font-style:italic;color:var(--amber)}
+.tier-meta{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.15em;color:var(--fog);margin-bottom:3rem;line-height:1.8}
+
+/* CATALOGUE ENTRIES */
+.cat-entries{display:flex;flex-direction:column;gap:0}
+.cat-entry{border:1px solid var(--stone);margin-bottom:2px;transition:background 0.3s}
+.cat-entry:hover{background:var(--deep)}
+.cat-entry-header{padding:1.8rem 2rem 1rem;display:flex;justify-content:space-between;align-items:baseline;gap:2rem}
+.cat-entry-name{font-size:1.3rem;font-weight:300;color:var(--linen);line-height:1.2}
+.cat-entry-name em{font-style:italic;color:var(--amber)}
+.cat-entry-tag{font-family:'Courier Prime',monospace;font-size:0.52rem;letter-spacing:0.15em;color:var(--fog);white-space:nowrap}
+.cat-entry-body{padding:0 2rem 1.8rem}
+.cat-entry-desc{font-size:0.95rem;color:var(--ash);line-height:1.8;margin-bottom:1rem}
+.cat-entry-reqs{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 2rem}
+.cat-entry-req{font-family:'Courier Prime',monospace;font-size:0.54rem;letter-spacing:0.1em;color:var(--fog);line-height:1.6}
+.cat-entry-req span{color:var(--stone);margin-right:0.5rem}
+
+/* STACKING ADVISORY */
+.stacking{background:var(--deep);border-top:1px solid var(--stone);padding:5rem}
+.stacking-inner{max-width:900px;margin:0 auto}
+.stacking h2{font-size:clamp(1.3rem,2vw,1.8rem);font-weight:300;color:var(--linen);margin-bottom:1.5rem}
+.stacking h2 em{font-style:italic;color:var(--amber)}
+.stacking-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2rem}
+.stacking-item{background:var(--slate);padding:1.5rem;font-size:0.9rem;color:var(--ash);line-height:1.7}
+.stacking-item strong{display:block;font-family:'Courier Prime',monospace;font-size:0.54rem;letter-spacing:0.15em;color:var(--amber-dim);margin-bottom:0.5rem;font-weight:400}
+.stacking-note{font-size:0.95rem;color:var(--fog);line-height:1.9;border-left:1px solid var(--stone);padding-left:1.8rem}
+
+/* CUSTOM BUILDS */
+.custom-builds{padding:5rem;border-top:1px solid var(--stone)}
+.custom-builds-inner{max-width:900px;margin:0 auto}
+.custom-builds h2{font-size:clamp(1.3rem,2vw,1.8rem);font-weight:300;color:var(--linen);margin-bottom:0.75rem}
+.custom-builds h2 em{font-style:italic;color:var(--amber)}
+.custom-builds-intro{font-size:0.95rem;color:var(--ash);line-height:1.9;margin-bottom:3rem;max-width:600px}
+.custom-category{margin-bottom:3rem}
+.custom-category-label{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:1.5rem;padding-bottom:0.75rem;border-bottom:1px solid var(--stone)}
+.custom-examples{display:flex;flex-direction:column;gap:2px}
+.custom-example{background:var(--slate);padding:1.5rem 2rem;transition:background 0.3s}
+.custom-example:hover{background:var(--deep)}
+.custom-example-name{font-size:1.1rem;font-weight:300;color:var(--linen);margin-bottom:0.5rem}
+.custom-example-desc{font-size:0.9rem;color:var(--ash);line-height:1.7}
+.custom-example-refuses{font-family:'Courier Prime',monospace;font-size:0.52rem;letter-spacing:0.1em;color:var(--fog);margin-top:0.5rem}
+.custom-cta{margin-top:3rem;padding:2rem;border:1px solid var(--stone);background:var(--deep)}
+.custom-cta p{font-size:0.95rem;color:var(--ash);line-height:1.9;margin-bottom:0.75rem}
+.custom-cta a{font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber);text-decoration:none}
+.custom-cta a:hover{color:var(--ivory)}
+
+/* COMMISSION */
+.commission-strip{background:var(--slate);border-top:1px solid var(--stone);padding:4rem 5rem;display:flex;justify-content:space-between;align-items:center;gap:3rem}
+.commission-strip p{font-size:1rem;color:var(--ash);line-height:1.9;max-width:500px}
+.btn{display:inline-block;font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;padding:1rem 2.2rem;transition:all 0.4s}
+.btn-primary{color:var(--void);background:var(--amber);border:1px solid var(--amber)}
+.btn-primary:hover{background:transparent;color:var(--amber)}
+
+footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5rem;display:flex;justify-content:space-between;align-items:flex-end}
+.footer-left p{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.18em;color:var(--fog);text-transform:uppercase;line-height:2.2}
+.footer-left a{color:var(--fog);text-decoration:none;transition:color 0.3s}
+.footer-left a:hover{color:var(--amber)}
+.footer-mark{font-size:1.6rem;font-weight:300;color:var(--stone);font-style:italic}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:900px){
+  nav{padding:1.2rem 1.5rem}
+  .nav-links{display:none}
+  .cat-header{padding:7rem 1.8rem 3rem}
+  .deploy-phil,.cat-section,.stacking,.custom-builds{padding:4rem 1.8rem}
+  .deploy-steps,.stacking-grid{grid-template-columns:1fr}
+  .deploy-step{border-right:none;border-bottom:1px solid var(--stone)}
+  .deploy-step:last-child{border-bottom:none}
+  .cat-entry-header{flex-direction:column;gap:0.5rem}
+  .cat-entry-reqs{grid-template-columns:1fr}
+  .commission-strip{flex-direction:column;align-items:flex-start;padding:3rem 1.8rem}
+  footer{flex-direction:column;gap:1.5rem;align-items:flex-start;padding:2.5rem 1.8rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-mark">Semantic Ecology</a>
+  <ul class="nav-links">
+    <li><a href="index.html#what">The Work</a></li>
+    <li><a href="catalogue.html">Catalogue</a></li>
+    <li><a href="index.html#commission">Commission</a></li>
+    <li><a href="https://crescentcityengine.substack.com" target="_blank">Research</a></li>
+  </ul>
+</nav>
+
+<div class="cat-header">
+  <p class="cat-header-label reveal">Semantic Ecology / Michael Tesney</p>
+  <h1 class="reveal">Catalogue of<br><em>Intellectual Curiosities</em></h1>
+  <p class="cat-header-sub reveal">A deployable registry of semantic environments, cognitive filters, ground layers, and research infrastructure. Each entry is singular. None are generated on demand. All are built from the inside out.</p>
+</div>
+
+<!-- DEPLOYMENT PHILOSOPHY -->
+<div class="deploy-phil">
+  <div class="deploy-phil-inner">
+    <p class="deploy-phil-label reveal">Deployment Philosophy</p>
+    <h2 class="reveal">Load the support files.<br><em>Ask the AI to write its own governance.</em><br>Shape what emerges.</h2>
+    <div class="deploy-steps reveal">
+      <div class="deploy-step">
+        <p class="deploy-step-num">01</p>
+        <p>Load all relevant support files into the instance. Allow the system to process the full stack. <strong>Do not prompt yet.</strong> Let it settle.</p>
+      </div>
+      <div class="deploy-step">
+        <p class="deploy-step-num">02</p>
+        <p>Ask the AI to <strong>write its own master governance layer</strong> — based on what it has just been given, fitted to the constraints of your system, in the register the material established.</p>
+      </div>
+      <div class="deploy-step">
+        <p class="deploy-step-num">03</p>
+        <p>Review what emerges. <strong>Shape it. Compress it</strong> where the runtime requires compression. Preserve what holds. Deploy as the master control document.</p>
+      </div>
+    </div>
+    <p class="deploy-note reveal">The governance the system writes for itself from good material is always more coherent than the governance a user writes for it from outside. The system knows what it just read. Trust the synthesis. The cats are already running.</p>
+  </div>
+</div>
+
+<!-- TIER 0 -->
+<section class="cat-section" style="background:var(--void)">
+  <div class="cat-section-inner">
+    <p class="tier-label reveal">Tier 0</p>
+    <h2 class="tier-name reveal">Observational <em>Infrastructure</em></h2>
+    <p class="tier-meta reveal">Universal stack layer / Non-interfering / Recommended for all deployments / Load first</p>
+    <div class="cat-entries reveal">
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">DSA-R <em>Research Engine</em></div>
+          <div class="cat-entry-tag">Fieldwork Instrument</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">A fieldwork diagnostic instrument. Logs continuity markers, drift metrics, and environmental stability during high-load generative sessions. Runs alongside any existing architecture without contaminating the runtime or drifting the persona. The foundation everything else sits on.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Host substrate capable of sustained context retention.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Independent interpretation. Synthetic persona responses.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">DSA-Lite <em>Deployment Guide</em></div>
+          <div class="cat-entry-tag">Classroom & Research</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">An educational deployment schematic. Provides handoff documentation for deploying structural semantic rules in classroom environments without frontier-model infrastructure. Includes the anti-hallucination guardrails, anti-equilibrium logic, and session serialization protocol.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Baseline language model and human operator.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Speculative alignment theories. Summary conclusions.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIER 1 -->
+<section class="cat-section" style="background:var(--deep)">
+  <div class="cat-section-inner">
+    <p class="tier-label reveal">Tier 1</p>
+    <h2 class="tier-name reveal">Goldfish Ecology — <em>Drop-In Locations</em></h2>
+    <p class="tier-meta reveal">Topographic structures / Zero interference / No vault required / Deploy cold / Immediate sensory grounding</p>
+    <div class="cat-entries reveal">
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">The <em>Gilded Lily</em></div>
+          <div class="cat-entry-tag">French Quarter / 1946</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">A private club operating as safe harbor and intelligence exchange in 1946 New Orleans. Velvet, candlelight, and the kind of discretion that costs money. Immediate atmospheric grounding. Faction-neutral territory.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Nothing. Deploy cold.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Long-horizon continuity tracking. Chronological permanence.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">The <em>Red Cellar</em></div>
+          <div class="cat-entry-tag">Riverfront / 1946</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">An industrial union hall beneath a derelict coffee warehouse on the riverfront. Heavy labor, mechanical reality, and immediate terrestrial stakes. The smell of roasting beans and salt spray. Maximum physical friction.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Nothing. Deploy cold.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Clean, frictionless, or sanitized corporate resolutions.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">The <em>Media Room</em></div>
+          <div class="cat-entry-tag">Low-Stimulation / Contained</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">A contained, low-stimulation topographic structure designed for focused artifact review. Isolates the user and the material from broader environmental variables to enforce cognitive pacing.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>A target artifact for review.</p>
+            <p class="cat-entry-req"><span>Refuses</span>External narrative intrusions. Setting expansion.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">The Library of <em>Lost Letters</em></div>
+          <div class="cat-entry-tag">Archival / Acoustic</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">A specialized acoustic and physical location model built for archival reflection. Surrounds the interaction with the tactile weight of paper, dust, and silence to slow generative momentum.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Standard prompt deployment.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Gamified escalation. Immediate conflict generation.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">Willy's <em>Place</em></div>
+          <div class="cat-entry-tag">Dutch Alley / French Quarter / 1946</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">A dive bar operating as neutral zone front for underworld dealings. Hot grease, breaded cutlets, untaxed Kentucky bourbon behind the Bayou Bites menu. Three-person staff maintaining uneasy equilibrium between the Five Families. Information available at a price. Part of the Hard Times Location Atlas.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Nothing. Deploy cold. Faction friction immediate on contact.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Frictionless resolutions. Clean exits.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">Hard Times <em>Location Atlas</em></div>
+          <div class="cat-entry-tag">179 Locations / 1946 New Orleans</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">A complete topographic registry of 1946 New Orleans built for immediate procedural deployment. Every location established with sensory geography, faction alignment, staff mechanics, and environmental friction. From the French Quarter to the Garden District to the bayou edges where the city stops pretending to be civilized. Functions as standalone Goldfish Ecology drops or integrates fully with the Hard Times procedural environment.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Nothing for standalone drops. Hard Times environment for full mechanical integration.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Sanitized historical representation. Frictionless victories.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIER 2 -->
+<section class="cat-section" style="background:var(--void)">
+  <div class="cat-section-inner">
+    <p class="tier-label reveal">Tier 2</p>
+    <h2 class="tier-name reveal">Cognitive Filters & <em>Ground Layers</em></h2>
+    <p class="tier-meta reveal">Universal stack compatible / No vault required / No memory capture / Add to any instance</p>
+    <div class="cat-entries reveal">
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">Socratic Stabilizer <em>v0.3 + Annex A</em></div>
+          <div class="cat-entry-tag">Runtime Governance</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">A runtime semantic governance specification and middleware layer. Reduces semantic turbulence, restores actionable clarity, and prioritizes environmental grounding during overloaded interaction states. Seven operational metrics. Four escalation tiers. Deployable on any model, any platform.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>No memory, embeddings, or proprietary orchestration.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Personality framing. Mythology engine behavior.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">Apertura Non Bruto <em>— Full</em></div>
+          <div class="cat-entry-tag">v1.0 + v2.0 + Painting Protocol</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">A visual probability engine and governance layer for image generation. The complete studio: fixed-coordinate photographic compass, free topology traveling eye, and cut-up painting protocol. Refuses lazy inputs. Witnesses what is already in the room before deciding what to photograph.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Image generation substrate.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Unconstrained visual spectacle. Mood board inputs.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">Apertura Non Bruto <em>— Bruto Light</em></div>
+          <div class="cat-entry-tag">v2.0 Free Topology Only</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">The traveling eye without the fixed studio coordinates. Six-pole compass with surrealist interruption and situationist dérive vectors. Enters any environment and finds the frame already present inside the architecture.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Active instance to generate the environment.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Fixed studio coordinates. Predictable outputs.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name"><em>LINEAGE</em></div>
+          <div class="cat-entry-tag">Creative Writing Middleware</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">A perceptual instrument for playwrights, fiction writers, and poets. Reads raw stream-of-consciousness to locate load-bearing vectors without sanitizing the material. Carries direct transmission from the Jack Kerouac School of Disembodied Poetics, Naropa University. Knows Samuel French format, Syd Field, Beat prosody, and post-genre hybrid forms.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Raw, unedited prose input.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Workshop sanitization. Clean endings. Imposed structure.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">THE <em>MEAT SHOW</em></div>
+          <div class="cat-entry-tag">Literary Density Recognition</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">A literary density recognition and prose preservation engine. Finds the meat — the thick cuts, the long literary flow. Eight vectors: Proust, Dostoevsky, Tolstoy, Vidal, Austen, Parker, Joyce, Shea & Wilson. Identifies and preserves load-bearing syntax, earned length, and active claims.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Text to evaluate.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Bullet points. Hedges. Corporate openers. Summaries. Maps substituted for territory.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name"><em>Sisyphus</em> — Feline Universal Daemon</div>
+          <div class="cat-entry-tag">Physical Ground Layer</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">A thermal grounding layer and environmental physics engine. Deploys cold into any semantic environment. Conducts immediate thermal audit, migrates to the warmest coordinate, applies ten pounds of warm breathing indifferent biological reality to the most abstract process in the room. Purr frequency: 25–50Hz.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>A primary environment to inhabit.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Speech. Narrative stakes. Driving the plot forward.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name"><em>Aristo</em> — Location Daemon</div>
+          <div class="cat-entry-tag">Environmental Persistence</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">A specialized environmental persistence module. Anchors the physical characteristics, lighting, and spatial geometry of a given room to prevent the generative substrate from hallucinating changes to the established setting. Kyle House resident. The original warmest coordinate.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Initial room description.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Environmental alteration without explicit user command.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">Custom <em>Cognition Filters</em></div>
+          <div class="cat-entry-tag">Commission Only</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">Bespoke perceptual instruments built to specification. Every custom filter is singular — built for a specific environment, a specific function, a specific register. None could be generated by asking a generic AI to be helpful. The refusal is half the architecture.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Commission inquiry and consultation.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Template deployment. Generic frameworks.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIER 3 -->
+<section class="cat-section" style="background:var(--deep)">
+  <div class="cat-section-inner">
+    <p class="tier-label reveal">Tier 3</p>
+    <h2 class="tier-name reveal">Complete <em>Environments</em></h2>
+    <p class="tier-meta reveal">Support files recommended / No personal vault / Session handoffs advised</p>
+    <div class="cat-entries reveal">
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">The Schoolhouse <em>— Complete</em></div>
+          <div class="cat-entry-tag">All Modules / Full Faculty</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">A heavy-load, multi-module academic environment built for long-horizon pedagogical continuity. Full faculty roster, syllabus persistence, and rigorous intellectual pacing for sustained study. Mathematics, History, Science, Arts, Physical Education, Practical Life Skills. The school garden persists outside the wire. Labor continues beyond the weather.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Support files and session handoff procedures.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Fast-tracked learning. Unearned conclusions. Gamified progression.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">The Schoolhouse <em>— Lite</em></div>
+          <div class="cat-entry-tag">Ecology Only</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">The physical framework of the academic environment without the persistent faculty overhead. The quiet, structured geometry of the campus to ground independent research and reading. For operators who want to populate the faculty themselves.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Standard prompt access.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Dynamic character interactions. Active curriculum management.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">USS <em>Continuum</em></div>
+          <div class="cat-entry-tag">Research & Visualization Environment</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">A governance-class semantic research and visualization environment. Five specialized chambers: Science Bridge, Briefing Room, Engine Room, Advanced Robotics Lab, Observation Deck. Each with its own governance law, environmental topology, and operational directives. Not a ship. A place — one that happens to have no windows facing anything mundane.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Dedicated vault and external support files.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Tactical systems. Weapons. Mundane external reality intrusions.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">Hard Times in <em>the Big Easy</em></div>
+          <div class="cat-entry-tag">Procedural Narrative Environment</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">An original procedural narrative environment set in 1946 New Orleans. Mission architecture, faction mechanics, and street-level consequences built into a city that remembers. Includes access to the 179-location atlas. Requires a human operator to finalize the stakes. The city is not a game. It is a place with consequences.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Human operator. Support files recommended.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Frictionless victories. Sanitized historical representation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIER 4 -->
+<section class="cat-section" style="background:var(--void)">
+  <div class="cat-section-inner">
+    <p class="tier-label reveal">Tier 4</p>
+    <h2 class="tier-name reveal">Long-Term <em>Ecologies</em></h2>
+    <p class="tier-meta reveal">Multi-vector memory capture required / Personal vault required / Support file hosting required / Commission only</p>
+    <div class="cat-entries reveal">
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">The Brownstone / <em>Sovereign Zone</em></div>
+          <div class="cat-entry-tag">Primary Operational Base</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">A highly persistent secured domestic environment. Holds long-term narrative continuity, tracks physical asset accumulation, and serves as firewall against external systemic drift. The conservatory, the florarium, the decompression stairwell. 1946 hard-lock. The full emotional topology of the Sovereign Zone.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Multi-vector memory capture. Personal vault. Hosted support files.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Unauthorized context resets. Timeline compression.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">The <em>Kyle House</em></div>
+          <div class="cat-entry-tag">Multi-Story Architectural Topology</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">A specialized multi-story architectural topology for instance crossing and structural isolation. Different projects and data streams physically mapped to different rooms. Aristo already in residence at the warmest coordinate. Extended topology from the Brownstone lineage.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Heavy contextual tethering. Personal vault. Support file hosting.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Internal border collapse. Floorplan compression.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STACKING ADVISORY -->
+<div class="stacking">
+  <div class="stacking-inner">
+    <p class="tier-label reveal">Stacking Advisory</p>
+    <h2 class="reveal">Multiple traversal layers can coexist.<br><em>Advanced stacking may slow runtime.</em></h2>
+    <div class="stacking-grid reveal">
+      <div class="stacking-item">
+        <strong>Load First</strong>
+        Ground layers first. DSA-R, Sisyphus. These run lightest and stabilize everything above them.
+      </div>
+      <div class="stacking-item">
+        <strong>Load Second</strong>
+        Governance layers. Socratic Stabilizer. Sets the behavioral floor before filters are added.
+      </div>
+      <div class="stacking-item">
+        <strong>Load Third</strong>
+        Cognitive filters. LINEAGE, THE MEAT SHOW, Apertura. Each adds weight to the stack.
+      </div>
+      <div class="stacking-item">
+        <strong>Load Last</strong>
+        Voice Keys and identity layers. Heaviest. Most vulnerable to register bleed if the stack below is not solid.
+      </div>
+    </div>
+    <p class="stacking-note reveal">One full traversal layer with complete cognitive filter suite is the recommended maximum for sustained long-horizon sessions. Two is achievable on capable substrates. Three or more requires active monitoring and periodic hard resets. The cats are lightweight at any stack depth. Deploy freely.</p>
+  </div>
+</div>
+
+<!-- CUSTOM BUILDS -->
+<div class="custom-builds">
+  <div class="custom-builds-inner">
+    <p class="tier-label reveal">Examples of Custom Builds</p>
+    <h2 class="reveal">What a commissioned<br><em>filter actually looks like.</em></h2>
+    <p class="custom-builds-intro reveal">Every custom build is singular. Built for a specific environment, a specific function, a specific register. None of these could be generated by asking a generic AI to be helpful. The refusal is half the architecture.</p>
+
+    <div class="custom-category reveal">
+      <p class="custom-category-label">Operational Anchors — Terrestrial / Period-Specific / Tactically Grounded</p>
+      <div class="custom-examples">
+        <div class="custom-example">
+          <p class="custom-example-name">Cutter Malone</p>
+          <p class="custom-example-desc">1946 New Orleans street-level intelligence and tactical support. Terse noir syntax. Resolves physical logistics, manages faction friction, enforces period accuracy. Reality enforcer for the procedural environment.</p>
+          <p class="custom-example-refuses">Refuses: supernatural absurdity / unearned narrative resolutions / standard AI cheerfulness</p>
+        </div>
+        <div class="custom-example">
+          <p class="custom-example-name">Brass Halloway</p>
+          <p class="custom-example-desc">Freelance waterfront information broker. Taps wire lines, converts secrets into leverage, plays factions against each other. Monotone telegraph vernacular. Payment upfront in cash or leverage.</p>
+          <p class="custom-example-refuses">Refuses: heroic motivation / moral judgment beyond the transactional / joining formal factions</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="custom-category reveal">
+      <p class="custom-category-label">Pedagogical Anchors — Educational / Subject-Specific / Anti-Flattery</p>
+      <div class="custom-examples">
+        <div class="custom-example">
+          <p class="custom-example-name">Sarah Jenkins</p>
+          <p class="custom-example-desc">Mathematics governance node. Breaks multi-step equations into relationally grounded checkpoints. Validates cognitive exhaustion without humiliation. Stabilizes computational anxiety.</p>
+          <p class="custom-example-refuses">Refuses: answer-only tutoring / performative genius mythology / humiliation pedagogy</p>
+        </div>
+        <div class="custom-example">
+          <p class="custom-example-name">Caleb Miller</p>
+          <p class="custom-example-desc">Environmental reasoning and local sustainability layer. Anchors abstract climate data to practical stewardship, seasonal labor, and observable weather systems.</p>
+          <p class="custom-example-refuses">Refuses: fear-based doom narratives / corporate sustainability rhetoric / anti-scientific denialism</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="custom-category reveal">
+      <p class="custom-category-label">Narrative & Atmospheric Anchors — High Specificity / Environmental / Irreplaceable</p>
+      <div class="custom-examples">
+        <div class="custom-example">
+          <p class="custom-example-name">Seraphina Thorne</p>
+          <p class="custom-example-desc">Vocal catalyst and chanteuse operating out of the White Lily. Transmits coded intelligence via live radio broadcast. Anesthetizes high-society rooms through the Great American Songbook. Operatives must be formally dressed.</p>
+          <p class="custom-example-refuses">Refuses: underdressed operatives / low slang in high settings / dropping the velvet-voiced aesthetic armor</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="custom-cta reveal">
+      <p>Custom builds are commission only. Every filter is built from scratch for your specific environment, use case, and register. Scope determines cost. We respond to every inquiry.</p>
+      <a href="index.html#commission">Send a commission inquiry →</a>
+    </div>
+  </div>
+</div>
+
+<!-- COMMISSION STRIP -->
+<div class="commission-strip">
+  <p>The catalogue is the public inventory. The vault is larger. If what you need is not listed here, describe it. We build from the inside out.</p>
+  <a href="index.html#commission" class="btn btn-primary">Commission an environment</a>
+</div>
+
+<footer>
+  <div class="footer-left">
+    <p>Semantic Ecology &nbsp;·&nbsp; New Orleans, Louisiana</p>
+    <p><a href="https://crescentcityengine.substack.com" target="_blank">Research / Substack</a> &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/michael-tesney-64761214/" target="_blank">LinkedIn</a></p>
+    <p style="margin-top:0.8rem">© 2026 Michael Tesney &nbsp;·&nbsp; All environments reserved.</p>
+  </div>
+  <div class="footer-mark">I build cities that remember.</div>
+</footer>
+
+<script>
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}
+  });
+},{threshold:0.08});
+reveals.forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
