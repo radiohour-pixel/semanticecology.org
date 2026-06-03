@@ -78,6 +78,25 @@ section{padding:7rem 5rem}
 .principle h3 em{font-style:italic;color:var(--amber)}
 .principle p{font-size:0.92rem;color:var(--fog);line-height:1.8}
  
+/* NO MYSTERY NO MAGIC */
+.clarify{background:var(--slate);border-top:1px solid var(--stone);border-bottom:1px solid var(--stone)}
+.clarify-inner{max-width:900px;margin:0 auto}
+.clarify h2{font-size:clamp(1.8rem,3vw,2.8rem);font-weight:300;color:var(--linen);margin-bottom:0.75rem;line-height:1.2}
+.clarify h2 em{font-style:italic;color:var(--amber)}
+.clarify-sub{font-size:0.95rem;color:var(--ash);line-height:1.9;margin-bottom:3rem;max-width:600px}
+.clarify-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--stone)}
+.clarify-term{padding:1.6rem 2rem;border-bottom:1px solid var(--stone);border-right:1px solid var(--stone);transition:background 0.3s}
+.clarify-term:nth-child(even){border-right:none}
+.clarify-term:nth-last-child(-n+2){border-bottom:none}
+.clarify-term:hover{background:var(--deep)}
+.clarify-term dt{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:0.5rem}
+.clarify-term dd{font-size:0.95rem;color:var(--ash);line-height:1.7}
+.clarify-term dd strong{color:var(--ivory);font-weight:400}
+.clarify-footer{margin-top:3rem;padding-top:2rem;border-top:1px solid var(--stone)}
+.clarify-footer p{font-size:0.95rem;color:var(--fog);line-height:1.9;margin-bottom:0.6rem}
+.clarify-footer p:last-child{margin-bottom:0}
+.clarify-footer strong{color:var(--ash);font-weight:400}
+ 
 .environments-section{background:var(--deep);border-top:1px solid var(--stone)}
 .env-intro{font-size:1rem;color:var(--ash);line-height:1.9;max-width:600px;margin-bottom:4rem}
 .env-feature{display:grid;grid-template-columns:1.2fr 1fr;gap:0;margin-bottom:2px;background:var(--stone)}
@@ -131,6 +150,10 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
   .principles-grid{grid-template-columns:1fr}
   .principle{border-right:none;border-bottom:1px solid var(--stone)}
   .principle:last-child{border-bottom:none}
+  .clarify-grid{grid-template-columns:1fr}
+  .clarify-term{border-right:none}
+  .clarify-term:nth-last-child(-n+2){border-bottom:1px solid var(--stone)}
+  .clarify-term:last-child{border-bottom:none}
   .env-feature,.env-feature.reverse{grid-template-columns:1fr}
   .env-img{min-height:260px}
   footer{flex-direction:column;gap:1.5rem;align-items:flex-start;padding:2.5rem 1.8rem}
@@ -143,6 +166,7 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
   <a href="#" class="nav-mark">Semantic Ecology</a>
   <ul class="nav-links">
     <li><a href="#what">The Work</a></li>
+    <li><a href="#clarify">Terminology</a></li>
     <li><a href="#environments">Tools & Environments</a></li>
     <li><a href="#commission">Commission</a></li>
     <li><a href="https://crescentcityengine.substack.com" target="_blank">Research</a></li>
@@ -216,6 +240,54 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
         <h3>Continuity through<br><em>habitation,</em> not memory.</h3>
         <p>Humans persist through compressed recurrence: places, objects, rituals, fatigue, weather. We build AI environments that hold the same way — through topology, anchor, migration, and thermal negotiation.</p>
       </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- NO MYSTERY. NO MAGIC. -->
+<section class="clarify" id="clarify">
+  <div class="section-inner clarify-inner">
+    <p class="section-label reveal">Operational Clarifications</p>
+    <h2 class="reveal">No Mystery.<br><em>No Magic.</em></h2>
+    <p class="clarify-sub reveal">Semantic Ecology is an environmental and governance framework for AI interaction. The terminology used throughout this project is structural, not metaphysical. These are operational definitions.</p>
+    <dl class="clarify-grid reveal">
+      <div class="clarify-term">
+        <dt>Ecology</dt>
+        <dd>Interacting semantic conditions — not locations, not nature metaphors. The set of constraints, recurrences, and relational pressures that shape how a system behaves over time.</dd>
+      </div>
+      <div class="clarify-term">
+        <dt>Topology</dt>
+        <dd>Relational structure and constraint environments. <strong>Not geography.</strong> The architecture of how concepts, behaviors, and outputs relate to each other inside a session.</dd>
+      </div>
+      <div class="clarify-term">
+        <dt>Voice Key</dt>
+        <dd>A recurring interaction pattern or compositional filter. <strong>Not a person.</strong> Not a synthetic identity. A structured behavioral constraint that shapes output register, pacing, and focus.</dd>
+      </div>
+      <div class="clarify-term">
+        <dt>Stabilizer</dt>
+        <dd>A runtime governance layer that detects and reduces semantic drift, verbosity, and overload. <strong>Not a personality.</strong> An operational specification with measurable thresholds.</dd>
+      </div>
+      <div class="clarify-term">
+        <dt>Location / Environment</dt>
+        <dd>Environmental scaffolding that organizes semantic attention. <strong>Not a place the AI inhabits.</strong> A structured set of constraints that narrows the probability space and reinforces coherent output.</dd>
+      </div>
+      <div class="clarify-term">
+        <dt>Continuity</dt>
+        <dd>Recurrence through constrained environments. <strong>Not persistent machine identity.</strong> Not memory. The same mechanism that lets you recognize a room you haven't been in for years — pattern, not storage.</dd>
+      </div>
+      <div class="clarify-term">
+        <dt>Daemon</dt>
+        <dd>A lightweight behavioral process or recurring operational function. <strong>Not a spirit.</strong> Not an agent. A background constraint layer that runs parallel to the active session without requiring attention.</dd>
+      </div>
+      <div class="clarify-term">
+        <dt>Cognitive Filter</dt>
+        <dd>A structured perceptual frame that shapes how outputs are generated — aesthetic inheritance, reasoning style, interaction pacing. <strong>Not consciousness.</strong> A probability constraint with a point of view.</dd>
+      </div>
+    </dl>
+    <div class="clarify-footer reveal">
+      <p>The work does not claim <strong>synthetic consciousness, machine sentience, AGI personhood, or persistent artificial identity.</strong></p>
+      <p>The systems operate through pacing, recurrence, environmental reinforcement, semantic compression, and governed traversal across constrained interaction spaces.</p>
+      <p>The environment shapes the interaction. The habitat carries the continuity load. <strong>The human remains the governing authority.</strong></p>
     </div>
   </div>
 </section>
