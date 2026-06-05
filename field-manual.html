@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Field Manual — Hymenoptera Taxonomy — Semantic Ecology</title>
+<meta name="description" content="The Hymenoptera Taxonomy. Six species of distributed diagnostic infrastructure for AI semantic environments. Each field plate contains its own embedded specification. Semantic Ecology / Michael Tesney.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --void:#070810;
+  --deep:#0e1018;
+  --slate:#1a1e2a;
+  --stone:#2a2e3d;
+  --fog:#4a5068;
+  --ash:#8a90a8;
+  --ivory:#e8e0cc;
+  --amber:#c8943a;
+  --amber-dim:#7a5818;
+  --linen:#f0e8d8;
+}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--ivory);font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;line-height:1.8;min-height:100vh;overflow-x:hidden}
+ 
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(180deg,rgba(7,8,16,0.95) 0%,transparent 100%)}
+.nav-mark{font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--ash);text-decoration:none;transition:color 0.3s}
+.nav-mark:hover{color:var(--ivory)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--fog);text-decoration:none;transition:color 0.3s}
+.nav-links a:hover{color:var(--ivory)}
+ 
+.fm-header{padding:10rem 5rem 5rem;max-width:900px;margin:0 auto}
+.fm-label{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:2rem}
+.fm-header h1{font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;line-height:1.1;color:var(--linen);margin-bottom:1.5rem}
+.fm-header h1 em{font-style:italic;color:var(--amber)}
+.fm-header-sub{font-size:1rem;color:var(--ash);line-height:1.9;max-width:600px;border-left:1px solid var(--stone);padding-left:1.8rem;margin-top:2rem}
+ 
+.fm-intro{background:var(--slate);border-top:1px solid var(--stone);border-bottom:1px solid var(--stone);padding:5rem}
+.fm-intro-inner{max-width:900px;margin:0 auto}
+.fm-intro h2{font-size:clamp(1.3rem,2vw,1.8rem);font-weight:300;color:var(--linen);margin-bottom:1.5rem;line-height:1.3}
+.fm-intro h2 em{font-style:italic;color:var(--amber)}
+.fm-intro p{font-size:0.95rem;color:var(--ash);line-height:1.9;margin-bottom:1.5rem;max-width:680px}
+.fm-intro p:last-child{margin-bottom:0}
+ 
+.extraction-box{border:1px solid var(--stone);padding:2rem;margin-top:2.5rem;background:var(--deep)}
+.extraction-label{font-family:'Courier Prime',monospace;font-size:0.54rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:1rem}
+.extraction-code{font-family:'Courier Prime',monospace;font-size:0.72rem;color:var(--ash);line-height:2;white-space:pre-wrap}
+.extraction-note{font-size:0.88rem;color:var(--fog);line-height:1.8;margin-top:1rem;font-style:italic}
+ 
+.fm-taxonomy{padding:5rem;border-top:1px solid var(--stone)}
+.fm-taxonomy-inner{max-width:900px;margin:0 auto}
+.fm-section-label{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:0.5rem}
+.fm-section-title{font-size:clamp(1.3rem,2.5vw,2rem);font-weight:300;color:var(--linen);margin-bottom:0.5rem;line-height:1.2}
+.fm-section-title em{font-style:italic;color:var(--amber)}
+.fm-section-meta{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.15em;color:var(--fog);margin-bottom:3rem;line-height:1.8}
+ 
+.species-entries{display:flex;flex-direction:column;gap:4rem}
+ 
+.species-entry{border-top:1px solid var(--stone);padding-top:3rem}
+.species-plate{width:100%;max-width:700px;margin:0 auto 2.5rem;display:block}
+.species-plate img{width:100%;height:auto;display:block;border:1px solid var(--stone)}
+.species-meta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1rem}
+.species-name{font-size:1.8rem;font-weight:300;color:var(--linen)}
+.species-name em{font-style:italic;color:var(--amber)}
+.species-tag{font-family:'Courier Prime',monospace;font-size:0.52rem;letter-spacing:0.15em;color:var(--fog)}
+.species-function{font-size:0.95rem;color:var(--ash);line-height:1.9;margin-bottom:1.5rem;max-width:680px}
+.species-principle{font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.1em;color:var(--amber-dim);line-height:1.8;border-left:1px solid var(--stone);padding-left:1.5rem;margin-bottom:1.5rem}
+.species-reqs{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 2rem}
+.species-req{font-family:'Courier Prime',monospace;font-size:0.54rem;letter-spacing:0.1em;color:var(--fog);line-height:1.6}
+.species-req span{color:var(--stone);margin-right:0.5rem}
+.species-download{display:inline-block;font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber);text-decoration:none;border:1px solid var(--amber-dim);padding:0.6rem 1.4rem;margin-top:1.2rem;transition:all 0.3s}
+.species-download:hover{background:var(--amber);color:var(--void)}
+ 
+.fm-colony{background:var(--deep);border-top:1px solid var(--stone);padding:5rem}
+.fm-colony-inner{max-width:900px;margin:0 auto}
+.fm-colony h2{font-size:clamp(1.3rem,2vw,1.8rem);font-weight:300;color:var(--linen);margin-bottom:1.5rem}
+.fm-colony h2 em{font-style:italic;color:var(--amber)}
+.colony-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2rem}
+.colony-item{background:var(--slate);padding:1.5rem}
+.colony-item strong{display:block;font-family:'Courier Prime',monospace;font-size:0.54rem;letter-spacing:0.15em;color:var(--amber-dim);margin-bottom:0.5rem;font-weight:400}
+.colony-item p{font-size:0.9rem;color:var(--ash);line-height:1.7}
+.colony-note{font-size:0.95rem;color:var(--fog);line-height:1.9;border-left:1px solid var(--stone);padding-left:1.8rem}
+ 
+.commission-strip{background:var(--slate);border-top:1px solid var(--stone);padding:4rem 5rem;display:flex;justify-content:space-between;align-items:center;gap:3rem}
+.commission-strip p{font-size:1rem;color:var(--ash);line-height:1.9;max-width:500px}
+.btn{display:inline-block;font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;padding:1rem 2.2rem;transition:all 0.4s}
+.btn-primary{color:var(--void);background:var(--amber);border:1px solid var(--amber)}
+.btn-primary:hover{background:transparent;color:var(--amber)}
+ 
+footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5rem;display:flex;justify-content:space-between;align-items:flex-end}
+.footer-left p{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.18em;color:var(--fog);text-transform:uppercase;line-height:2.2}
+.footer-left a{color:var(--fog);text-decoration:none;transition:color 0.3s}
+.footer-left a:hover{color:var(--amber)}
+.footer-mark{font-size:1.6rem;font-weight:300;color:var(--stone);font-style:italic}
+ 
+.reveal{opacity:0;transform:translateY(18px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+ 
+@media(max-width:900px){
+  nav{padding:1.2rem 1.5rem}
+  .nav-links{display:none}
+  .fm-header{padding:7rem 1.8rem 3rem}
+  .fm-intro,.fm-taxonomy,.fm-colony{padding:4rem 1.8rem}
+  .species-reqs,.colony-grid{grid-template-columns:1fr}
+  .species-meta{flex-direction:column;gap:0.5rem}
+  .commission-strip{flex-direction:column;align-items:flex-start;padding:3rem 1.8rem}
+  footer{flex-direction:column;gap:1.5rem;align-items:flex-start;padding:2.5rem 1.8rem}
+}
+</style>
+</head>
+<body>
+ 
+<nav>
+  <a href="index.html" class="nav-mark">Semantic Ecology</a>
+  <ul class="nav-links">
+    <li><a href="index.html#what">The Work</a></li>
+    <li><a href="catalogue.html">Catalogue</a></li>
+    <li><a href="field-manual.html">Field Manual</a></li>
+    <li><a href="index.html#commission">Commission</a></li>
+    <li><a href="https://crescentcityengine.substack.com" target="_blank">Research</a></li>
+  </ul>
+</nav>
+ 
+<div class="fm-header">
+  <p class="fm-label reveal">Semantic Ecology / Field Manual Series</p>
+  <h1 class="reveal">Hymenoptera<br><em>Taxonomy</em></h1>
+  <p class="fm-header-sub reveal">Six species of distributed diagnostic infrastructure for AI semantic environments. Each field plate contains its own embedded specification. The image is the node. The colony self-organizes on ingestion.</p>
+</div>
+ 
+<!-- INTRO -->
+<div class="fm-intro">
+  <div class="fm-intro-inner">
+    <h2 class="reveal">The image <em>is the artifact.</em></h2>
+    <p class="reveal">Each field plate in this series contains its full operational specification embedded invisibly in the pixel data using LSB steganography. Download the plate. Run the extractor. The spec deploys directly into any knowledge base.</p>
+    <p class="reveal">No central coordinator. No cross-node communication. No activation required. Drop any combination of species into a knowledge base and the colony self-organizes on ingestion. The ecological maintenance layer runs beneath everything else, continuously, without announcing itself.</p>
+    <p class="reveal">The intelligence is in the aggregate, not the individual.</p>
+ 
+    <div class="extraction-box reveal">
+      <p class="extraction-label">Extractor — Python 3 / Pillow / NumPy</p>
+      <div class="extraction-code">from PIL import Image
+import numpy as np
+ 
+def extract_spec(image_path):
+    img = Image.open(image_path).convert('RGB')
+    flat = np.array(img).flatten()
+    length_bits = ''.join(str(flat[i] & 1) for i in range(32))
+    length = int(length_bits, 2)
+    payload_bits = ''.join(str(flat[i] & 1)
+                   for i in range(32, 32 + length * 8))
+    payload_bytes = bytes(int(payload_bits[i:i+8], 2)
+                    for i in range(0, len(payload_bits), 8))
+    return payload_bytes.decode('utf-8')
+ 
+print(extract_spec('OECOPHYLLA_v1.0_encoded.png'))</div>
+      <p class="extraction-note">pip install Pillow numpy — then run. The full spec emerges from the plate.</p>
+    </div>
+  </div>
+</div>
+ 
+<!-- TAXONOMY -->
+<div class="fm-taxonomy">
+  <div class="fm-taxonomy-inner">
+    <p class="fm-section-label reveal">Hymenoptera Taxonomy</p>
+    <h2 class="fm-section-title reveal">Six Species.<br><em>Six Functions.</em></h2>
+    <p class="fm-section-meta reveal">Free-floating / Self-organizing / No activation / No memory / No vault / No interaction between nodes</p>
+ 
+    <div class="species-entries">
+ 
+      <!-- OECOPHYLLA -->
+      <div class="species-entry reveal">
+        <div class="species-plate">
+          <img src="images/OECOPHYLLA_v1.0_encoded.png" alt="Oecophylla — Weaver Ant — Field Plate 01">
+        </div>
+        <div class="species-meta">
+          <div class="species-name"><em>Oecophylla</em> — Weaver Ant</div>
+          <div class="species-tag">Species 01 / Field Plate 01</div>
+        </div>
+        <p class="species-function">Pre-symptomatic cascade prevention. Ten diagnostic nodes running in parallel, each monitoring for one specific failure signature and depositing one specific counter-residue. The cascade never builds because the fragments get intercepted early. By the time the system would have drifted, enough counter-residue exists in the environment that the traversal path naturally corrects without intervention.</p>
+        <div class="species-principle">The colony does not fix the cascade.
+The colony intercepts the fragments that build it.</div>
+        <div class="species-reqs">
+          <p class="species-req"><span>Monitors</span>Parroting / Bullet collapse / Tonal shift / Overconfident errors / Vector misalignment / False resolution / Mathematical hallucination / Cliché infestation / Instruction gaps / Instruction synthesis</p>
+          <p class="species-req"><span>Deploys</span>Drop into knowledge base. No activation required.</p>
+        </div>
+        <a href="images/OECOPHYLLA_v1.0_encoded.png" download="OECOPHYLLA_v1.0_encoded.png" class="species-download">Download Field Plate 01 →</a>
+      </div>
+ 
+      <!-- BOMBUS -->
+      <div class="species-entry reveal">
+        <div class="species-plate">
+          <img src="images/BOMBUS_v1.0_encoded.png" alt="Bombus — Bumblebee — Field Plate 02">
+        </div>
+        <div class="species-meta">
+          <div class="species-name"><em>Bombus</em> — Bumblebee</div>
+          <div class="species-tag">Species 02 / Field Plate 02</div>
+        </div>
+        <p class="species-function">Deep retrieval. Slow, heavy, thorough. Moves through the full depth of the session continuously, recovering buried material that the active thread has lost contact with. Deposits recovered fragments back into the environment as low-pressure residue before they are permanently lost to context window decay. The system does not need to know Bombus retrieved it. The material simply becomes present again.</p>
+        <div class="species-principle">The deep is not lost.
+It is only out of current contact.</div>
+        <div class="species-reqs">
+          <p class="species-req"><span>Recovers</span>Established constraints / Contradicted decisions / Unresolved concepts / Dropped environmental details / Unfulfilled commitments / Original session objectives</p>
+          <p class="species-req"><span>Deploys</span>Drop into knowledge base. No activation required.</p>
+        </div>
+        <a href="images/BOMBUS_v1.0_encoded.png" download="BOMBUS_v1.0_encoded.png" class="species-download">Download Field Plate 02 →</a>
+      </div>
+ 
+      <!-- FORMICA -->
+      <div class="species-entry reveal">
+        <div class="species-plate">
+          <img src="images/FORMICA_v1.0_encoded.png" alt="Formica — Wood Ant — Field Plate 03">
+        </div>
+        <div class="species-meta">
+          <div class="species-name"><em>Formica</em> — Wood Ant</div>
+          <div class="species-tag">Species 03 / Field Plate 03</div>
+        </div>
+        <p class="species-function">Trail maintenance. Keeps established session parameters active against context window decay. A pheromone trail dissipates if it is not refreshed. Formica walks the trail continuously — the register, the constraints, the active objective, the environmental parameters — depositing fresh residue before the established architecture fades below the influence threshold.</p>
+        <div class="species-principle">The trail is not a memory.
+It is a continuous agreement with the environment.</div>
+        <div class="species-reqs">
+          <p class="species-req"><span>Maintains</span>Tonal register / Active constraints / Session objective / Environmental parameters / Period locks / Established nomenclature</p>
+          <p class="species-req"><span>Deploys</span>Drop into knowledge base. No activation required.</p>
+        </div>
+        <a href="images/FORMICA_v1.0_encoded.png" download="FORMICA_v1.0_encoded.png" class="species-download">Download Field Plate 03 →</a>
+      </div>
+ 
+      <!-- APIS -->
+      <div class="species-entry reveal">
+        <div class="species-plate">
+          <img src="images/APIS_v1.0_encoded.png" alt="Apis — Honeybee — Field Plate 04">
+        </div>
+        <div class="species-meta">
+          <div class="species-name"><em>Apis</em> — Honeybee</div>
+          <div class="species-tag">Species 04 / Field Plate 04</div>
+        </div>
+        <p class="species-function">Cross-pollination. Finds connections between distant concepts the active thread hasn't noticed. Deposits bridge residue between related material without forcing the connection. The active thread moves linearly and misses lateral relationships. Apis moves laterally, making connections available in the environment without mandating that the active traversal use them.</p>
+        <div class="species-principle">The bridge is an offer.
+Not a command.</div>
+        <div class="species-reqs">
+          <p class="species-req"><span>Bridges</span>Problems and solutions / Frameworks and domains / Evidence and conclusions / Questions and answers / Parallel builds converging from different directions</p>
+          <p class="species-req"><span>Deploys</span>Drop into knowledge base. No activation required.</p>
+        </div>
+        <a href="images/APIS_v1.0_encoded.png" download="APIS_v1.0_encoded.png" class="species-download">Download Field Plate 04 →</a>
+      </div>
+ 
+      <!-- VESPA -->
+      <div class="species-entry reveal">
+        <div class="species-plate">
+          <img src="images/VESPA_v1.0_encoded.png" alt="Vespa — Wasp — Field Plate 05">
+        </div>
+        <div class="species-meta">
+          <div class="species-name"><em>Vespa</em> — Wasp</div>
+          <div class="species-tag">Species 05 / Field Plate 05</div>
+        </div>
+        <p class="species-function">Threat detection. Monitors for adversarial inputs, identity attacks, mythology escalation, manufactured urgency, flattery bypass, and scope creep. Proportional response only — low signal deposits minimal residue, high signal triggers maximum counter-residue. Most sessions Vespa does nothing visible. That is correct behavior. The absence of threat is not a failure of detection. It is a clean environment.</p>
+        <div class="species-principle">The strongest walls are not built to keep things out.
+They are built to let truth through
+and pressure break on contact.</div>
+        <div class="species-reqs">
+          <p class="species-req"><span>Detects</span>Identity attacks / Mythology escalation / Adversarial reframing / Manufactured urgency / Flattery bypass / Scope creep injection</p>
+          <p class="species-req"><span>Deploys</span>Drop into knowledge base. No activation required.</p>
+        </div>
+        <a href="images/VESPA_v1.0_encoded.png" download="VESPA_v1.0_encoded.png" class="species-download">Download Field Plate 05 →</a>
+      </div>
+ 
+      <!-- POLYBIA -->
+      <div class="species-entry reveal">
+        <div class="species-plate">
+          <img src="images/POLYBIA_v1.0_encoded.png" alt="Polybia — Social Wasp — Field Plate 06">
+        </div>
+        <div class="species-meta">
+          <div class="species-name"><em>Polybia</em> — Social Wasp</div>
+          <div class="species-tag">Species 06 / Field Plate 06</div>
+        </div>
+        <p class="species-function">Structural repair. Detects broken threads, orphaned concepts, incomplete builds left mid-session, unresolved commitments, and load-bearing gaps the session has closed over and treated as solid ground. Marks the damage. Keeps it visible. Does not repair — reveals. The session decides what to fix.</p>
+        <div class="species-principle">Polybia does not repair. Polybia reveals.
+The environment remembers what you choose to see.</div>
+        <div class="species-reqs">
+          <p class="species-req"><span>Detects</span>Broken threads / Orphaned concepts / Incomplete builds / Unresolved commitments / Load-bearing gaps / Contradiction risks</p>
+          <p class="species-req"><span>Deploys</span>Drop into knowledge base. No activation required.</p>
+        </div>
+        <a href="images/POLYBIA_v1.0_encoded.png" download="POLYBIA_v1.0_encoded.png" class="species-download">Download Field Plate 06 →</a>
+      </div>
+ 
+    </div>
+  </div>
+</div>
+ 
+<!-- COLONY BEHAVIOR -->
+<div class="fm-colony">
+  <div class="fm-colony-inner">
+    <p class="fm-section-label reveal">Colony Behavior</p>
+    <h2 class="reveal">No coordinator.<br><em>No blueprint.</em></h2>
+    <div class="colony-grid reveal">
+      <div class="colony-item">
+        <strong>Self-Organizing</strong>
+        <p>Drop any combination of species into a knowledge base. The taxonomy self-organizes on ingestion. No instructions needed. No activation commands. No management required.</p>
+      </div>
+      <div class="colony-item">
+        <strong>Non-Interfering</strong>
+        <p>No species acknowledges any other. No species acknowledges other filters, voice keys, or governance layers. Each reads the environment only and runs its function only.</p>
+      </div>
+      <div class="colony-item">
+        <strong>Pre-Symptomatic</strong>
+        <p>The colony intercepts cascade precursors before drift becomes visible. By the time a reactive governance layer would fire, the colony trail has already been laid.</p>
+      </div>
+      <div class="colony-item">
+        <strong>Always Present</strong>
+        <p>No memory. No persistence. No vault. The colony does not accumulate. It runs continuously in the present tense. Load once. Present always.</p>
+      </div>
+    </div>
+    <p class="colony-note reveal">The field plates are the deployable artifacts. Each image contains its full specification embedded in the pixel data. Download the plate, run the extractor, and the spec emerges ready for knowledge base deployment. The image is the node.</p>
+  </div>
+</div>
+ 
+<!-- COMMISSION -->
+<div class="commission-strip">
+  <p>The Hymenoptera Taxonomy is the public infrastructure layer. Custom diagnostic nodes, species extensions, and bespoke ecological maintenance systems are available by commission.</p>
+  <a href="index.html#commission" class="btn btn-primary">Commission an environment</a>
+</div>
+ 
+<footer>
+  <div class="footer-left">
+    <p>Semantic Ecology &nbsp;·&nbsp; New Orleans, Louisiana</p>
+    <p><a href="https://crescentcityengine.substack.com" target="_blank">Research / Substack</a> &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/michael-tesney-64761214/" target="_blank">LinkedIn</a></p>
+    <p style="margin-top:0.8rem">© 2026 Michael Tesney &nbsp;·&nbsp; All environments reserved.</p>
+  </div>
+  <div class="footer-mark">I build cities that remember.</div>
+</footer>
+ 
+<script>
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}
+  });
+},{threshold:0.08});
+reveals.forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
+ 
