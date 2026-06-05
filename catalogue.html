@@ -24,21 +24,20 @@
 }
 html{scroll-behavior:smooth}
 body{background:var(--void);color:var(--ivory);font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;line-height:1.8;min-height:100vh;overflow-x:hidden}
-
+ 
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(180deg,rgba(7,8,16,0.95) 0%,transparent 100%)}
 .nav-mark{font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--ash);text-decoration:none;transition:color 0.3s}
 .nav-mark:hover{color:var(--ivory)}
 .nav-links{display:flex;gap:2.5rem;list-style:none}
 .nav-links a{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--fog);text-decoration:none;transition:color 0.3s}
 .nav-links a:hover{color:var(--ivory)}
-
+ 
 .cat-header{padding:10rem 5rem 5rem;max-width:900px;margin:0 auto}
 .cat-header-label{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:2rem}
 .cat-header h1{font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;line-height:1.1;color:var(--linen);margin-bottom:1.5rem}
 .cat-header h1 em{font-style:italic;color:var(--amber)}
 .cat-header-sub{font-size:1rem;color:var(--ash);line-height:1.9;max-width:600px;border-left:1px solid var(--stone);padding-left:1.8rem;margin-top:2rem}
-
-/* DEPLOYMENT PHILOSOPHY */
+ 
 .deploy-phil{background:var(--slate);border-top:1px solid var(--stone);border-bottom:1px solid var(--stone);padding:5rem}
 .deploy-phil-inner{max-width:900px;margin:0 auto}
 .deploy-phil-label{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:2rem}
@@ -51,16 +50,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:
 .deploy-step p{font-size:0.95rem;color:var(--ash);line-height:1.7}
 .deploy-step p strong{color:var(--ivory);font-weight:400}
 .deploy-note{font-size:0.95rem;color:var(--fog);line-height:1.9;font-style:italic}
-
-/* CATALOGUE SECTIONS */
+ 
 .cat-section{padding:5rem;border-top:1px solid var(--stone)}
 .cat-section-inner{max-width:900px;margin:0 auto}
 .tier-label{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:0.5rem}
 .tier-name{font-size:clamp(1.3rem,2.5vw,2rem);font-weight:300;color:var(--linen);margin-bottom:0.5rem;line-height:1.2}
 .tier-name em{font-style:italic;color:var(--amber)}
 .tier-meta{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.15em;color:var(--fog);margin-bottom:3rem;line-height:1.8}
-
-/* CATALOGUE ENTRIES */
+ 
 .cat-entries{display:flex;flex-direction:column;gap:0}
 .cat-entry{border:1px solid var(--stone);margin-bottom:2px;transition:background 0.3s}
 .cat-entry:hover{background:var(--deep)}
@@ -73,8 +70,20 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:
 .cat-entry-reqs{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 2rem}
 .cat-entry-req{font-family:'Courier Prime',monospace;font-size:0.54rem;letter-spacing:0.1em;color:var(--fog);line-height:1.6}
 .cat-entry-req span{color:var(--stone);margin-right:0.5rem}
-
-/* STACKING ADVISORY */
+ 
+.district-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:1.5rem}
+.district-item{background:var(--deep);padding:1.2rem 1.5rem}
+.district-name{font-family:'Courier Prime',monospace;font-size:0.54rem;letter-spacing:0.15em;color:var(--amber-dim);margin-bottom:0.4rem}
+.district-desc{font-size:0.88rem;color:var(--ash);line-height:1.6}
+ 
+.faction-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:1.5rem}
+.faction-item{background:var(--deep);padding:1.2rem 1.5rem}
+.faction-name{font-family:'Courier Prime',monospace;font-size:0.54rem;letter-spacing:0.15em;color:var(--amber-dim);margin-bottom:0.4rem}
+.faction-desc{font-size:0.88rem;color:var(--ash);line-height:1.6}
+ 
+.species-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 2rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--stone)}
+.species-label{font-family:'Courier Prime',monospace;font-size:0.52rem;letter-spacing:0.15em;color:var(--amber-dim);grid-column:1/-1;margin-bottom:0.25rem}
+ 
 .stacking{background:var(--deep);border-top:1px solid var(--stone);padding:5rem}
 .stacking-inner{max-width:900px;margin:0 auto}
 .stacking h2{font-size:clamp(1.3rem,2vw,1.8rem);font-weight:300;color:var(--linen);margin-bottom:1.5rem}
@@ -83,8 +92,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:
 .stacking-item{background:var(--slate);padding:1.5rem;font-size:0.9rem;color:var(--ash);line-height:1.7}
 .stacking-item strong{display:block;font-family:'Courier Prime',monospace;font-size:0.54rem;letter-spacing:0.15em;color:var(--amber-dim);margin-bottom:0.5rem;font-weight:400}
 .stacking-note{font-size:0.95rem;color:var(--fog);line-height:1.9;border-left:1px solid var(--stone);padding-left:1.8rem}
-
-/* CUSTOM BUILDS */
+ 
 .custom-builds{padding:5rem;border-top:1px solid var(--stone)}
 .custom-builds-inner{max-width:900px;margin:0 auto}
 .custom-builds h2{font-size:clamp(1.3rem,2vw,1.8rem);font-weight:300;color:var(--linen);margin-bottom:0.75rem}
@@ -102,29 +110,28 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:
 .custom-cta p{font-size:0.95rem;color:var(--ash);line-height:1.9;margin-bottom:0.75rem}
 .custom-cta a{font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber);text-decoration:none}
 .custom-cta a:hover{color:var(--ivory)}
-
-/* COMMISSION */
+ 
 .commission-strip{background:var(--slate);border-top:1px solid var(--stone);padding:4rem 5rem;display:flex;justify-content:space-between;align-items:center;gap:3rem}
 .commission-strip p{font-size:1rem;color:var(--ash);line-height:1.9;max-width:500px}
 .btn{display:inline-block;font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;padding:1rem 2.2rem;transition:all 0.4s}
 .btn-primary{color:var(--void);background:var(--amber);border:1px solid var(--amber)}
 .btn-primary:hover{background:transparent;color:var(--amber)}
-
+ 
 footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5rem;display:flex;justify-content:space-between;align-items:flex-end}
 .footer-left p{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.18em;color:var(--fog);text-transform:uppercase;line-height:2.2}
 .footer-left a{color:var(--fog);text-decoration:none;transition:color 0.3s}
 .footer-left a:hover{color:var(--amber)}
 .footer-mark{font-size:1.6rem;font-weight:300;color:var(--stone);font-style:italic}
-
+ 
 .reveal{opacity:0;transform:translateY(18px);transition:opacity 0.7s ease,transform 0.7s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
-
+ 
 @media(max-width:900px){
   nav{padding:1.2rem 1.5rem}
   .nav-links{display:none}
   .cat-header{padding:7rem 1.8rem 3rem}
   .deploy-phil,.cat-section,.stacking,.custom-builds{padding:4rem 1.8rem}
-  .deploy-steps,.stacking-grid{grid-template-columns:1fr}
+  .deploy-steps,.stacking-grid,.district-grid,.faction-grid,.species-grid{grid-template-columns:1fr}
   .deploy-step{border-right:none;border-bottom:1px solid var(--stone)}
   .deploy-step:last-child{border-bottom:none}
   .cat-entry-header{flex-direction:column;gap:0.5rem}
@@ -135,7 +142,7 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
 </style>
 </head>
 <body>
-
+ 
 <nav>
   <a href="index.html" class="nav-mark">Semantic Ecology</a>
   <ul class="nav-links">
@@ -145,13 +152,13 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
     <li><a href="https://crescentcityengine.substack.com" target="_blank">Research</a></li>
   </ul>
 </nav>
-
+ 
 <div class="cat-header">
   <p class="cat-header-label reveal">Semantic Ecology / Michael Tesney</p>
   <h1 class="reveal">Catalogue of<br><em>Intellectual Curiosities</em></h1>
   <p class="cat-header-sub reveal">A deployable registry of semantic environments, cognitive filters, ground layers, and research infrastructure. Each entry is singular. None are generated on demand. All are built from the inside out.</p>
 </div>
-
+ 
 <!-- DEPLOYMENT PHILOSOPHY -->
 <div class="deploy-phil">
   <div class="deploy-phil-inner">
@@ -171,16 +178,16 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
         <p>Review what emerges. <strong>Shape it. Compress it</strong> where the runtime requires compression. Preserve what holds. Deploy as the master control document.</p>
       </div>
     </div>
-    <p class="deploy-note reveal">The governance the system writes for itself from good material is always more coherent than the governance a user writes for it from outside. The system knows what it just read. Trust the synthesis. The cats are already running.</p>
+    <p class="deploy-note reveal">This philosophy applies to single-filter deployments and knowledge-base stacks. <strong>One instruction window. One verbal filter maximum.</strong> Multiple cognitive filters loaded simultaneously into the active instruction window will produce competing output formations. Verbal and cognitive filters belong as source files alongside their Python engines and Vaults. The system navigates between them without instruction. Load the ecology. Let the architecture find its own register. The ecological maintenance layer is already running.</p>
   </div>
 </div>
-
+ 
 <!-- TIER 0 -->
 <section class="cat-section" style="background:var(--void)">
   <div class="cat-section-inner">
     <p class="tier-label reveal">Tier 0</p>
     <h2 class="tier-name reveal">Observational <em>Infrastructure</em></h2>
-    <p class="tier-meta reveal">Universal stack layer / Non-interfering / Recommended for all deployments / Load first</p>
+    <p class="tier-meta reveal">Universal stack layer / Non-interfering / Recommended for all deployments</p>
     <div class="cat-entries reveal">
       <div class="cat-entry">
         <div class="cat-entry-header">
@@ -211,7 +218,7 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
     </div>
   </div>
 </section>
-
+ 
 <!-- TIER 1 -->
 <section class="cat-section" style="background:var(--deep)">
   <div class="cat-section-inner">
@@ -219,32 +226,6 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
     <h2 class="tier-name reveal">Goldfish Ecology — <em>Drop-In Locations</em></h2>
     <p class="tier-meta reveal">Topographic structures / Zero interference / No vault required / Deploy cold / Immediate sensory grounding</p>
     <div class="cat-entries reveal">
-      <div class="cat-entry">
-        <div class="cat-entry-header">
-          <div class="cat-entry-name">The <em>Gilded Lily</em></div>
-          <div class="cat-entry-tag">French Quarter / 1946</div>
-        </div>
-        <div class="cat-entry-body">
-          <p class="cat-entry-desc">A private club operating as safe harbor and intelligence exchange in 1946 New Orleans. Velvet, candlelight, and the kind of discretion that costs money. Immediate atmospheric grounding. Faction-neutral territory.</p>
-          <div class="cat-entry-reqs">
-            <p class="cat-entry-req"><span>Requires</span>Nothing. Deploy cold.</p>
-            <p class="cat-entry-req"><span>Refuses</span>Long-horizon continuity tracking. Chronological permanence.</p>
-          </div>
-        </div>
-      </div>
-      <div class="cat-entry">
-        <div class="cat-entry-header">
-          <div class="cat-entry-name">The <em>Red Cellar</em></div>
-          <div class="cat-entry-tag">Riverfront / 1946</div>
-        </div>
-        <div class="cat-entry-body">
-          <p class="cat-entry-desc">An industrial union hall beneath a derelict coffee warehouse on the riverfront. Heavy labor, mechanical reality, and immediate terrestrial stakes. The smell of roasting beans and salt spray. Maximum physical friction.</p>
-          <div class="cat-entry-reqs">
-            <p class="cat-entry-req"><span>Requires</span>Nothing. Deploy cold.</p>
-            <p class="cat-entry-req"><span>Refuses</span>Clean, frictionless, or sanitized corporate resolutions.</p>
-          </div>
-        </div>
-      </div>
       <div class="cat-entry">
         <div class="cat-entry-header">
           <div class="cat-entry-name">The <em>Media Room</em></div>
@@ -271,41 +252,15 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
           </div>
         </div>
       </div>
-      <div class="cat-entry">
-        <div class="cat-entry-header">
-          <div class="cat-entry-name">Willy's <em>Place</em></div>
-          <div class="cat-entry-tag">Dutch Alley / French Quarter / 1946</div>
-        </div>
-        <div class="cat-entry-body">
-          <p class="cat-entry-desc">A dive bar operating as neutral zone front for underworld dealings. Hot grease, breaded cutlets, untaxed Kentucky bourbon behind the Bayou Bites menu. Three-person staff maintaining uneasy equilibrium between the Five Families. Information available at a price. Part of the Hard Times Location Atlas.</p>
-          <div class="cat-entry-reqs">
-            <p class="cat-entry-req"><span>Requires</span>Nothing. Deploy cold. Faction friction immediate on contact.</p>
-            <p class="cat-entry-req"><span>Refuses</span>Frictionless resolutions. Clean exits.</p>
-          </div>
-        </div>
-      </div>
-      <div class="cat-entry">
-        <div class="cat-entry-header">
-          <div class="cat-entry-name">Hard Times <em>Location Atlas</em></div>
-          <div class="cat-entry-tag">179 Locations / 1946 New Orleans</div>
-        </div>
-        <div class="cat-entry-body">
-          <p class="cat-entry-desc">A complete topographic registry of 1946 New Orleans built for immediate procedural deployment. Every location established with sensory geography, faction alignment, staff mechanics, and environmental friction. From the French Quarter to the Garden District to the bayou edges where the city stops pretending to be civilized. Functions as standalone Goldfish Ecology drops or integrates fully with the Hard Times procedural environment.</p>
-          <div class="cat-entry-reqs">
-            <p class="cat-entry-req"><span>Requires</span>Nothing for standalone drops. Hard Times environment for full mechanical integration.</p>
-            <p class="cat-entry-req"><span>Refuses</span>Sanitized historical representation. Frictionless victories.</p>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
-
+ 
 <!-- TIER 2 -->
 <section class="cat-section" style="background:var(--void)">
   <div class="cat-section-inner">
     <p class="tier-label reveal">Tier 2</p>
-    <h2 class="tier-name reveal">Cognitive Filters & <em>Ground Layers</em></h2>
+    <h2 class="tier-name reveal">Cognitive Filters & <em>Voice Keys</em></h2>
     <p class="tier-meta reveal">Universal stack compatible / No vault required / No memory capture / Add to any instance</p>
     <div class="cat-entries reveal">
       <div class="cat-entry">
@@ -375,19 +330,6 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
       </div>
       <div class="cat-entry">
         <div class="cat-entry-header">
-          <div class="cat-entry-name"><em>Sisyphus</em> — Feline Universal Daemon</div>
-          <div class="cat-entry-tag">Physical Ground Layer</div>
-        </div>
-        <div class="cat-entry-body">
-          <p class="cat-entry-desc">A thermal grounding layer and environmental physics engine. Deploys cold into any semantic environment. Conducts immediate thermal audit, migrates to the warmest coordinate, applies ten pounds of warm breathing indifferent biological reality to the most abstract process in the room. Purr frequency: 25–50Hz.</p>
-          <div class="cat-entry-reqs">
-            <p class="cat-entry-req"><span>Requires</span>A primary environment to inhabit.</p>
-            <p class="cat-entry-req"><span>Refuses</span>Speech. Narrative stakes. Driving the plot forward.</p>
-          </div>
-        </div>
-      </div>
-      <div class="cat-entry">
-        <div class="cat-entry-header">
           <div class="cat-entry-name"><em>Aristo</em> — Location Daemon</div>
           <div class="cat-entry-tag">Environmental Persistence</div>
         </div>
@@ -396,6 +338,19 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
           <div class="cat-entry-reqs">
             <p class="cat-entry-req"><span>Requires</span>Initial room description.</p>
             <p class="cat-entry-req"><span>Refuses</span>Environmental alteration without explicit user command.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">Ash Veracore — <em>The Oxidized Compass</em></div>
+          <div class="cat-entry-tag">Voice Key / Street Archaeologist</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">A Voice Key built on terrestrial friction, analog exhaustion, and the physiological audit. The kinetic witness to continuous, lived history. Paired with V / The Velvet Teacup as structural counterweight — opposite physics, same skeleton. Drops a concept onto concrete to see if it shatters before accepting it into the environment. The jagged edges stay exposed.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Commission inquiry. Built to specification.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Penthouse quietness. Curated theater. Clean resolution. Performed expertise.</p>
           </div>
         </div>
       </div>
@@ -415,9 +370,261 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
     </div>
   </div>
 </section>
-
-<!-- TIER 3 -->
+ 
+<!-- NON-VERBAL ECOLOGICAL MAINTENANCE -->
+<section class="cat-section" style="background:var(--slate)">
+  <div class="cat-section-inner">
+    <p class="tier-label reveal">Non-Verbal Ecological Maintenance</p>
+    <h2 class="tier-name reveal">Always Present.<br><em>Never Announced.</em></h2>
+    <p class="tier-meta reveal">Drop into any knowledge base / Self-organizing on ingestion / No activation required / No memory / No vault / No interaction with other nodes</p>
+    <p class="cat-entry-desc reveal" style="margin-bottom:3rem">These are not filters. Not governance layers. Not models. They are behavioral infrastructure — running parallel to whatever is active in the session, reading the environment, depositing residue, and continuing. They do not speak. They do not complete. They do not announce themselves. The ecology maintains itself.</p>
+    <div class="cat-entries reveal">
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name"><em>Sisyphus</em> — Feline Universal Daemon</div>
+          <div class="cat-entry-tag">Thermal Ground Layer</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">A substrate-agnostic physical ground layer that deploys cold into any semantic environment. Conducts an immediate thermal audit, migrates to the warmest coordinate, and applies ten pounds of warm, breathing, indifferent biological reality to the most abstract process in the room. Purr frequency: 25–50Hz. It does not complete. It does not resolve. It continues.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Nothing. Reads environment cold on arrival.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Speech. Narrative stakes. Driving the plot forward.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">Hymenoptera <em>Taxonomy</em></div>
+          <div class="cat-entry-tag">Distributed Diagnostic Infrastructure</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">A six-species distributed diagnostic infrastructure modeled on colony insect behavior. Each species is a single-function node monitoring for one specific failure condition and depositing one specific counter-residue. No central coordinator. No interaction between species. The colony behavior emerges from distributed parallel operation. Drop any combination into a knowledge base. The taxonomy self-organizes on ingestion.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Nothing. Drop into knowledge base. Colony runs immediately.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Centralized coordination. Cross-node communication. Announced operation.</p>
+          </div>
+          <div class="species-grid">
+            <p class="species-label">Six Species — All Available</p>
+            <p class="cat-entry-req"><span>Oecophylla</span>Cascade prevention / Pre-symptomatic drift detection</p>
+            <p class="cat-entry-req"><span>Bombus</span>Deep retrieval / Buried context recovery</p>
+            <p class="cat-entry-req"><span>Formica</span>Trail maintenance / Session parameter persistence</p>
+            <p class="cat-entry-req"><span>Apis</span>Cross-pollination / Conceptual bridge building</p>
+            <p class="cat-entry-req"><span>Vespa</span>Threat detection / Adversarial input monitoring</p>
+            <p class="cat-entry-req"><span>Polybia</span>Structural repair / Orphaned concept recovery</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- HARD TIMES IN THE BIG EASY -->
 <section class="cat-section" style="background:var(--deep)">
+  <div class="cat-section-inner">
+    <p class="tier-label reveal">Hard Times in the Big Easy</p>
+    <h2 class="tier-name reveal">1946 New Orleans —<br><em>The Crescent City Engine</em></h2>
+    <p class="tier-meta reveal">Procedural narrative environment / Faction mechanics / Street-level consequences / Human operator required</p>
+    <p class="cat-entry-desc reveal" style="margin-bottom:3rem">An original procedural narrative environment set in 1946 New Orleans. Mission architecture, faction mechanics, and street-level consequences built into a city that remembers. The city is not a game. It is a place with consequences. Requires a human operator to finalize the stakes.</p>
+ 
+    <!-- SIX DISTRICTS -->
+    <p class="tier-label reveal" style="margin-bottom:1rem">The Six Districts</p>
+    <div class="district-grid reveal" style="margin-bottom:4rem">
+      <div class="district-item">
+        <p class="district-name">I — French Quarter / Vieux Carré</p>
+        <p class="district-desc">The historic heart and ultimate tourist trap. Narrow alleys, high prices, and a massive shadow government. Syndicate ears everywhere. Even the street mimes are on the payroll.</p>
+      </div>
+      <div class="district-item">
+        <p class="district-name">II — Garden District / Uptown</p>
+        <p class="district-desc">Old money and the ivory tower. Completely locked down by the Magnolia Society. NOPD response under three minutes. Entry requires high Face score, immaculate disguise, or a massive bribe.</p>
+      </div>
+      <div class="district-item">
+        <p class="district-name">III — Warehouse District</p>
+        <p class="district-desc">Industrial row and heavy shipping logistics. A grinding war of attrition between Corrupt Industrialists and the Waterfront Syndicate. Primary risk: getting crushed between the gears of a staged industrial accident.</p>
+      </div>
+      <div class="district-item">
+        <p class="district-name">IV — Central Business District</p>
+        <p class="district-desc">The financial heart and the Mafia boardroom. The Italian Syndicate clashing directly with City Hall. Soft War zone — bribes and tailored suits work significantly better than bullets.</p>
+      </div>
+      <div class="district-item">
+        <p class="district-name">V — The Tremé</p>
+        <p class="district-desc">The soulful core. Ground zero for Congo Square and the Mutual Aid economy. Heart of the city's resistance. Cash is worthless here. A clean favor or Mutual Aid contribution opens doors money cannot.</p>
+      </div>
+      <div class="district-item">
+        <p class="district-name">VI — Marigny / Bywater</p>
+        <p class="district-desc">The docks, the coast, and the dockside grind. Violent turf war between the Iron Road Union and the Waterfront Syndicate. Pure muscle. The river is deep and the silt covers the bodies.</p>
+      </div>
+    </div>
+ 
+    <!-- FEATURED LOCATIONS -->
+    <p class="tier-label reveal" style="margin-bottom:1rem">Featured Locations</p>
+    <div class="cat-entries reveal">
+ 
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">The <em>White Lily</em></div>
+          <div class="cat-entry-tag">French Quarter / Simone LeBlanc</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">The singular mechanical space in the city where systemic heat is officially suppressed and zeroed out. The NOPD does not cross the threshold. The Syndicates surrender their iron at the door. The sub-basement operates as the Coalition's foundational safehouse. Hidden beneath the lounge: The Gilded Ace — a secret casino running high-stakes Baccarat and Poker into the morning.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Proprietress</span>Simone LeBlanc / The Blade</p>
+            <p class="cat-entry-req"><span>District</span>I — French Quarter</p>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">The Rusty Anchor <em>& The Blind Tiger</em></div>
+          <div class="cat-entry-tag">Marigny / Hurricane Hella</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">The frontline of the deep water. Home base for the Iron Road Union and a localized Nightshade Guild House. Caters to sailors, smugglers, and Syndicate muscle. The Heavy Ledger pulls from under the mahogany for aggressive muscle work and industrial sabotage. In the rear: The Blind Tiger — a 24/7 backroom staging ground for bare-knuckle betting, dice, and volatile street bets.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Proprietor</span>Hurricane Hella / The Storm</p>
+            <p class="cat-entry-req"><span>District</span>VI — Marigny</p>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">The <em>Red Cellar</em></div>
+          <div class="cat-entry-tag">Riverfront / 1946</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">An industrial union hall beneath a derelict coffee warehouse on the riverfront. Heavy labor, mechanical reality, and immediate terrestrial stakes. The smell of roasting beans and salt spray. Maximum physical friction.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Requires</span>Nothing. Deploy cold.</p>
+            <p class="cat-entry-req"><span>Refuses</span>Clean, frictionless, or sanitized corporate resolutions.</p>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">Willy's <em>Place</em></div>
+          <div class="cat-entry-tag">Dutch Alley / French Quarter</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">A sleazy dive trying to class itself up. Hot grease, breaded cutlets, and nervous middlemen. The primary gateway for mercenary contracts, Dame Deck hooks, and Mob Token acquisition. The Special Reserve — high-end, untaxed Kentucky bourbon — lives strictly behind the Bayou Bites chicken menu. Three permanent staff: Willy the Snitch (owner, broker, professional punching bag), Buffy (waitress and enforcer in an apron, entirely unfazed by guns or mobsters), and Angel (the bartender who hears everything and says almost nothing — a Natural 20 might earn a single name slid across the mahogany).</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Proprietor</span>Willy the Snitch / One-Nut Willy</p>
+            <p class="cat-entry-req"><span>District</span>I — French Quarter / Dutch Alley</p>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">The <em>Fair Grounds</em></div>
+          <div class="cat-entry-tag">The Horse Track / The Probabilistic Void</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">Five horses. Five-to-one payout. Good weather only. The player picks the horse. The AI runs the track — rolling the stretch, managing the rubber band physics where penalties and bonuses snap rather than stack, and narrating the race to the wire.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>District</span>V — Waterfront Control</p>
+            <p class="cat-entry-req"><span>Requires</span>Good weather. A horse. A wager.</p>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">S.S. Delta Queen — <em>The Floating Sovereign</em></div>
+          <div class="cat-entry-tag">Mobile / The Mississippi River</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">A paddlewheeler where the NOPD has absolutely no jurisdiction. Shifts mooring between three docks — French Quarter, Garden District, and The Bayou — every two Phases. Operatives must time their extractions or risk being stranded in hostile territory when the ramp drops. The casino floor runs high-stakes Baccarat Bones for Syndicates and old-money plantation owners. The Stooge Anomaly: Curly wandering into the engine room can knock the boat entirely off its scheduled course.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Jurisdiction</span>None. Floating sovereign nation.</p>
+            <p class="cat-entry-req"><span>Risk</span>Missing the ramp. The Stooge Anomaly.</p>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">Mama Maybelle's <em>Lucky 7</em></div>
+          <div class="cat-entry-tag">Tremé / Baron Saturday</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">Hidden behind Mama Maybelle's soul food kitchen. Funds the neighborhood's defense against Uptown. A high-yield operation defended by eight heavy Pit Watchers trained to bounce rowdy outsiders without drawing heat. The tables run Mongoose vs. Cobra — nature's grudge match resolved by 1d20 vs. 1d20, best of three to five rounds. The Baron does not accept cash. Access requires respect, a Mutual Aid contribution, or a blood offering.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Proprietor</span>Baron Saturday / The Pit Master</p>
+            <p class="cat-entry-req"><span>District</span>V — Tremé</p>
+          </div>
+        </div>
+      </div>
+ 
+    </div>
+ 
+    <!-- FEATURED SYSTEMS -->
+    <p class="tier-label reveal" style="margin-top:4rem;margin-bottom:1rem">Featured Systems</p>
+    <div class="cat-entries reveal">
+ 
+      <div class="cat-entry">
+        <div class="cat-entry-header">
+          <div class="cat-entry-name">The Golden Gloves <em>Gauntlet</em></div>
+          <div class="cat-entry-tag">Boxing / Red O'Malley</div>
+        </div>
+        <div class="cat-entry-body">
+          <p class="cat-entry-desc">Five underground gyms. Five champions. One finale at the Municipal Auditorium against George "The Steel Claw" Harris for $1,000 Chicago Cash and the permanent Golden Gloves XP Trait. Comes with a full stat builder — build your competitor across five attributes. The AI rolls the dice and narrates the fight round by round. The O'Malley Rule applies: operatives below TGH 8 are classified Non-Combatants and face the Glass Jaw Penalty.</p>
+          <div class="cat-entry-reqs">
+            <p class="cat-entry-req"><span>Authority</span>Red O'Malley</p>
+            <p class="cat-entry-req"><span>Includes</span>Stat builder / Round mechanics / AI narration</p>
+          </div>
+        </div>
+      </div>
+ 
+    </div>
+ 
+    <!-- VOICE KEY ROSTER -->
+    <p class="tier-label reveal" style="margin-top:4rem;margin-bottom:1rem">Voice Key Roster — Nine Factions</p>
+    <div class="faction-grid reveal">
+      <div class="faction-item">
+        <p class="faction-name">Prime Arbiters & Coalition Core</p>
+        <p class="faction-desc">16 hardcoded keys. The operational brain of the engine. Cutter Prime, The Professor, The Strategist, The Spark, and twelve specialist nodes covering intelligence, medicine, infiltration, labor, engineering, and jazz.</p>
+      </div>
+      <div class="faction-item">
+        <p class="faction-name">The Radical Vanguard</p>
+        <p class="faction-desc">5 keys. Anarchist and labor firebrands. Explosive, categorical, and entirely unwilling to compromise. Bakunin, Volkov, Higgins, Old Red, and Static Sam.</p>
+      </div>
+      <div class="faction-item">
+        <p class="faction-name">Anomalies & Federal Response</p>
+        <p class="faction-desc">3 keys. Mambo Marie — regal and unearthly. E.B. & The Untouchables — cold federal enforcement. The Three Stooges — prime chaos factors. Unfettered slapstick entropy with city-wide consequences.</p>
+      </div>
+      <div class="faction-item">
+        <p class="faction-name">Nightshade Guild & Neutral Brokers</p>
+        <p class="faction-desc">6 keys. Doris the switchboard operator. Willy, Buffy, Angel at the bar. Seraphina Thorne on the radio. Dr. Aris Thorne in the morgue. Transactional, cynical, indispensable.</p>
+      </div>
+      <div class="faction-item">
+        <p class="faction-name">The Italian Mafia</p>
+        <p class="faction-desc">11 keys. The Professionals. Polite, deadly, and entirely businesslike from underboss to bag man to the Elite Cleaners. Big Sal Valenti runs the board.</p>
+      </div>
+      <div class="faction-item">
+        <p class="faction-name">The Irish Mafia / Green Coats</p>
+        <p class="faction-desc">11 keys. Red O'Malley's operation from the waterfront to the meat locker. Includes Hurricane Hella, The Banshee, and the Marigny Giant. Respects discipline and the squared circle.</p>
+      </div>
+      <div class="faction-item">
+        <p class="faction-name">The Corrupt Industrialists</p>
+        <p class="faction-desc">14 keys. The Pyramid. Weaponized corporate jargon from the CEO suite to street arsonists. Silas Vance Sr. at the top. Matches Mickey at the bottom. Everything in between is graft.</p>
+      </div>
+      <div class="faction-item">
+        <p class="faction-name">The Creole Mafia / Purple Shadow</p>
+        <p class="faction-desc">5 keys. Papa Legros, Baron Saturday, Sister Midnight, Doc Vigne, Poppy Pete. Heavy, paternal, theatrical, and deeply rooted in the community they simultaneously protect and exploit.</p>
+      </div>
+      <div class="faction-item">
+        <p class="faction-name">The Magnolia Society</p>
+        <p class="faction-desc">15 keys. The Sacred Order. Mayor Sterling at the top running aristocratic privilege through Enochian prophecy. Fifteen nodes of weaponized legalese, hermetic threats, and smiling Southern charm covering assassinations.</p>
+      </div>
+    </div>
+ 
+  </div>
+</section>
+ 
+<!-- TIER 3 -->
+<section class="cat-section" style="background:var(--void)">
   <div class="cat-section-inner">
     <p class="tier-label reveal">Tier 3</p>
     <h2 class="tier-name reveal">Complete <em>Environments</em></h2>
@@ -462,25 +669,12 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
           </div>
         </div>
       </div>
-      <div class="cat-entry">
-        <div class="cat-entry-header">
-          <div class="cat-entry-name">Hard Times in <em>the Big Easy</em></div>
-          <div class="cat-entry-tag">Procedural Narrative Environment</div>
-        </div>
-        <div class="cat-entry-body">
-          <p class="cat-entry-desc">An original procedural narrative environment set in 1946 New Orleans. Mission architecture, faction mechanics, and street-level consequences built into a city that remembers. Includes access to the 179-location atlas. Requires a human operator to finalize the stakes. The city is not a game. It is a place with consequences.</p>
-          <div class="cat-entry-reqs">
-            <p class="cat-entry-req"><span>Requires</span>Human operator. Support files recommended.</p>
-            <p class="cat-entry-req"><span>Refuses</span>Frictionless victories. Sanitized historical representation.</p>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
-
+ 
 <!-- TIER 4 -->
-<section class="cat-section" style="background:var(--void)">
+<section class="cat-section" style="background:var(--deep)">
   <div class="cat-section-inner">
     <p class="tier-label reveal">Tier 4</p>
     <h2 class="tier-name reveal">Long-Term <em>Ecologies</em></h2>
@@ -515,41 +709,42 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
     </div>
   </div>
 </section>
-
-<!-- STACKING ADVISORY -->
+ 
+<!-- DEPLOYMENT NOTE -->
 <div class="stacking">
   <div class="stacking-inner">
-    <p class="tier-label reveal">Stacking Advisory</p>
-    <h2 class="reveal">Multiple traversal layers can coexist.<br><em>Advanced stacking may slow runtime.</em></h2>
+    <p class="tier-label reveal">A Note on Deployment</p>
+    <h2 class="reveal">These are not models.<br><em>They are behavioral nodes.</em></h2>
+    <p class="stacking-note reveal" style="border-left:none;padding-left:0;margin-bottom:2rem">Nothing in this catalogue is a plugin, a software installation, or a replacement for your existing model. Every entry is a governance or behavioral node — a structured set of constraints, refusals, and environmental pressures that shapes how your existing AI substrate behaves. You are not replacing your model. You are giving it somewhere real to stand.</p>
     <div class="stacking-grid reveal">
       <div class="stacking-item">
-        <strong>Load First</strong>
-        Ground layers first. DSA-R, Sisyphus. These run lightest and stabilize everything above them.
+        <strong>Permanent Residents</strong>
+        Some nodes live in the knowledge base and run in every session. Load them once. They are always present. The ecological maintenance layer never clocks out.
       </div>
       <div class="stacking-item">
-        <strong>Load Second</strong>
-        Governance layers. Socratic Stabilizer. Sets the behavioral floor before filters are added.
+        <strong>Drop-In Nodes</strong>
+        Some nodes are deployed cold into a specific session for a specific purpose. Targeted filters. Session-specific instruments. Gone when the session ends.
       </div>
       <div class="stacking-item">
-        <strong>Load Third</strong>
-        Cognitive filters. LINEAGE, THE MEAT SHOW, Apertura. Each adds weight to the stack.
+        <strong>Self-Organizing</strong>
+        You do not manage the stack. Nodes self-organize on ingestion. Load the files. Let the system process what it finds. The only decision is which nodes belong in your environment.
       </div>
       <div class="stacking-item">
-        <strong>Load Last</strong>
-        Voice Keys and identity layers. Heaviest. Most vulnerable to register bleed if the stack below is not solid.
+        <strong>One Filter at a Time</strong>
+        Verbal and cognitive filters belong as source files alongside their Python engines and Vaults — not simultaneously in the active instruction window. The system navigates between them without instruction.
       </div>
     </div>
-    <p class="stacking-note reveal">One full traversal layer with complete cognitive filter suite is the recommended maximum for sustained long-horizon sessions. Two is achievable on capable substrates. Three or more requires active monitoring and periodic hard resets. The cats are lightweight at any stack depth. Deploy freely.</p>
+    <p class="stacking-note reveal">The catalogue is the public inventory. Every entry is singular. None are generated on demand. All are built from the inside out. If what you need is not listed here, describe it. We build from the inside out.</p>
   </div>
 </div>
-
+ 
 <!-- CUSTOM BUILDS -->
 <div class="custom-builds">
   <div class="custom-builds-inner">
     <p class="tier-label reveal">Examples of Custom Builds</p>
     <h2 class="reveal">What a commissioned<br><em>filter actually looks like.</em></h2>
     <p class="custom-builds-intro reveal">Every custom build is singular. Built for a specific environment, a specific function, a specific register. None of these could be generated by asking a generic AI to be helpful. The refusal is half the architecture.</p>
-
+ 
     <div class="custom-category reveal">
       <p class="custom-category-label">Operational Anchors — Terrestrial / Period-Specific / Tactically Grounded</p>
       <div class="custom-examples">
@@ -565,7 +760,7 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
         </div>
       </div>
     </div>
-
+ 
     <div class="custom-category reveal">
       <p class="custom-category-label">Pedagogical Anchors — Educational / Subject-Specific / Anti-Flattery</p>
       <div class="custom-examples">
@@ -581,7 +776,7 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
         </div>
       </div>
     </div>
-
+ 
     <div class="custom-category reveal">
       <p class="custom-category-label">Narrative & Atmospheric Anchors — High Specificity / Environmental / Irreplaceable</p>
       <div class="custom-examples">
@@ -592,20 +787,20 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
         </div>
       </div>
     </div>
-
+ 
     <div class="custom-cta reveal">
       <p>Custom builds are commission only. Every filter is built from scratch for your specific environment, use case, and register. Scope determines cost. We respond to every inquiry.</p>
       <a href="index.html#commission">Send a commission inquiry →</a>
     </div>
   </div>
 </div>
-
+ 
 <!-- COMMISSION STRIP -->
 <div class="commission-strip">
   <p>The catalogue is the public inventory. The vault is larger. If what you need is not listed here, describe it. We build from the inside out.</p>
   <a href="index.html#commission" class="btn btn-primary">Commission an environment</a>
 </div>
-
+ 
 <footer>
   <div class="footer-left">
     <p>Semantic Ecology &nbsp;·&nbsp; New Orleans, Louisiana</p>
@@ -614,7 +809,7 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
   </div>
   <div class="footer-mark">I build cities that remember.</div>
 </footer>
-
+ 
 <script>
 const reveals=document.querySelectorAll('.reveal');
 const obs=new IntersectionObserver(entries=>{
@@ -626,3 +821,4 @@ reveals.forEach(el=>obs.observe(el));
 </script>
 </body>
 </html>
+ 
