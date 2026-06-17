@@ -8,53 +8,51 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --pit:      #0d0a06;
-    --table:    #1a1208;
-    --surface:  #221a0e;
-    --gold:     #c8a84b;
-    --gold-dim: #7a6228;
-    --blood:    #8b1a1a;
-    --blood-dim:#4a0e0e;
-    --mongoose: #2d5a1e;
+    --pit:             #0d0a06;
+    --table:           #1a1208;
+    --surface:         #221a0e;
+    --gold:            #c8a84b;
+    --gold-dim:        #7a6228;
+    --blood:           #8b1a1a;
+    --blood-dim:       #4a0e0e;
+    --mongoose:        #2d5a1e;
     --mongoose-bright: #4a8c30;
-    --tobacco:  #6b5a3a;
-    --paper:    #d4c4a0;
-    --mist:     #9a8a6a;
-    --void:     #c8a84b;
+    --tobacco:         #6b5a3a;
+    --paper:           #d4c4a0;
+    --mist:            #9a8a6a;
   }
 
-  html { background: var(--pit); }
-
-  body {
-    min-height: 100vh;
+  html, body {
     background: var(--pit);
     color: var(--paper);
-    font-family: 'Georgia', serif;
+    font-family: Georgia, serif;
+    min-height: 100vh;
+  }
+
+  body {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 0 1rem 4rem;
   }
 
-  /* ── HEADER ── */
+  .wrap { width: 100%; max-width: 640px; }
+
+  /* HEADER */
   .header {
-    width: 100%;
-    max-width: 680px;
-    padding: 2.5rem 0 1.5rem;
     text-align: center;
+    padding: 2.5rem 0 1.5rem;
     border-bottom: 1px solid #2a1f0e;
     margin-bottom: 1.75rem;
   }
-
   .header-locale {
-    font-family: 'Courier New', monospace;
-    font-size: 0.55rem;
+    font: 0.55rem/1 'Courier New', monospace;
     letter-spacing: 0.4em;
     text-transform: uppercase;
     color: var(--tobacco);
     margin-bottom: 1rem;
+    display: block;
   }
-
   .header-title {
     font-size: clamp(2.2rem, 6vw, 3.4rem);
     font-weight: normal;
@@ -64,81 +62,60 @@
     line-height: 1;
     margin-bottom: 0.4rem;
   }
-
-  .header-subtitle {
-    font-family: 'Courier New', monospace;
-    font-size: 0.65rem;
+  .header-sub {
+    font: 0.65rem/1 'Courier New', monospace;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--tobacco);
   }
 
-  /* ── INTRO ── */
+  /* INTRO */
   .intro {
-    width: 100%;
-    max-width: 680px;
     margin-bottom: 2rem;
     padding: 1.25rem 1.5rem;
     background: var(--table);
     border-left: 2px solid var(--gold-dim);
   }
-
   .intro p {
     font-size: 0.82rem;
     line-height: 1.8;
     color: var(--mist);
     font-style: italic;
   }
-
-  .intro .attribution {
-    font-family: 'Courier New', monospace;
-    font-size: 0.6rem;
+  .intro .attr {
+    font: 0.6rem/1 'Courier New', monospace;
     letter-spacing: 0.2em;
     color: var(--gold-dim);
     margin-top: 0.75rem;
-    font-style: normal;
+    display: block;
   }
 
-  /* ── BANKROLL ── */
-  .bankroll-bar {
-    width: 100%;
-    max-width: 680px;
+  /* BANKROLL */
+  .bankroll {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     padding: 0.75rem 1.25rem;
     background: var(--surface);
     border: 1px solid #2a1f0e;
     margin-bottom: 2rem;
   }
-
   .bankroll-label {
-    font-family: 'Courier New', monospace;
-    font-size: 0.6rem;
+    font: 0.6rem/1 'Courier New', monospace;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--tobacco);
   }
-
   .bankroll-amount {
-    font-family: 'Courier New', monospace;
-    font-size: 1.4rem;
+    font: 1.4rem/1 'Courier New', monospace;
     color: var(--gold);
     letter-spacing: 0.05em;
   }
-
   .bankroll-amount.low { color: var(--blood); }
 
-  /* ── BETTING INTERFACE ── */
-  .bet-section {
-    width: 100%;
-    max-width: 680px;
-    margin-bottom: 2rem;
-  }
-
-  .section-label {
-    font-family: 'Courier New', monospace;
-    font-size: 0.55rem;
+  /* SECTION LABEL */
+  .sec-label {
+    font: 0.55rem/1 'Courier New', monospace;
     letter-spacing: 0.35em;
     text-transform: uppercase;
     color: var(--tobacco);
@@ -146,195 +123,125 @@
     display: block;
   }
 
-  /* Side picker */
+  /* SIDE PICKER */
   .side-picker {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
-    gap: 0;
-    margin-bottom: 1.25rem;
     border: 1px solid #2a1f0e;
+    margin-bottom: 1.25rem;
   }
-
   .side-btn {
     padding: 1.5rem 1rem;
-    background: var(--table);
     border: none;
     cursor: pointer;
-    transition: all 0.2s;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
+    transition: background 0.15s;
   }
-
-  .side-btn:hover { opacity: 0.85; }
-
-  .side-btn.mongoose { background: #0e1a0a; }
-  .side-btn.cobra    { background: #1a0a0a; }
-
-  .side-btn.selected.mongoose { background: var(--mongoose); }
-  .side-btn.selected.cobra    { background: var(--blood-dim); }
-
-  .side-animal {
-    font-size: 2rem;
-    line-height: 1;
-  }
-
+  .side-btn.mongoose-btn { background: #0e1a0a; }
+  .side-btn.cobra-btn    { background: #1a0a0a; }
+  .side-btn.mongoose-btn.selected { background: var(--mongoose); }
+  .side-btn.cobra-btn.selected    { background: var(--blood-dim); }
+  .side-animal { font-size: 2rem; line-height: 1; }
   .side-name {
-    font-family: 'Courier New', monospace;
-    font-size: 0.7rem;
+    font: bold 0.7rem/1 'Courier New', monospace;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    font-weight: bold;
   }
-
-  .side-btn.mongoose .side-name { color: var(--mongoose-bright); }
-  .side-btn.cobra    .side-name { color: var(--blood); }
-  .side-btn.selected .side-name { color: var(--paper); }
-
-  .side-desc {
-    font-size: 0.7rem;
-    color: var(--tobacco);
-    font-style: italic;
-    text-align: center;
-  }
-
-  .side-divider {
+  .side-btn.mongoose-btn .side-name { color: var(--mongoose-bright); }
+  .side-btn.cobra-btn    .side-name { color: var(--blood); }
+  .side-btn.selected .side-name     { color: var(--paper); }
+  .side-desc { font-size: 0.7rem; color: var(--tobacco); font-style: italic; text-align: center; }
+  .side-vs {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0 0.75rem;
     background: var(--pit);
-    font-family: 'Courier New', monospace;
-    font-size: 0.7rem;
+    font: 0.7rem/1 'Courier New', monospace;
     color: var(--gold-dim);
-    letter-spacing: 0.1em;
   }
 
-  /* Rounds + wager row */
+  /* BET CONTROLS */
   .bet-controls {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0.75rem;
     margin-bottom: 1.25rem;
   }
-
-  .control-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-
-  .control-group label {
-    font-family: 'Courier New', monospace;
-    font-size: 0.55rem;
+  .ctrl label {
+    font: 0.55rem/1 'Courier New', monospace;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--tobacco);
+    display: block;
+    margin-bottom: 0.4rem;
   }
-
-  .control-group select,
-  .control-group input {
+  .ctrl select, .ctrl input {
+    width: 100%;
     background: var(--table);
     border: 1px solid #3a2a14;
     color: var(--paper);
-    font-family: 'Courier New', monospace;
-    font-size: 0.9rem;
+    font: 0.9rem/1 'Courier New', monospace;
     padding: 0.6rem 0.75rem;
-    width: 100%;
-    appearance: none;
     -webkit-appearance: none;
-    cursor: pointer;
+    appearance: none;
   }
-
-  .control-group select:focus,
-  .control-group input:focus {
+  .ctrl select:focus, .ctrl input:focus {
     outline: none;
     border-color: var(--gold-dim);
   }
 
-  /* Folk Hero toggle */
-  .folk-hero-row {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.6rem 0.75rem;
-    background: var(--table);
-    border: 1px solid #2a1f0e;
-    cursor: pointer;
-    margin-bottom: 1.25rem;
-    user-select: none;
+  /* ERROR */
+  .err {
+    font: 0.65rem/1 'Courier New', monospace;
+    color: var(--blood);
+    padding: 0.4rem 0;
+    display: none;
+    margin-bottom: 0.5rem;
   }
+  .err.show { display: block; }
 
-  .folk-hero-row input { display: none; }
-
-  .folk-hero-box {
-    width: 14px;
-    height: 14px;
-    border: 1px solid var(--gold-dim);
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Courier New', monospace;
-    font-size: 0.7rem;
-    color: var(--gold);
-  }
-
-  .folk-hero-text {
-    font-family: 'Courier New', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
-    color: var(--tobacco);
-    line-height: 1.4;
-  }
-
-  /* Lay the Bet button */
-  .bet-btn {
+  /* PRIMARY BUTTON */
+  .btn-primary {
     width: 100%;
     padding: 1rem;
     background: var(--gold-dim);
     color: var(--pit);
     border: none;
-    font-family: 'Courier New', monospace;
-    font-size: 0.7rem;
+    font: 0.7rem/1 'Courier New', monospace;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     cursor: pointer;
     transition: background 0.2s;
+    display: block;
+  }
+  .btn-primary:hover { background: var(--gold); }
+  .btn-primary:disabled {
+    background: #2a1f0e;
+    color: var(--tobacco);
+    cursor: not-allowed;
   }
 
-  .bet-btn:hover { background: var(--gold); }
-  .bet-btn:disabled { background: #2a1f0e; color: var(--tobacco); cursor: not-allowed; }
+  /* ARENA */
+  .arena { display: none; margin-bottom: 2rem; }
+  .arena.show { display: block; }
 
-  /* ── ARENA ── */
-  .arena {
-    width: 100%;
-    max-width: 680px;
-    margin-bottom: 2rem;
-    display: none;
-  }
-
-  .arena.visible { display: block; }
-
-  /* Round tracker */
   .round-tracker {
     display: flex;
-    align-items: center;
     justify-content: space-between;
     padding: 0.6rem 1rem;
     background: var(--surface);
     border: 1px solid #2a1f0e;
     border-bottom: none;
-    font-family: 'Courier New', monospace;
-    font-size: 0.65rem;
+    font: 0.65rem/1 'Courier New', monospace;
     letter-spacing: 0.2em;
     color: var(--tobacco);
   }
+  .round-tracker .hi { color: var(--gold); font-size: 0.8rem; }
 
-  .round-tracker .current { color: var(--gold); font-size: 0.8rem; }
-
-  /* Dice battle */
   .dice-arena {
     background: var(--table);
     border: 1px solid #2a1f0e;
@@ -343,100 +250,54 @@
     grid-template-columns: 1fr auto 1fr;
     gap: 1rem;
     align-items: center;
-    margin-bottom: 0;
   }
-
-  .fighter-side {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
+  .fighter { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
   .fighter-label {
-    font-family: 'Courier New', monospace;
-    font-size: 0.6rem;
+    font: 0.6rem/1 'Courier New', monospace;
     letter-spacing: 0.3em;
     text-transform: uppercase;
   }
+  .fighter-label.m { color: var(--mongoose-bright); }
+  .fighter-label.c { color: var(--blood); }
 
-  .fighter-label.mongoose-label { color: var(--mongoose-bright); }
-  .fighter-label.cobra-label    { color: var(--blood); }
-
-  /* CSS d20 */
+  /* Die */
   .die {
-    width: 80px;
-    height: 80px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 80px; height: 80px;
+    display: flex; align-items: center; justify-content: center;
   }
-
   .die-face {
-    width: 80px;
-    height: 80px;
+    width: 80px; height: 80px;
     clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.15s;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.2s;
   }
-
-  .die.mongoose-die .die-face { background: var(--mongoose); }
-  .die.cobra-die    .die-face { background: var(--blood-dim); }
-
-  .die.rolling .die-face { animation: roll 0.5s ease-out; }
-
-  @keyframes roll {
-    0%   { transform: scale(0.8) rotate(-10deg); opacity: 0.5; }
-    50%  { transform: scale(1.1) rotate(5deg); opacity: 1; }
-    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  .die.m .die-face { background: var(--mongoose); }
+  .die.c .die-face { background: var(--blood-dim); }
+  .die.rolling .die-face { animation: spin 0.45s ease-out; }
+  .die.loser   .die-face { opacity: 0.4; }
+  .die.winner  .die-face { outline: 2px solid var(--gold); }
+  @keyframes spin {
+    0%   { transform: scale(0.7) rotate(-15deg); opacity: 0.4; }
+    60%  { transform: scale(1.1) rotate(6deg);   opacity: 1;   }
+    100% { transform: scale(1)   rotate(0deg);   opacity: 1;   }
   }
-
-  .die-number {
-    font-family: 'Courier New', monospace;
-    font-size: 1.6rem;
-    font-weight: bold;
+  .die-num {
+    font: bold 1.6rem/1 'Courier New', monospace;
     color: var(--paper);
-    line-height: 1;
-    position: relative;
-    z-index: 1;
   }
 
-  .die.winner .die-face { outline: 2px solid var(--gold); }
-  .die.loser .die-face  { opacity: 0.5; }
-
-  .die-placeholder {
-    font-family: 'Courier New', monospace;
-    font-size: 1.8rem;
-    color: #3a2a14;
+  .vs-col {
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
   }
-
-  .vs-column {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .vs-text {
-    font-family: 'Courier New', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    color: var(--gold-dim);
-  }
-
+  .vs-txt { font: 0.7rem/1 'Courier New', monospace; color: var(--gold-dim); letter-spacing: 0.2em; }
   .round-result {
-    font-family: 'Courier New', monospace;
-    font-size: 0.65rem;
+    font: 0.65rem/1 'Courier New', monospace;
     letter-spacing: 0.15em;
     text-align: center;
-    min-height: 1.2em;
-    color: var(--gold);
+    min-height: 1em;
   }
 
-  /* Round log */
+  /* Log */
   .round-log {
     background: var(--pit);
     border: 1px solid #2a1f0e;
@@ -444,132 +305,66 @@
     padding: 0.75rem 1rem;
     min-height: 2.5rem;
   }
-
-  .round-log-entries {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-  }
-
-  .log-entry {
-    font-family: 'Courier New', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.08em;
+  .log-line {
+    font: 0.62rem/1.5 'Courier New', monospace;
+    letter-spacing: 0.05em;
     color: var(--tobacco);
-    line-height: 1.4;
   }
+  .log-line .w { color: var(--gold); }
+  .log-line .l { color: #3a2a14; }
 
-  .log-entry .win  { color: var(--gold); }
-  .log-entry .loss { color: #4a3a2a; }
-
-  /* ── OUTCOME STATES ── */
+  /* OUTCOME */
   .outcome {
-    width: 100%;
-    max-width: 680px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
     display: none;
+    padding: 1.5rem;
+    border: 1px solid #2a1f0e;
+    margin-bottom: 1.5rem;
     flex-direction: column;
     gap: 0.75rem;
-    border: 1px solid #2a1f0e;
   }
-
-  .outcome.visible { display: flex; }
+  .outcome.show { display: flex; }
   .outcome.win  { background: #0a1a06; border-color: var(--mongoose); }
   .outcome.loss { background: #1a0606; border-color: var(--blood-dim); }
-  .outcome.raid { background: #0d0a06; border-color: var(--gold-dim); }
-
-  .outcome-headline {
-    font-family: 'Courier New', monospace;
-    font-size: 0.6rem;
+  .outcome-tag {
+    font: 0.6rem/1 'Courier New', monospace;
     letter-spacing: 0.4em;
     text-transform: uppercase;
   }
-
-  .outcome.win  .outcome-headline { color: var(--mongoose-bright); }
-  .outcome.loss .outcome-headline { color: var(--blood); }
-  .outcome.raid .outcome-headline { color: var(--gold); }
-
+  .outcome.win  .outcome-tag { color: var(--mongoose-bright); }
+  .outcome.loss .outcome-tag { color: var(--blood); }
   .outcome-amount {
-    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    font-size: clamp(1.4rem, 3.5vw, 2rem);
     font-style: italic;
-    line-height: 1;
+    line-height: 1.1;
   }
-
   .outcome.win  .outcome-amount { color: var(--gold); }
   .outcome.loss .outcome-amount { color: var(--mist); }
+  .outcome-flavor { font-size: 0.8rem; font-style: italic; color: var(--mist); line-height: 1.7; }
 
-  .outcome-flavor {
-    font-size: 0.8rem;
-    line-height: 1.7;
-    font-style: italic;
-    color: var(--mist);
-  }
-
-  /* Raid options */
-  .raid-options {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
-    margin-top: 0.25rem;
-  }
-
-  .raid-btn {
-    padding: 0.75rem;
-    background: transparent;
-    font-family: 'Courier New', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    cursor: pointer;
-    border: 1px solid;
-    transition: all 0.2s;
-  }
-
-  .raid-btn.bribe {
-    color: var(--gold);
-    border-color: var(--gold-dim);
-  }
-  .raid-btn.bribe:hover { background: rgba(200, 168, 75, 0.1); }
-
-  .raid-btn.run {
-    color: var(--blood);
-    border-color: var(--blood-dim);
-  }
-  .raid-btn.run:hover { background: rgba(139, 26, 26, 0.15); }
-
-  /* Play again */
-  .play-again-btn {
+  /* PLAY AGAIN */
+  .btn-again {
+    display: none;
     width: 100%;
-    max-width: 680px;
     padding: 0.9rem;
     background: transparent;
     border: 1px solid var(--gold-dim);
     color: var(--gold);
-    font-family: 'Courier New', monospace;
-    font-size: 0.65rem;
+    font: 0.65rem/1 'Courier New', monospace;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: background 0.2s;
     margin-bottom: 2rem;
-    display: none;
   }
+  .btn-again:hover { background: rgba(200,168,75,0.08); }
+  .btn-again.show { display: block; }
 
-  .play-again-btn:hover { background: rgba(200, 168, 75, 0.08); }
-  .play-again-btn.visible { display: block; }
-
-  /* ── CROWD TEXT ── */
+  /* CROWD */
   .crowd {
-    width: 100%;
-    max-width: 680px;
     padding: 1rem 0;
     border-top: 1px solid #1a1208;
     min-height: 3rem;
-    display: flex;
-    align-items: center;
   }
-
   .crowd-line {
     font-size: 0.78rem;
     font-style: italic;
@@ -578,551 +373,326 @@
     transition: opacity 0.5s;
   }
 
-  /* ── ERROR ── */
-  .error {
-    font-family: 'Courier New', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    color: var(--blood);
-    padding: 0.5rem 0;
-    display: none;
-  }
-
-  .error.visible { display: block; }
-
-  /* ── FOOTER ── */
+  /* FOOTER */
   .footer {
-    width: 100%;
-    max-width: 680px;
     padding-top: 1.5rem;
     border-top: 1px solid #1a1208;
     text-align: center;
   }
-
-  .footer-text {
-    font-family: 'Courier New', monospace;
-    font-size: 0.52rem;
+  .footer p {
+    font: 0.52rem/1 'Courier New', monospace;
     letter-spacing: 0.2em;
     color: #3a2a14;
     text-transform: uppercase;
   }
 
-  #roll-btn {
-    width: 100%;
-    padding: 1rem;
-    background: var(--gold-dim);
-    color: var(--pit);
-    border: none;
-    font-family: 'Courier New', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background 0.2s;
-    margin-top: 1px;
-    display: block;
-  }
-
-  #roll-btn:hover:not(:disabled) { background: var(--gold); }
-  #roll-btn:disabled { background: #2a1f0e; color: var(--tobacco); cursor: not-allowed; }
-
   @media (max-width: 480px) {
     .bet-controls { grid-template-columns: 1fr; }
     .dice-arena { padding: 1.25rem 0.75rem; }
-    .die { width: 64px; height: 64px; }
-    .die-face { width: 64px; height: 64px; }
-    .die-number { font-size: 1.3rem; }
-    .raid-options { grid-template-columns: 1fr; }
+    .die, .die-face { width: 64px; height: 64px; }
+    .die-num { font-size: 1.3rem; }
   }
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<div class="header">
-  <p class="header-locale">Lucky 7 — Tremé, New Orleans — 1946</p>
-  <h1 class="header-title">The Cage</h1>
-  <p class="header-subtitle">Mongoose vs. Cobra — Baron Saturday's Circle</p>
-</div>
-
-<div class="intro">
-  <p>You don't just wander in here. This pit runs deep in the Tremé, behind Mama Maybelle's, under eight Pit Watchers who work quiet and hit hard. The Baron lays out the exotic bets — fur against scales, speed against venom. The heavy bones decide it. No velvet ropes. Just you, the dirt, and a little poison in the air.</p>
-  <p class="attribution">— Cutter Malone &nbsp;|&nbsp; Street Bets &amp; The Alleyway Protocol</p>
-</div>
-
-<div class="bankroll-bar">
-  <span class="bankroll-label">Running Stake</span>
-  <span class="bankroll-amount" id="bankroll-display">$500</span>
-</div>
-
-<!-- BET SECTION -->
-<div class="bet-section" id="bet-section">
-  <span class="section-label">Place Your Bet</span>
-
-  <div class="side-picker">
-    <button type="button" class="side-btn mongoose" onclick="selectSide('mongoose')" id="btn-mongoose">
-      <span class="side-animal">🦡</span>
-      <span class="side-name">Mongoose</span>
-      <span class="side-desc">Speed. Aggression.<br>Death from the front.</span>
-    </button>
-    <div class="side-divider">vs</div>
-    <button type="button" class="side-btn cobra" onclick="selectSide('cobra')" id="btn-cobra">
-      <span class="side-animal">🐍</span>
-      <span class="side-name">Cobra</span>
-      <span class="side-desc">Patience. Venom.<br>Death from nowhere.</span>
-    </button>
+  <div class="header">
+    <span class="header-locale">Lucky 7 — Tremé, New Orleans — 1946</span>
+    <h1 class="header-title">The Cage</h1>
+    <p class="header-sub">Mongoose vs. Cobra — Baron Saturday's Circle</p>
   </div>
 
-  <div class="bet-controls">
-    <div class="control-group">
-      <label>Rounds</label>
-      <select id="rounds-select">
-        <option value="3">Best of 3</option>
-        <option value="5">Best of 5</option>
-      </select>
+  <div class="intro">
+    <p>You don't just wander in here. This pit runs deep in the Tremé, behind Mama Maybelle's, under eight Pit Watchers who work quiet and hit hard. The Baron lays out the exotic bets — fur against scales, speed against venom. The heavy bones decide it. No velvet ropes. Just you, the dirt, and a little poison in the air.</p>
+    <span class="attr">— Cutter Malone &nbsp;|&nbsp; Street Bets &amp; The Alleyway Protocol</span>
+  </div>
+
+  <div class="bankroll">
+    <span class="bankroll-label">Running Stake</span>
+    <span class="bankroll-amount" id="bankroll">$500</span>
+  </div>
+
+  <!-- BET SECTION -->
+  <div id="bet-section">
+    <span class="sec-label">Place Your Bet</span>
+
+    <div class="side-picker">
+      <button type="button" class="side-btn mongoose-btn" id="btn-m" onclick="pick('mongoose')">
+        <span class="side-animal">🦡</span>
+        <span class="side-name">Mongoose</span>
+        <span class="side-desc">Speed. Aggression.<br>Death from the front.</span>
+      </button>
+      <div class="side-vs">vs</div>
+      <button type="button" class="side-btn cobra-btn" id="btn-c" onclick="pick('cobra')">
+        <span class="side-animal">🐍</span>
+        <span class="side-name">Cobra</span>
+        <span class="side-desc">Patience. Venom.<br>Death from nowhere.</span>
+      </button>
     </div>
-    <div class="control-group">
-      <label>Wager ($)</label>
-      <input type="number" id="wager-input" value="50" min="10" max="500" step="10">
-    </div>
-  </div>
 
-  <div class="folk-hero-row" id="folk-hero-row">
-    <div class="folk-hero-box" id="folk-hero-box"></div>
-    <span class="folk-hero-text">FOLK HERO STATUS — The locals cover for you. Free re-roll on any Raid check. <button type="button" onclick="toggleFolkHero()" style="background:none;border:none;color:var(--gold);font-family:'Courier New',monospace;font-size:0.62rem;cursor:pointer;letter-spacing:0.1em;padding:0;">[TOGGLE]</button></span>
-  </div>
-
-  <div class="error" id="bet-error">Pick a side before you lay the cash.</div>
-
-  <button type="button" class="bet-btn" id="bet-btn" onclick="placeBet()">
-    Lay the Bet →
-  </button>
-</div>
-
-<!-- ARENA -->
-<div class="arena" id="arena">
-  <div class="round-tracker">
-    <span>Round <span class="current" id="round-display">1</span> of <span id="total-rounds-display">3</span></span>
-    <span>Score: <span id="score-display" style="color: var(--gold);">0 — 0</span></span>
-  </div>
-
-  <div class="dice-arena">
-    <div class="fighter-side">
-      <span class="fighter-label mongoose-label">Mongoose</span>
-      <div class="die mongoose-die" id="die-mongoose">
-        <div class="die-face">
-          <span class="die-number" id="mongoose-roll">—</span>
-        </div>
+    <div class="bet-controls">
+      <div class="ctrl">
+        <label>Rounds</label>
+        <select id="rounds">
+          <option value="3">Best of 3</option>
+          <option value="5">Best of 5</option>
+        </select>
+      </div>
+      <div class="ctrl">
+        <label>Wager ($)</label>
+        <input type="number" id="wager" value="50" min="10" max="500" step="10">
       </div>
     </div>
 
-    <div class="vs-column">
-      <span class="vs-text">VS</span>
-      <span class="round-result" id="round-result"></span>
-    </div>
+    <div class="err" id="err">Pick a side before you lay the cash.</div>
 
-    <div class="fighter-side">
-      <span class="fighter-label cobra-label">Cobra</span>
-      <div class="die cobra-die" id="die-cobra">
-        <div class="die-face">
-          <span class="die-number" id="cobra-roll">—</span>
-        </div>
+    <button type="button" class="btn-primary" onclick="startBet()">Lay the Bet →</button>
+  </div>
+
+  <!-- ARENA -->
+  <div class="arena" id="arena">
+    <div class="round-tracker">
+      <span>Round <span class="hi" id="r-cur">1</span> of <span id="r-tot">3</span></span>
+      <span>Score: <span class="hi" id="score">0 — 0</span></span>
+    </div>
+    <div class="dice-arena">
+      <div class="fighter">
+        <span class="fighter-label m">Mongoose</span>
+        <div class="die m" id="die-m"><div class="die-face"><span class="die-num" id="num-m">—</span></div></div>
+      </div>
+      <div class="vs-col">
+        <span class="vs-txt">VS</span>
+        <span class="round-result" id="r-result"></span>
+      </div>
+      <div class="fighter">
+        <span class="fighter-label c">Cobra</span>
+        <div class="die c" id="die-c"><div class="die-face"><span class="die-num" id="num-c">—</span></div></div>
       </div>
     </div>
+    <div class="round-log" id="log"></div>
+    <button type="button" class="btn-primary" id="roll-btn" onclick="doRoll()">Roll →</button>
   </div>
 
-  <div class="round-log">
-    <div class="round-log-entries" id="round-log"></div>
+  <!-- OUTCOMES -->
+  <div class="outcome win" id="out-win">
+    <span class="outcome-tag">Winner</span>
+    <span class="outcome-amount" id="win-amt"></span>
+    <p class="outcome-flavor" id="win-txt"></p>
+  </div>
+  <div class="outcome loss" id="out-loss">
+    <span class="outcome-tag">Loss</span>
+    <span class="outcome-amount">The house takes the stake.</span>
+    <p class="outcome-flavor" id="loss-txt"></p>
   </div>
 
-  <button type="button" id="roll-btn" onclick="rollRound()">
-    Roll →
-  </button>
+  <button type="button" class="btn-again" id="btn-again" onclick="reset()">Back to the Cage →</button>
+
+  <div class="crowd"><p class="crowd-line" id="crowd">The Baron's circle is quiet tonight. Too quiet.</p></div>
+
+  <div class="footer"><p>Hard Times in the Big Easy © 2026 Michael Tesney &nbsp;|&nbsp; semanticecology.org</p></div>
+
 </div>
-
-<!-- OUTCOMES -->
-<div class="outcome win" id="outcome-win">
-  <span class="outcome-headline">Winner</span>
-  <span class="outcome-amount" id="win-amount"></span>
-  <p class="outcome-flavor" id="win-flavor"></p>
-</div>
-
-<div class="outcome loss" id="outcome-loss">
-  <span class="outcome-headline">Loss</span>
-  <span class="outcome-amount">The house takes the stake.</span>
-  <p class="outcome-flavor" id="loss-flavor"></p>
-</div>
-
-<div class="outcome raid" id="outcome-raid">
-  <span class="outcome-headline">⚠ Raid — Blue Shields in the Alley</span>
-  <p class="outcome-flavor" id="raid-flavor"></p>
-  <div class="raid-options">
-    <button type="button" class="raid-btn bribe" onclick="handleRaid('bribe')">Pay the $50 Bribe</button>
-    <button type="button" class="raid-btn run"   onclick="handleRaid('run')">Run for It</button>
-  </div>
-</div>
-
-<button type="button" class="play-again-btn" id="play-again-btn" onclick="resetGame()">
-  Back to the Cage →
-</button>
-
-<!-- CROWD TEXT -->
-<div class="crowd">
-  <p class="crowd-line" id="crowd-line">The Baron's circle is quiet tonight. Too quiet.</p>
-</div>
-
-<div class="footer">
-  <p class="footer-text">Hard Times in the Big Easy © 2026 Michael Tesney &nbsp;|&nbsp; semanticecology.org &nbsp;|&nbsp; Hidden link — Baron Saturday's table</p>
-</div>
-
 <script>
-  // ── STATE ──
-  let bankroll = 500;
-  let selectedSide = null;
-  let folkHero = false;
-  let totalRounds = 3;
-  let currentRound = 0;
-  let mongooseWins = 0;
-  let cobraWins = 0;
-  let wager = 50;
-  let gameActive = false;
-  let pendingRaid = false;
+var cash    = 500;
+var side    = null;
+var total   = 3;
+var cur     = 0;
+var mW      = 0;
+var cW      = 0;
+var wager   = 50;
+var active  = false;
+var crowdI  = 0;
 
-  // ── CROWD LINES ──
-  const crowdLines = [
-    "The Baron hasn't moved in twenty minutes. That means he already knows something you don't.",
-    "Man in the corner lost his rent money on the Cobra last Tuesday. Still here. Still betting the Cobra.",
-    "The Pit Watchers rotate on the hour. You've got forty minutes before a fresh set of eyes.",
-    "Someone in the back is burning something sweet. It's not tobacco.",
-    "The mongoose doesn't care if it wins. That's why it usually does.",
-    "Baron Saturday runs a clean house. The math is the math. The animals don't take bribes.",
-    "Last man who tried to grease the outcome left without three fingers. The Pit Watchers kept them.",
-    "Rain on the street outside. In here, the only weather is money moving.",
-    "The Cobra hasn't lost three in a row all month. The Cobra has also never won five straight.",
-    "Nobody in this room is your friend. Some of them are temporarily your ally. Know the difference.",
-    "The Baron watches the bettors more than the animals. He already knows what you're going to do.",
-    "You can always walk away from the table. The problem is the table is inside a room with eight Pit Watchers."
-  ];
+var crowd = [
+  "The Baron hasn't moved in twenty minutes. That means he already knows something you don't.",
+  "Man in the corner lost his rent money on the Cobra last Tuesday. Still here. Still betting the Cobra.",
+  "The Pit Watchers rotate on the hour. You've got forty minutes before a fresh set of eyes.",
+  "Someone in the back is burning something sweet. It's not tobacco.",
+  "The mongoose doesn't care if it wins. That's why it usually does.",
+  "Baron Saturday runs a clean house. The math is the math. The animals don't take bribes.",
+  "Last man who tried to grease the outcome left without three fingers.",
+  "Rain on the street outside. In here, the only weather is money moving.",
+  "The Cobra hasn't lost three in a row all month.",
+  "Nobody in this room is your friend. Some of them are temporarily your ally.",
+  "The Baron watches the bettors more than the animals.",
+  "You can always walk away. The problem is the table is inside a room with eight Pit Watchers."
+];
 
-  let crowdIndex = 0;
-  function cycleCrowd() {
-    const el = document.getElementById('crowd-line');
-    el.style.opacity = '0';
-    setTimeout(() => {
-      crowdIndex = (crowdIndex + Math.floor(Math.random() * 3) + 1) % crowdLines.length;
-      el.textContent = crowdLines[crowdIndex];
-      el.style.opacity = '1';
-    }, 500);
+var winTxt = [
+  "The Baron stamps the ticket without looking up. He's seen this before.",
+  "You lay the cash flat on the wood and walk away before the applause dies.",
+  "Two-to-one. The math was always there. You just had to be patient.",
+  "The pile slides across the table. Heavier than you expected.",
+  "The Pit Watcher at the door clocks your exit. Tonight you're just a man with money."
+];
+
+var lossTxt = [
+  "The house doesn't celebrate. It just recalculates.",
+  "The Baron doesn't look at you. He's already thinking about the next bet.",
+  "The math ran. It ran against you.",
+  "You had it right up until the last round. That's the most expensive kind of almost.",
+  "The crowd doesn't react. They've all been exactly here before."
+];
+
+function pick(s) {
+  side = s;
+  document.getElementById('btn-m').classList.toggle('selected', s === 'mongoose');
+  document.getElementById('btn-c').classList.toggle('selected', s === 'cobra');
+  document.getElementById('err').classList.remove('show');
+}
+
+function startBet() {
+  if (!side) { document.getElementById('err').classList.add('show'); return; }
+
+  wager = parseInt(document.getElementById('wager').value) || 50;
+  wager = Math.max(10, Math.min(wager, 500));
+  if (cash < wager) {
+    var e = document.getElementById('err');
+    e.textContent = "You don't have the stake. Reduce your wager.";
+    e.classList.add('show');
+    return;
   }
 
-  setInterval(cycleCrowd, 8000);
+  total  = parseInt(document.getElementById('rounds').value);
+  cur    = 0; mW = 0; cW = 0; active = true;
 
-  // ── WINNER FLAVORS ──
-  const winFlavors = [
-    "The Baron stamps the ticket without looking up. He's seen this before. He'll see it again.",
-    "You lay the cash flat on the wood and walk away before the applause dies. Clean exit.",
-    "The pile slides across the table. Heavier than you expected. Don't let them see that.",
-    "Two-to-one. The math was always there. You just had to be patient enough to let it run.",
-    "The Pit Watcher at the door clocks your exit. You're not a mark anymore tonight. Tonight you're just a man with money."
-  ];
+  document.getElementById('bet-section').style.display = 'none';
+  document.getElementById('r-tot').textContent = total;
+  document.getElementById('log').innerHTML = '';
+  document.getElementById('r-result').textContent = '';
+  document.getElementById('num-m').textContent = '—';
+  document.getElementById('num-c').textContent = '—';
+  document.getElementById('die-m').className = 'die m';
+  document.getElementById('die-c').className = 'die c';
+  document.getElementById('roll-btn').disabled = false;
+  document.getElementById('r-cur').textContent = 1;
+  document.getElementById('score').textContent = '0 — 0';
 
-  const lossFlavors = [
-    "The house doesn't celebrate. It just recalculates.",
-    "The Baron doesn't look at you. He's already thinking about the next bet.",
-    "The math ran. It ran against you. That's not a surprise — it's a condition.",
-    "The crowd doesn't react. They've all been exactly here before.",
-    "You had it right up until the last round. That's the most expensive kind of almost."
-  ];
+  hideOut();
+  document.getElementById('arena').classList.add('show');
+  nextCrowd();
+}
 
-  const raidFlavors = [
-    "The Pit Watcher by the door puts two fingers up. Blue Shields on Rampart. You've got sixty seconds.",
-    "Someone brought Heat into the Baron's house. The Pit Watchers are moving before the whistles stop.",
-    "The back door is behind the curtain. The alley connects to Ursulines. Move now or explain yourself."
-  ];
+function doRoll() {
+  if (!active) return;
+  document.getElementById('roll-btn').disabled = true;
+  document.getElementById('r-result').textContent = '';
 
-  // ── UI HELPERS ──
-  function updateBankroll() {
-    const el = document.getElementById('bankroll-display');
-    el.textContent = '$' + bankroll;
-    el.className = 'bankroll-amount' + (bankroll < 100 ? ' low' : '');
-  }
+  var dm = document.getElementById('die-m');
+  var dc = document.getElementById('die-c');
+  dm.className = 'die m rolling';
+  dc.className = 'die c rolling';
+  document.getElementById('num-m').textContent = '·';
+  document.getElementById('num-c').textContent = '·';
 
-  function selectSide(side) {
-    selectedSide = side;
-    document.getElementById('btn-mongoose').classList.toggle('selected', side === 'mongoose');
-    document.getElementById('btn-cobra').classList.toggle('selected', side === 'cobra');
-    document.getElementById('bet-error').classList.remove('visible');
-  }
-
-  function toggleFolkHero() {
-    folkHero = !folkHero;
-    document.getElementById('folk-hero-box').textContent = folkHero ? '✓' : '';
-  }
-
-  function hideOutcomes() {
-    ['outcome-win','outcome-loss','outcome-raid'].forEach(id => {
-      document.getElementById(id).classList.remove('visible');
-    });
-    document.getElementById('play-again-btn').classList.remove('visible');
-  }
-
-  // ── PLACE BET ──
-  function placeBet() {
-    if (!selectedSide) {
-      document.getElementById('bet-error').classList.add('visible');
-      return;
+  setTimeout(function() {
+    var mr = Math.floor(Math.random() * 20) + 1;
+    var cr = Math.floor(Math.random() * 20) + 1;
+    var tries = 0;
+    while (mr === cr && tries < 5) {
+      mr = Math.floor(Math.random() * 20) + 1;
+      cr = Math.floor(Math.random() * 20) + 1;
+      tries++;
     }
 
-    wager = parseInt(document.getElementById('wager-input').value) || 50;
-    wager = Math.max(10, Math.min(wager, 500));
+    document.getElementById('num-m').textContent = mr;
+    document.getElementById('num-c').textContent = cr;
+    cur++;
 
-    if (bankroll < wager) {
-      document.getElementById('bet-error').textContent = "You don't have the stake. Reduce your wager.";
-      document.getElementById('bet-error').classList.add('visible');
-      return;
-    }
-
-    totalRounds = parseInt(document.getElementById('rounds-select').value);
-    currentRound = 0;
-    mongooseWins = 0;
-    cobraWins = 0;
-    gameActive = true;
-
-    document.getElementById('bet-section').style.display = 'none';
-    document.getElementById('total-rounds-display').textContent = totalRounds;
-    updateScore();
-    document.getElementById('round-log').innerHTML = '';
-    document.getElementById('round-result').textContent = '';
-    document.getElementById('mongoose-roll').textContent = '—';
-    document.getElementById('cobra-roll').textContent = '—';
-    document.getElementById('die-mongoose').className = 'die mongoose-die';
-    document.getElementById('die-cobra').className = 'die cobra-die';
-
-    hideOutcomes();
-    document.getElementById('arena').classList.add('visible');
-    updateRoundDisplay();
-
-    cycleCrowd();
-  }
-
-  function updateScore() {
-    document.getElementById('score-display').textContent =
-      `${mongooseWins} — ${cobraWins}`;
-  }
-
-  function updateRoundDisplay() {
-    document.getElementById('round-display').textContent = currentRound + 1;
-  }
-
-  // ── ROLL ROUND ──
-  function rollRound() {
-    if (!gameActive) return;
-
-    document.getElementById('roll-btn').disabled = true;
-    document.getElementById('round-result').textContent = '';
-
-    // Animate dice
-    const dieMongo = document.getElementById('die-mongoose');
-    const dieCobra = document.getElementById('die-cobra');
-    dieMongo.className = 'die mongoose-die rolling';
-    dieCobra.className = 'die cobra-die rolling';
-
-    document.getElementById('mongoose-roll').textContent = '·';
-    document.getElementById('cobra-roll').textContent = '·';
-
-    setTimeout(() => {
-      let mRoll = Math.floor(Math.random() * 20) + 1;
-      let cRoll = Math.floor(Math.random() * 20) + 1;
-
-      // Re-roll ties
-      let tieCount = 0;
-      while (mRoll === cRoll && tieCount < 5) {
-        mRoll = Math.floor(Math.random() * 20) + 1;
-        cRoll = Math.floor(Math.random() * 20) + 1;
-        tieCount++;
-      }
-
-      document.getElementById('mongoose-roll').textContent = mRoll;
-      document.getElementById('cobra-roll').textContent = cRoll;
-
-      currentRound++;
-      let roundWinner;
-
-      if (mRoll > cRoll) {
-        mongooseWins++;
-        roundWinner = 'mongoose';
-        dieMongo.className = 'die mongoose-die winner';
-        dieCobra.className = 'die cobra-die loser';
-        document.getElementById('round-result').textContent = 'MONGOOSE';
-        document.getElementById('round-result').style.color = 'var(--mongoose-bright)';
-      } else {
-        cobraWins++;
-        roundWinner = 'cobra';
-        dieCobra.className = 'die cobra-die winner';
-        dieMongo.className = 'die mongoose-die loser';
-        document.getElementById('round-result').textContent = 'COBRA';
-        document.getElementById('round-result').style.color = 'var(--blood)';
-      }
-
-      // Log entry
-      const log = document.getElementById('round-log');
-      const entry = document.createElement('div');
-      entry.className = 'log-entry';
-      const winClass = roundWinner === selectedSide ? 'win' : 'loss';
-      entry.innerHTML = `Round ${currentRound}: Mongoose <span class="${roundWinner === 'mongoose' ? 'win' : 'loss'}">${mRoll}</span> vs Cobra <span class="${roundWinner === 'cobra' ? 'win' : 'loss'}">${cRoll}</span> — <span class="${winClass}">${roundWinner.toUpperCase()} takes it</span>`;
-      log.appendChild(entry);
-
-      updateScore();
-
-      // Win condition check
-      const winsNeeded = Math.ceil(totalRounds / 2) + (totalRounds % 2 === 0 ? 0 : 0);
-      const needed = Math.ceil((totalRounds + 1) / 2);
-
-      if (mongooseWins >= needed || cobraWins >= needed || currentRound >= totalRounds) {
-        setTimeout(() => resolveMatch(), 600);
-      } else {
-        updateRoundDisplay();
-        document.getElementById('roll-btn').disabled = false;
-      }
-
-    }, 500);
-  }
-
-  // ── RESOLVE MATCH ──
-  function resolveMatch() {
-    const playerWon = (selectedSide === 'mongoose' && mongooseWins > cobraWins) ||
-                      (selectedSide === 'cobra' && cobraWins > mongooseWins);
-
-    document.getElementById('roll-btn').disabled = true;
-
-    // Raid check
-    const raidRoll = Math.floor(Math.random() * 6) + 1;
-    let raidTriggered = raidRoll === 1;
-
-    if (raidTriggered && folkHero) {
-      const reroll = Math.floor(Math.random() * 6) + 1;
-      raidTriggered = reroll === 1;
-      const log = document.getElementById('round-log');
-      const entry = document.createElement('div');
-      entry.className = 'log-entry';
-      entry.innerHTML = `<span class="win">Folk Hero:</span> Locals cover for you. Re-rolled the Raid check — ${reroll === 1 ? 'still got made.' : 'clean exit.'}`;
-      log.appendChild(entry);
-    }
-
-    if (raidTriggered) {
-      pendingRaid = { playerWon, wager };
-      showRaid();
-      return;
-    }
-
-    if (playerWon) {
-      bankroll += wager;
-      showWin(wager * 2);
+    var rWin;
+    if (mr > cr) {
+      mW++; rWin = 'mongoose';
+      dm.className = 'die m winner';
+      dc.className = 'die c loser';
+      document.getElementById('r-result').style.color = 'var(--mongoose-bright)';
+      document.getElementById('r-result').textContent = 'MONGOOSE';
     } else {
-      bankroll -= wager;
-      showLoss();
+      cW++; rWin = 'cobra';
+      dc.className = 'die c winner';
+      dm.className = 'die m loser';
+      document.getElementById('r-result').style.color = 'var(--blood)';
+      document.getElementById('r-result').textContent = 'COBRA';
     }
 
-    updateBankroll();
-    checkBankrupt();
-  }
+    var log = document.getElementById('log');
+    var line = document.createElement('p');
+    line.className = 'log-line';
+    var pw = rWin === side;
+    line.innerHTML = 'Round ' + cur + ': Mongoose <span class="' + (mr > cr ? 'w' : 'l') + '">' + mr + '</span> vs Cobra <span class="' + (cr > mr ? 'w' : 'l') + '">' + cr + '</span> — <span class="' + (pw ? 'w' : 'l') + '">' + rWin.toUpperCase() + '</span>';
+    log.appendChild(line);
 
-  function showWin(payout) {
-    const el = document.getElementById('outcome-win');
-    document.getElementById('win-amount').textContent = '+$' + payout + ' — Two-to-one.';
-    document.getElementById('win-flavor').textContent = winFlavors[Math.floor(Math.random() * winFlavors.length)];
-    el.classList.add('visible');
-    document.getElementById('play-again-btn').classList.add('visible');
-    cycleCrowd();
-  }
+    document.getElementById('score').textContent = mW + ' — ' + cW;
 
-  function showLoss() {
-    const el = document.getElementById('outcome-loss');
-    document.getElementById('loss-flavor').textContent = lossFlavors[Math.floor(Math.random() * lossFlavors.length)];
-    el.classList.add('visible');
-    document.getElementById('play-again-btn').classList.add('visible');
-    cycleCrowd();
-  }
-
-  function showRaid() {
-    const el = document.getElementById('outcome-raid');
-    document.getElementById('raid-flavor').textContent = raidFlavors[Math.floor(Math.random() * raidFlavors.length)];
-    el.classList.add('visible');
-    cycleCrowd();
-  }
-
-  // ── RAID RESOLUTION ──
-  function handleRaid(choice) {
-    document.getElementById('outcome-raid').classList.remove('visible');
-
-    if (choice === 'bribe') {
-      if (bankroll < 50) {
-        // Can't afford bribe — forced run
-        const log = document.getElementById('round-log');
-        const entry = document.createElement('div');
-        entry.className = 'log-entry';
-        entry.innerHTML = `<span class="loss">No cash for the bribe. Running.</span>`;
-        log.appendChild(entry);
-        handleRaid('run');
-        return;
-      }
-      bankroll -= 50;
-      // Bet still resolves
-      if (pendingRaid.playerWon) {
-        bankroll += pendingRaid.wager;
-        showWin(pendingRaid.wager * 2);
-      } else {
-        bankroll -= pendingRaid.wager;
-        showLoss();
-      }
+    var need = Math.ceil((total + 1) / 2);
+    if (mW >= need || cW >= need || cur >= total) {
+      setTimeout(resolve, 500);
     } else {
-      // Run — lose the bet regardless, lose nothing extra
-      bankroll -= pendingRaid.wager;
-      const el = document.getElementById('outcome-loss');
-      document.getElementById('loss-flavor').textContent = "You made it to Ursulines. The bet didn't. The Baron's already forgotten your face. That's the best outcome available.";
-      el.classList.add('visible');
+      document.getElementById('r-cur').textContent = cur + 1;
+      document.getElementById('roll-btn').disabled = false;
     }
+  }, 450);
+}
 
-    updateBankroll();
-    document.getElementById('play-again-btn').classList.add('visible');
-    checkBankrupt();
+function resolve() {
+  var won = (side === 'mongoose' && mW > cW) || (side === 'cobra' && cW > mW);
+  active = false;
+
+  if (won) {
+    cash += wager;
+    document.getElementById('win-amt').textContent = '+$' + (wager * 2) + ' — Two-to-one.';
+    document.getElementById('win-txt').textContent = winTxt[Math.floor(Math.random() * winTxt.length)];
+    document.getElementById('out-win').classList.add('show');
+  } else {
+    cash -= wager;
+    document.getElementById('loss-txt').textContent = lossTxt[Math.floor(Math.random() * lossTxt.length)];
+    document.getElementById('out-loss').classList.add('show');
   }
 
-  // ── BANKRUPTCY ──
-  function checkBankrupt() {
-    if (bankroll <= 0) {
-      bankroll = 0;
-      updateBankroll();
-      document.getElementById('play-again-btn').textContent = 'Start Over — $500 stake →';
-    }
-  }
+  updateCash();
+  document.getElementById('btn-again').classList.add('show');
+  if (cash <= 0) document.getElementById('btn-again').textContent = 'Start Over — $500 →';
+  nextCrowd();
+}
 
-  // ── RESET ──
-  function resetGame() {
-    if (bankroll <= 0) bankroll = 500;
+function updateCash() {
+  var el = document.getElementById('bankroll');
+  el.textContent = '$' + Math.max(0, cash);
+  el.className = 'bankroll-amount' + (cash < 100 ? ' low' : '');
+}
 
-    gameActive = false;
-    selectedSide = null;
-    pendingRaid = false;
-    currentRound = 0;
-    mongooseWins = 0;
-    cobraWins = 0;
+function hideOut() {
+  document.getElementById('out-win').classList.remove('show');
+  document.getElementById('out-loss').classList.remove('show');
+  document.getElementById('btn-again').classList.remove('show');
+}
 
-    document.getElementById('btn-mongoose').classList.remove('selected');
-    document.getElementById('btn-cobra').classList.remove('selected');
-    document.getElementById('bet-section').style.display = '';
-    document.getElementById('arena').classList.remove('visible');
-    document.getElementById('roll-btn').disabled = false;
-    document.getElementById('play-again-btn').classList.remove('visible');
-    document.getElementById('play-again-btn').textContent = 'Back to the Cage →';
-    document.getElementById('round-log').innerHTML = '';
-    document.getElementById('bet-error').classList.remove('visible');
-    document.getElementById('bet-error').textContent = 'Pick a side before you lay the cash.';
+function reset() {
+  if (cash <= 0) cash = 500;
+  side = null; cur = 0; mW = 0; cW = 0; active = false;
+  document.getElementById('btn-m').classList.remove('selected');
+  document.getElementById('btn-c').classList.remove('selected');
+  document.getElementById('err').classList.remove('show');
+  document.getElementById('err').textContent = 'Pick a side before you lay the cash.';
+  document.getElementById('bet-section').style.display = '';
+  document.getElementById('arena').classList.remove('show');
+  document.getElementById('btn-again').textContent = 'Back to the Cage →';
+  hideOut();
+  updateCash();
+  nextCrowd();
+}
 
-    hideOutcomes();
-    updateBankroll();
-    cycleCrowd();
-  }
+function nextCrowd() {
+  var el = document.getElementById('crowd');
+  el.style.opacity = '0';
+  setTimeout(function() {
+    crowdI = (crowdI + Math.floor(Math.random() * 3) + 1) % crowd.length;
+    el.textContent = crowd[crowdI];
+    el.style.opacity = '1';
+  }, 400);
+}
+
+setInterval(nextCrowd, 9000);
 </script>
-
 </body>
 </html>
