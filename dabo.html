@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DABO — The Highest Stakes Game in the Camp</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --void:       #070810;
+    --deep:       #0e1018;
+    --amber:      #c8943a;
+    --amber-dim:  #7a5818;
+    --crimson:    #8b0000;
+    --near-black: #1a0f00;
+    --ivory:      #e8e0cc;
+    --fog:        #4a5068;
+    --stone:      #2a2e3d;
+  }
+
+  body {
+    background: var(--void);
+    color: var(--ivory);
+    font-family: "Cinzel", serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem 4rem;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--amber-dim);
+    padding-bottom: 1.5rem;
+    width: 100%;
+    max-width: 800px;
+  }
+  .header-eyebrow {
+    font-size: 0.55rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--amber-dim);
+    margin-bottom: 0.5rem;
+  }
+  .header h1 {
+    font-family: "Cinzel Decorative", serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    color: var(--amber);
+    letter-spacing: 0.08em;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .header-sub {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    color: var(--amber-dim);
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .game-layout {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 2rem;
+    align-items: start;
+    width: 100%;
+    max-width: 900px;
+  }
+
+  /* ── LEFT PANEL — QUARK ── */
+  .quark-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .quark-portrait-wrap {
+    position: relative;
+    width: 200px;
+  }
+  .quark-portrait-wrap img {
+    width: 200px;
+    border: 1px solid var(--amber-dim);
+    display: block;
+  }
+  .quark-nameplate {
+    text-align: center;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    color: var(--amber-dim);
+    margin-top: 0.5rem;
+  }
+
+  /* ── QUARK DIALOGUE ── */
+  .quark-dialogue {
+    background: var(--near-black);
+    border: 1px solid var(--amber-dim);
+    border-top: 2px solid var(--amber);
+    padding: 1rem 1.2rem;
+    font-size: 0.75rem;
+    line-height: 1.7;
+    color: var(--ivory);
+    min-height: 80px;
+    width: 200px;
+    font-style: italic;
+    position: relative;
+  }
+  .quark-dialogue::before {
+    content: "QUARK";
+    position: absolute;
+    top: -0.6rem;
+    left: 0.8rem;
+    background: var(--near-black);
+    padding: 0 0.4rem;
+    font-size: 0.48rem;
+    letter-spacing: 0.25em;
+    color: var(--amber);
+    font-style: normal;
+  }
+
+  /* ── CENTER — WHEEL ── */
+  .wheel-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .wheel-wrap {
+    position: relative;
+    width: 320px;
+    height: 320px;
+  }
+
+  .wheel-wrap svg {
+    width: 320px;
+    height: 320px;
+    transition: filter 0.3s ease;
+  }
+
+  /* ── RIGHT PANEL — CONTROLS ── */
+  .controls-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  /* Gold display */
+  .gold-display {
+    background: var(--near-black);
+    border: 1px solid var(--amber-dim);
+    padding: 0.8rem 1rem;
+    text-align: center;
+  }
+  .gold-label {
+    font-size: 0.5rem;
+    letter-spacing: 0.3em;
+    color: var(--amber-dim);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .gold-amount {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--amber);
+  }
+  .gold-unit {
+    font-size: 0.6rem;
+    color: var(--amber-dim);
+    margin-left: 0.3rem;
+  }
+
+  /* Wager input */
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .input-label {
+    font-size: 0.5rem;
+    letter-spacing: 0.25em;
+    color: var(--amber-dim);
+    text-transform: uppercase;
+  }
+  .input-group input {
+    background: var(--deep);
+    border: 1px solid var(--amber-dim);
+    color: var(--ivory);
+    font-family: "Cinzel", serif;
+    font-size: 1rem;
+    padding: 0.6rem 0.8rem;
+    width: 100%;
+    text-align: center;
+    outline: none;
+  }
+  .input-group input:focus {
+    border-color: var(--amber);
+  }
+
+  /* Target selector */
+  .target-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+  }
+  .target-btn {
+    background: var(--deep);
+    border: 1px solid var(--fog);
+    color: var(--fog);
+    font-family: "Cinzel", serif;
+    font-size: 0.7rem;
+    padding: 0.4rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
+  .target-btn:hover {
+    border-color: var(--amber-dim);
+    color: var(--ivory);
+  }
+  .target-btn.selected {
+    background: var(--near-black);
+    border-color: var(--ivory);
+    color: var(--ivory);
+  }
+  /* Zone colors on buttons */
+  .target-btn.zone-crimson { border-color: #5a1a1a; }
+  .target-btn.zone-crimson.selected { background: #3a0a0a; border-color: var(--ivory); }
+  .target-btn.zone-amber-dim { border-color: #4a3a18; }
+  .target-btn.zone-amber-dim.selected { background: #2a1a08; border-color: var(--ivory); }
+  .target-btn.zone-amber { border-color: var(--amber-dim); }
+  .target-btn.zone-amber.selected { background: #2a1a08; border-color: var(--ivory); }
+
+  /* Roll button */
+  .roll-btn {
+    background: var(--near-black);
+    border: 2px solid var(--amber);
+    color: var(--amber);
+    font-family: "Cinzel Decorative", serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.15em;
+    padding: 0.9rem;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.2s;
+  }
+  .roll-btn:hover:not(:disabled) {
+    background: var(--amber);
+    color: var(--void);
+  }
+  .roll-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* Result display */
+  .result-display {
+    background: var(--near-black);
+    border: 1px solid var(--amber-dim);
+    padding: 0.8rem 1rem;
+    text-align: center;
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.3rem;
+  }
+  .result-label {
+    font-size: 0.48rem;
+    letter-spacing: 0.25em;
+    color: var(--amber-dim);
+  }
+  .result-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ivory);
+  }
+  .result-value.win  { color: var(--amber); }
+  .result-value.loss { color: var(--crimson); }
+  .result-value.exact { color: var(--amber); }
+
+  /* Streak tracker */
+  .streak-display {
+    background: var(--near-black);
+    border: 1px solid var(--amber-dim);
+    padding: 0.7rem 1rem;
+    text-align: center;
+  }
+  .streak-label {
+    font-size: 0.48rem;
+    letter-spacing: 0.25em;
+    color: var(--amber-dim);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .streak-chain {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    min-height: 20px;
+  }
+  .streak-token {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--amber);
+    border: 1px solid var(--amber-dim);
+    display: inline-block;
+  }
+  .streak-empty {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid var(--fog);
+    display: inline-block;
+  }
+
+  /* Let it ride prompt */
+  .ride-prompt {
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .ride-prompt.visible { display: flex; }
+  .ride-btn {
+    background: var(--near-black);
+    border: 1px solid var(--amber-dim);
+    color: var(--ivory);
+    font-family: "Cinzel", serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    padding: 0.6rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .ride-btn.collect { border-color: var(--amber); color: var(--amber); }
+  .ride-btn.collect:hover { background: var(--amber); color: var(--void); }
+  .ride-btn.ride:hover { border-color: var(--ivory); }
+
+  /* Fee schedule */
+  .fee-schedule {
+    background: var(--near-black);
+    border: 1px solid #2a1a08;
+    padding: 0.8rem 1rem;
+    font-size: 0.5rem;
+    line-height: 1.9;
+    color: var(--amber-dim);
+  }
+  .fee-schedule-title {
+    letter-spacing: 0.2em;
+    color: var(--amber);
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+  .fee-row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* Payout table */
+  .payout-table {
+    background: var(--near-black);
+    border: 1px solid #2a1a08;
+    padding: 0.8rem 1rem;
+    font-size: 0.52rem;
+    line-height: 2;
+    color: var(--ivory);
+    width: 200px;
+  }
+  .payout-title {
+    letter-spacing: 0.2em;
+    color: var(--amber);
+    margin-bottom: 0.4rem;
+    display: block;
+    text-align: center;
+  }
+  .payout-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #2a1a08;
+    padding: 0.1rem 0;
+  }
+  .payout-row:last-child { border-bottom: none; }
+  .payout-highlight { color: var(--amber); font-weight: 600; }
+
+  /* Narrative states */
+  .narrative-banner {
+    display: none;
+    text-align: center;
+    padding: 1.5rem;
+    border: 2px solid var(--amber);
+    background: var(--near-black);
+    width: 100%;
+    max-width: 900px;
+    margin-top: 1.5rem;
+  }
+  .narrative-banner.visible { display: block; }
+  .narrative-banner h2 {
+    font-family: "Cinzel Decorative", serif;
+    font-size: 1.5rem;
+    color: var(--amber);
+    margin-bottom: 0.8rem;
+  }
+  .narrative-banner p {
+    font-size: 0.75rem;
+    color: var(--ivory);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+  .restart-btn {
+    background: var(--near-black);
+    border: 1px solid var(--amber);
+    color: var(--amber);
+    font-family: "Cinzel", serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    padding: 0.6rem 1.5rem;
+    cursor: pointer;
+  }
+  .restart-btn:hover { background: var(--amber); color: var(--void); }
+
+  /* Wheel SVG states */
+  .seg-target   { stroke: #e8e0cc !important; stroke-width: 3; filter: brightness(1.3); }
+  .seg-result   { stroke: #c8943a !important; stroke-width: 3; filter: brightness(1.2); }
+  .seg-dabo     { fill: #c8943a !important; filter: url(#amber-glow) brightness(1.4); }
+  .seg-loss     { fill-opacity: 0.35 !important; }
+  .seg-exact    { fill: #c8943a !important; filter: url(#amber-glow) brightness(1.5); }
+  .seg-exact-cool { fill-opacity: 0.5 !important; stroke: #c8943a !important; stroke-width: 2; }
+  .glow-intense { opacity: 1 !important; filter: url(#amber-glow); }
+
+  /* House policy footer */
+  .house-policy {
+    margin-top: 3rem;
+    text-align: center;
+    font-size: 0.48rem;
+    letter-spacing: 0.2em;
+    color: var(--amber-dim);
+    line-height: 2.2;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-eyebrow">I.W.B.F. Approved — Form 66⅔-B</div>
+  <h1>DABO</h1>
+  <div class="header-sub">Near Miss Wins &nbsp;·&nbsp; Exact Hit Loses &nbsp;·&nbsp; The House Always Wins</div>
+</div>
+
+<div class="game-layout">
+
+  <!-- LEFT: QUARK -->
+  <div class="quark-panel">
+    <div class="quark-portrait-wrap">
+      <img id="quark-portrait" src="data:image/webp;base64,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" alt="Quark, House Dealer">
+    </div>
+    <div class="quark-nameplate">QUARK &nbsp;·&nbsp; HOUSE DEALER</div>
+    <div class="quark-dialogue" id="quark-dialogue">
+      Never Chase. Never Complain. Never Win Enough. Welcome to the I.W.B.F.
+    </div>
+    <div class="payout-table">
+      <span class="payout-title">DABO PAYOUTS</span>
+      <div class="payout-row"><span>1 DABO</span><span class="payout-highlight">×10</span></div>
+      <div class="payout-row"><span>2 DABO Streak</span><span class="payout-highlight">×30</span></div>
+      <div class="payout-row"><span>3 DABO Streak</span><span class="payout-highlight">×50</span></div>
+      <div class="payout-row"><span>4 DABO Streak</span><span class="payout-highlight">×100</span></div>
+      <div class="payout-row" style="color:var(--crimson); font-size:0.45rem; margin-top:0.3rem;">
+        <span colspan="2">One loss wipes the streak.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER: WHEEL -->
+  <div class="wheel-panel">
+    <div class="wheel-wrap">
+      <!-- DABO WHEEL SVG -->
+      <svg id="dabo-wheel" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="320" height="320">
+        <defs>
+          <filter id="amber-glow">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+          <radialGradient id="wheel-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#c8943a" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="#070810" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <!-- Background -->
+        <rect width="400" height="400" fill="#070810"/>
+
+        <!-- Ambient glow -->
+        <circle id="dabo-glow" cx="200" cy="200" r="185" fill="url(#wheel-glow)" opacity="0.5"/>
+
+        <!-- Outer ring -->
+        <circle cx="200" cy="200" r="183" fill="#1a0f00" stroke="#c8943a" stroke-width="1.5"/>
+
+        <!-- Segments -->
+        <g id="segments">
+          <path id="segment-1"  fill="#8b0000" d="M200,200 L200,17 A183,183 0 0,1 256.5,26.2 Z"/>
+          <path id="segment-2"  fill="#8b0000" d="M200,200 L256.5,26.2 A183,183 0 0,1 307.5,52.8 Z"/>
+          <path id="segment-3"  fill="#8b0000" d="M200,200 L307.5,52.8 A183,183 0 0,1 347.2,93.5 Z"/>
+          <path id="segment-4"  fill="#8b0000" d="M200,200 L347.2,93.5 A183,183 0 0,1 373.8,144.5 Z"/>
+          <path id="segment-5"  fill="#8b0000" d="M200,200 L373.8,144.5 A183,183 0 0,1 383,200 Z"/>
+          <path id="segment-6"  fill="#8b0000" d="M200,200 L383,200 A183,183 0 0,1 373.8,255.5 Z"/>
+          <path id="segment-7"  fill="#8b0000" d="M200,200 L373.8,255.5 A183,183 0 0,1 347.2,306.5 Z"/>
+          <path id="segment-8"  fill="#7a5818" d="M200,200 L347.2,306.5 A183,183 0 0,1 307.5,347.2 Z"/>
+          <path id="segment-9"  fill="#7a5818" d="M200,200 L307.5,347.2 A183,183 0 0,1 256.5,373.8 Z"/>
+          <path id="segment-10" fill="#7a5818" d="M200,200 L256.5,373.8 A183,183 0 0,1 200,383 Z"/>
+          <path id="segment-11" fill="#7a5818" d="M200,200 L200,383 A183,183 0 0,1 143.5,373.8 Z"/>
+          <path id="segment-12" fill="#7a5818" d="M200,200 L143.5,373.8 A183,183 0 0,1 92.5,347.2 Z"/>
+          <path id="segment-13" fill="#7a5818" d="M200,200 L92.5,347.2 A183,183 0 0,1 52.8,306.5 Z"/>
+          <path id="segment-14" fill="#c8943a" d="M200,200 L52.8,306.5 A183,183 0 0,1 26.2,255.5 Z"/>
+          <path id="segment-15" fill="#c8943a" d="M200,200 L26.2,255.5 A183,183 0 0,1 17,200 Z"/>
+          <path id="segment-16" fill="#c8943a" d="M200,200 L17,200 A183,183 0 0,1 26.2,144.5 Z"/>
+          <path id="segment-17" fill="#c8943a" d="M200,200 L26.2,144.5 A183,183 0 0,1 52.8,93.5 Z"/>
+          <path id="segment-18" fill="#c8943a" d="M200,200 L52.8,93.5 A183,183 0 0,1 92.5,52.8 Z"/>
+          <path id="segment-19" fill="#c8943a" d="M200,200 L92.5,52.8 A183,183 0 0,1 143.5,26.2 Z"/>
+          <path id="segment-20" fill="#c8943a" d="M200,200 L143.5,26.2 A183,183 0 0,1 200,17 Z"/>
+        </g>
+
+        <!-- Divider lines -->
+        <g stroke="#070810" stroke-width="1.5" opacity="0.8">
+          <line x1="200" y1="200" x2="200" y2="17"/>
+          <line x1="200" y1="200" x2="256.5" y2="26.2"/>
+          <line x1="200" y1="200" x2="307.5" y2="52.8"/>
+          <line x1="200" y1="200" x2="347.2" y2="93.5"/>
+          <line x1="200" y1="200" x2="373.8" y2="144.5"/>
+          <line x1="200" y1="200" x2="383" y2="200"/>
+          <line x1="200" y1="200" x2="373.8" y2="255.5"/>
+          <line x1="200" y1="200" x2="347.2" y2="306.5"/>
+          <line x1="200" y1="200" x2="307.5" y2="347.2"/>
+          <line x1="200" y1="200" x2="256.5" y2="373.8"/>
+          <line x1="200" y1="200" x2="200" y2="383"/>
+          <line x1="200" y1="200" x2="143.5" y2="373.8"/>
+          <line x1="200" y1="200" x2="92.5" y2="347.2"/>
+          <line x1="200" y1="200" x2="52.8" y2="306.5"/>
+          <line x1="200" y1="200" x2="26.2" y2="255.5"/>
+          <line x1="200" y1="200" x2="17" y2="200"/>
+          <line x1="200" y1="200" x2="26.2" y2="144.5"/>
+          <line x1="200" y1="200" x2="52.8" y2="93.5"/>
+          <line x1="200" y1="200" x2="92.5" y2="52.8"/>
+          <line x1="200" y1="200" x2="143.5" y2="26.2"/>
+        </g>
+
+        <!-- Numbers at radius 120 -->
+        <g font-family="Cinzel, serif" font-size="13" fill="#e8e0cc" text-anchor="middle" dominant-baseline="middle" pointer-events="none">
+          <text x="221" y="80">1</text>
+          <text x="257" y="91">2</text>
+          <text x="286" y="114">3</text>
+          <text x="308" y="145">4</text>
+          <text x="319" y="181">5</text>
+          <text x="319" y="219">6</text>
+          <text x="308" y="255">7</text>
+          <text x="286" y="286">8</text>
+          <text x="257" y="309">9</text>
+          <text x="220" y="320">10</text>
+          <text x="180" y="320">11</text>
+          <text x="143" y="309">12</text>
+          <text x="114" y="286">13</text>
+          <text x="92"  y="255">14</text>
+          <text x="81"  y="219">15</text>
+          <text x="81"  y="181">16</text>
+          <text x="92"  y="145">17</text>
+          <text x="114" y="114">18</text>
+          <text x="143" y="91">19</text>
+          <text x="179" y="80">20</text>
+        </g>
+
+        <!-- Hub border -->
+        <circle cx="200" cy="200" r="72" fill="none" stroke="#c8943a" stroke-width="1.5"/>
+
+        <!-- Hub -->
+        <circle id="dabo-hub" cx="200" cy="200" r="70" fill="#070810"/>
+
+        <!-- Hub title -->
+        <text id="dabo-title" x="200" y="194" font-family="Cinzel Decorative, serif" font-size="28" font-weight="700" fill="#c8943a" text-anchor="middle" dominant-baseline="middle" letter-spacing="3">DABO</text>
+
+        <!-- Hub subtitle -->
+        <text id="dabo-subtitle" x="200" y="220" font-family="Cinzel, serif" font-size="8" fill="#7a5818" text-anchor="middle" letter-spacing="1.5">NEAR MISS WINS.</text>
+      </svg>
+    </div>
+
+    <!-- House result readout -->
+    <div class="result-display">
+      <span class="result-label">HOUSE RESULT</span>
+      <span class="result-value" id="result-value">—</span>
+    </div>
+  </div>
+
+  <!-- RIGHT: CONTROLS -->
+  <div class="controls-panel">
+
+    <div class="gold-display">
+      <span class="gold-label">GOLD BALANCE</span>
+      <span class="gold-amount" id="gold-display">150</span>
+      <span class="gold-unit">GP</span>
+    </div>
+
+    <div class="input-group">
+      <span class="input-label">Wager (min 10)</span>
+      <input type="number" id="wager-input" value="10" min="10" max="150">
+    </div>
+
+    <div class="input-group">
+      <span class="input-label">Target Number (1–20)</span>
+      <div class="target-grid" id="target-grid">
+      </div>
+    </div>
+
+    <button class="roll-btn" id="roll-btn" type="button">ROLL THE HOUSE</button>
+
+    <div class="result-display">
+      <span class="result-label">OUTCOME</span>
+      <span class="result-value" id="outcome-value">Awaiting your wager.</span>
+    </div>
+
+    <div class="streak-display">
+      <span class="streak-label">DABO STREAK</span>
+      <div class="streak-chain" id="streak-chain">
+        <span class="streak-empty"></span>
+        <span class="streak-empty"></span>
+        <span class="streak-empty"></span>
+        <span class="streak-empty"></span>
+      </div>
+    </div>
+
+    <div class="ride-prompt" id="ride-prompt">
+      <button class="ride-btn collect" id="collect-btn" type="button">COLLECT WINNINGS</button>
+      <button class="ride-btn ride" id="ride-btn" type="button">LET IT RIDE</button>
+    </div>
+
+    <div class="fee-schedule">
+      <span class="fee-schedule-title">FEE SCHEDULE 66⅔-B</span>
+      <div class="fee-row"><span>Near Miss Fee</span><span>8.50%</span></div>
+      <div class="fee-row"><span>Excitement Tax</span><span>3.00%</span></div>
+      <div class="fee-row"><span>Hope Surcharge</span><span>9.95%</span></div>
+      <div class="fee-row"><span>Misfortune Levy</span><span>5.55%</span></div>
+      <div class="fee-row"><span>Despair Duty</span><span>4.41%</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Narrative end states -->
+<div class="narrative-banner" id="banner-void">
+  <h2>VOID</h2>
+  <p>Your gold is gone. The house thanks you for your contribution to the I.W.B.F. General Fund.<br>
+  Complaint Form 66⅔-B available at the desk. Take a number. Lose a soul.</p>
+  <button class="restart-btn" type="button" onclick="initGame()">FILE FOR REINSTATEMENT</button>
+</div>
+
+<div class="narrative-banner" id="banner-stable">
+  <h2>STABLE</h2>
+  <p>You collected your winnings. A rational decision.<br>
+  Quark finds rationality deeply suspicious.</p>
+  <button class="restart-btn" type="button" onclick="initGame()">RETURN TO THE TABLE</button>
+</div>
+
+<div class="narrative-banner" id="banner-blackflame">
+  <h2>BLACK FLAME</h2>
+  <p>Four DABO chain. The house acknowledges your improbable performance.<br>
+  This has been filed under: Statistical Anomaly, Pending Review.<br>
+  Your winnings have been disbursed. Mostly.</p>
+  <button class="restart-btn" type="button" onclick="initGame()">PRESS YOUR LUCK FURTHER</button>
+</div>
+
+<div class="house-policy">
+  <div>HOUSE POLICY — IT IS NOT OUR FAULT YOU CANNOT DO MATH</div>
+  <div>PAYOUTS ARE FICTITIOUS. FEES ARE REAL.</div>
+  <div>TODAY'S NUMBERS MEAN NOTHING. TOMORROW'S WILL COST MORE.</div>
+  <div style="margin-top:0.8rem; color: var(--fog);">semanticecology.org &nbsp;·&nbsp; I.W.B.F. Licensed &nbsp;·&nbsp; All Fees Subject to Rent & Review</div>
+</div>
+
+<script>
+var gold = 150;
+var streak = 0;
+var target = null;
+var rolling = false;
+var pendingWin = 0;
+
+var quarkLines = {
+  idle: [
+    "Never Chase. Never Complain. Never Win Enough.",
+    "The table is patient. Are you?",
+    "Select your number. The house has already selected its outcome.",
+    "Form 66\u2153-B is available if you have concerns. You won't.",
+    "Today's numbers mean nothing. Tomorrow's will cost more."
+  ],
+  win: [
+    "A DABO. The house acknowledges your near-miss.",
+    "You were close. Technically, that's the only way to win here.",
+    "Congratulations. Would you like to surrender those winnings now or later?",
+    "DABO. The paperwork has been filed."
+  ],
+  loss: [
+    "The house appreciates your contribution.",
+    "Not a DABO. Better luck constructing a different expectation.",
+    "Losses are processed immediately. Refunds are not processed at all.",
+    "The house always wins. This is not philosophy. It's accounting."
+  ],
+  exact: [
+    "Your number. Exactly your number. The house appreciates the precision.",
+    "So close. Mathematically speaking, you were perfect. That's the problem.",
+    "Form 66\u2153-B. Exact Hit. Filed under: Not Our Problem.",
+    "You hit your number. The rules were always this way. You simply didn't believe them."
+  ],
+  blackflame: [
+    "Four DABO chain. This has been noted. Investigations are ongoing.",
+    "Statistical anomaly. Your file has been flagged. Congratulations, probably."
+  ],
+  void: [
+    "Your balance has reached zero. The house thanks you for your service.",
+    "VOID. Please collect Form 66\u2153-B from the front desk. Take a number."
+  ]
+};
+
+function getLine(category) {
+  var lines = quarkLines[category];
+  return lines[Math.floor(Math.random() * lines.length)];
+}
+
+function setQuark(text) {
+  document.getElementById("quark-dialogue").innerHTML = text;
+}
+
+function buildTargetGrid() {
+  var grid = document.getElementById("target-grid");
+  grid.innerHTML = "";
+  for (var i = 1; i <= 20; i++) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "target-btn";
+    btn.textContent = i;
+    btn.dataset.num = i;
+    if (i <= 7) btn.classList.add("zone-crimson");
+    else if (i <= 13) btn.classList.add("zone-amber-dim");
+    else btn.classList.add("zone-amber");
+    btn.onclick = function() { selectTarget(parseInt(this.dataset.num)); };
+    grid.appendChild(btn);
+  }
+}
+
+function selectTarget(num) {
+  target = num;
+  var btns = document.querySelectorAll(".target-btn");
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].classList.remove("selected");
+    if (parseInt(btns[i].dataset.num) === num) btns[i].classList.add("selected");
+  }
+  clearWheelStates();
+  highlightSegment(num, "seg-target");
+}
+
+function clearWheelStates() {
+  for (var i = 1; i <= 20; i++) {
+    var seg = document.getElementById("segment-" + i);
+    if (seg) {
+      seg.classList.remove("seg-target", "seg-result", "seg-dabo", "seg-loss", "seg-exact", "seg-exact-cool");
+    }
+  }
+  document.getElementById("dabo-glow").classList.remove("glow-intense");
+  document.getElementById("dabo-hub").style.stroke = "";
+  document.getElementById("dabo-title").style.fill = "#c8943a";
+}
+
+function highlightSegment(num, cls) {
+  var seg = document.getElementById("segment-" + num);
+  if (seg) seg.classList.add(cls);
+}
+
+function updateStreak() {
+  var chain = document.getElementById("streak-chain");
+  chain.innerHTML = "";
+  for (var i = 0; i < 4; i++) {
+    var token = document.createElement("span");
+    token.className = i < streak ? "streak-token" : "streak-empty";
+    chain.appendChild(token);
+  }
+}
+
+function updateGold() {
+  document.getElementById("gold-display").textContent = gold;
+}
+
+function setResult(text, cls) {
+  var el = document.getElementById("result-value");
+  el.textContent = text;
+  el.className = "result-value" + (cls ? " " + cls : "");
+}
+
+function setOutcome(text, cls) {
+  var el = document.getElementById("outcome-value");
+  el.innerHTML = text;
+  el.className = "result-value" + (cls ? " " + cls : "");
+}
+
+function showRidePrompt(show) {
+  var p = document.getElementById("ride-prompt");
+  if (show) p.classList.add("visible");
+  else p.classList.remove("visible");
+}
+
+function showBanner(id) {
+  document.getElementById("banner-void").classList.remove("visible");
+  document.getElementById("banner-stable").classList.remove("visible");
+  document.getElementById("banner-blackflame").classList.remove("visible");
+  if (id) document.getElementById(id).classList.add("visible");
+}
+
+function roll() {
+  if (rolling) return;
+  if (target === null) { setQuark("Select a target number first."); return; }
+
+  var wager = parseInt(document.getElementById("wager-input").value);
+  if (isNaN(wager) || wager < 10) { setQuark("Minimum wager is 10 Gold."); return; }
+  if (wager > gold) { setQuark("You don't have enough gold. The house noticed."); return; }
+
+  rolling = true;
+  showRidePrompt(false);
+  document.getElementById("roll-btn").disabled = true;
+
+  // Deduct wager
+  gold -= wager;
+  updateGold();
+
+  // House rolls
+  var houseResult = Math.floor(Math.random() * 20) + 1;
+  var rawDelta = Math.abs(houseResult - target);
+  var delta = Math.min(rawDelta, 20 - rawDelta);
+
+  // STAGE 1: show target (already shown), pause, then show result
+  setTimeout(function() {
+    highlightSegment(houseResult, "seg-result");
+    setResult(houseResult);
+
+    setTimeout(function() {
+      // STAGE 2: evaluate
+      if (delta === 0) {
+        // EXACT HIT — false win first
+        highlightSegment(houseResult, "seg-exact");
+        document.getElementById("dabo-glow").classList.add("glow-intense");
+        document.getElementById("dabo-title").style.fill = "#e8e0cc";
+        setOutcome("...", "");
+
+        setTimeout(function() {
+          // Correction
+          var seg = document.getElementById("segment-" + houseResult);
+          if (seg) {
+            seg.classList.remove("seg-exact");
+            seg.classList.add("seg-exact-cool");
+          }
+          document.getElementById("dabo-glow").classList.remove("glow-intense");
+          document.getElementById("dabo-title").style.fill = "#c8943a";
+
+          setOutcome("EXACT HIT — LOSS", "loss");
+          setQuark(getLine("exact"));
+          streak = 0;
+          updateStreak();
+
+          if (gold <= 0) {
+            setTimeout(function() { showBanner("banner-void"); setQuark(getLine("void")); }, 1200);
+          }
+          rolling = false;
+          document.getElementById("roll-btn").disabled = false;
+        }, 600);
+
+      } else if (delta === 1) {
+        // DABO WIN — highlight result only, target stays visible as seg-target
+        highlightSegment(houseResult, "seg-dabo");
+        document.getElementById("dabo-glow").classList.add("glow-intense");
+
+        streak++;
+        updateStreak();
+
+        var multipliers = [0, 10, 30, 50, 100];
+        var mult = multipliers[Math.min(streak, 4)];
+        var winAmount = wager * mult;
+        pendingWin = winAmount;
+
+        setOutcome("DABO! +" + winAmount + " GP pending", "win");
+        setQuark(getLine("win"));
+
+        if (streak >= 4) {
+          gold += winAmount;
+          updateGold();
+          streak = 0;
+          updateStreak();
+          showBanner("banner-blackflame");
+          setQuark(getLine("blackflame"));
+          rolling = false;
+          document.getElementById("roll-btn").disabled = false;
+        } else {
+          showRidePrompt(true);
+          rolling = false;
+          document.getElementById("roll-btn").disabled = false;
+        }
+
+      } else {
+        // STANDARD LOSS
+        highlightSegment(houseResult, "seg-loss");
+        setOutcome("LOSS", "loss");
+        setQuark(getLine("loss"));
+        streak = 0;
+        updateStreak();
+
+        if (gold <= 0) {
+          setTimeout(function() { showBanner("banner-void"); setQuark(getLine("void")); }, 1200);
+        }
+        rolling = false;
+        document.getElementById("roll-btn").disabled = false;
+      }
+    }, 400);
+  }, 300);
+}
+
+function collect() {
+  gold += pendingWin;
+  pendingWin = 0;
+  updateGold();
+  showRidePrompt(false);
+  streak = 0;
+  updateStreak();
+  clearWheelStates();
+  if (target !== null) highlightSegment(target, "seg-target");
+  setOutcome("Winnings collected.", "");
+  setQuark("A rational decision. Quark finds rationality deeply suspicious.");
+  showBanner("banner-stable");
+}
+
+function letItRide() {
+  gold += pendingWin;
+  pendingWin = 0;
+  updateGold();
+  showRidePrompt(false);
+  clearWheelStates();
+  if (target !== null) highlightSegment(target, "seg-target");
+  setOutcome("Let it ride. Bold.", "");
+  setQuark("The table is ready. Your optimism is noted. And concerning.");
+}
+
+function initGame() {
+  gold = 150;
+  streak = 0;
+  target = null;
+  rolling = false;
+  pendingWin = 0;
+  updateGold();
+  updateStreak();
+  clearWheelStates();
+  showRidePrompt(false);
+  showBanner(null);
+  setResult("—");
+  setOutcome("Awaiting your wager.", "");
+  setQuark("Never Chase. Never Complain. Never Win Enough. Welcome to the I.W.B.F.");
+  var btns = document.querySelectorAll(".target-btn");
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove("selected");
+}
+
+document.getElementById("roll-btn").onclick = roll;
+document.getElementById("collect-btn").onclick = collect;
+document.getElementById("ride-btn").onclick = letItRide;
+
+buildTargetGrid();
+initGame();
+</script>
+</body>
+</html>
