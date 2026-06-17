@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEMANTIC ECOLOGY — Character Assessment</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* Cutter / 1946 */
+    --c-bg: #1a1008;
+    --c-paper: #f0e8d8;
+    --c-ink: #1a1008;
+    --c-rust: #8b3a1a;
+    --c-rust-dim: #5a2510;
+    --c-felt: #2a3d1a;
+    --c-mist: #c8b89a;
+
+    /* Morthalan / IWBF */
+    --m-bg: #070810;
+    --m-void: #0e1018;
+    --m-ivory: #e8e0cc;
+    --m-amber: #c8943a;
+    --m-amber-dim: #7a5818;
+    --m-flame: #8b0000;
+    --m-ash: #8a90a8;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Georgia', serif;
+    background: #111;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    padding: 2rem 1rem 1.5rem;
+    background: #0a0a0a;
+    border-bottom: 1px solid #333;
+  }
+
+  .header-eyebrow {
+    font-family: 'Courier New', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: #555;
+    margin-bottom: 0.75rem;
+  }
+
+  .header-title {
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    font-weight: normal;
+    font-style: italic;
+    color: #bbb;
+    letter-spacing: 0.05em;
+  }
+
+  .header-sub {
+    font-family: 'Courier New', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: #444;
+    margin-top: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  /* ── SPLIT ARENA ── */
+  .arena {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .arena-divider {
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, #444 15%, #444 85%, transparent);
+    flex-shrink: 0;
+  }
+
+  /* ── PANELS ── */
+  .panel {
+    flex: 1;
+    padding: 3rem 2.5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .panel-cutter { background: var(--c-bg); }
+  .panel-morthalan { background: var(--m-bg); }
+
+  /* ── PANEL HEADERS ── */
+  .panel-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .panel-cutter .panel-header { border-bottom: 1px solid var(--c-rust-dim); }
+  .panel-morthalan .panel-header { border-bottom: 1px solid var(--m-amber-dim); }
+
+  .panel-label {
+    font-family: 'Courier New', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .panel-cutter .panel-label { color: var(--c-rust); }
+  .panel-morthalan .panel-label { color: var(--m-amber-dim); }
+
+  .panel-title {
+    font-size: clamp(1.4rem, 2.8vw, 2rem);
+    font-weight: normal;
+    line-height: 1.1;
+    margin-bottom: 0.75rem;
+  }
+
+  .panel-cutter .panel-title { color: var(--c-paper); font-style: italic; }
+  .panel-morthalan .panel-title {
+    color: var(--m-ivory);
+    font-family: 'Courier New', monospace;
+    font-style: normal;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: clamp(1rem, 2vw, 1.4rem);
+  }
+
+  .panel-intro {
+    font-size: 0.82rem;
+    line-height: 1.75;
+  }
+
+  .panel-cutter .panel-intro { color: var(--c-mist); }
+  .panel-morthalan .panel-intro {
+    color: var(--m-ash);
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+  }
+
+  /* ── QUIZ ── */
+  .quiz { display: flex; flex-direction: column; gap: 2rem; flex: 1; }
+
+  .question-block { display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .question-number {
+    font-family: 'Courier New', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+
+  .panel-cutter .question-number { color: var(--c-rust); }
+  .panel-morthalan .question-number { color: var(--m-amber-dim); }
+
+  .question-text {
+    font-size: 0.88rem;
+    line-height: 1.65;
+  }
+
+  .panel-cutter .question-text { color: var(--c-paper); }
+  .panel-morthalan .question-text {
+    color: var(--m-ivory);
+    font-family: 'Courier New', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.25rem; }
+
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.6rem 0.85rem;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    border-radius: 2px;
+  }
+
+  .panel-cutter .option:hover { background: rgba(139, 58, 26, 0.1); border-color: var(--c-rust-dim); }
+  .panel-morthalan .option:hover { background: rgba(200, 148, 58, 0.08); border-color: var(--m-amber-dim); }
+
+  .panel-cutter .option.selected {
+    background: rgba(139, 58, 26, 0.2);
+    border-color: var(--c-rust);
+  }
+
+  .panel-morthalan .option.selected {
+    background: rgba(200, 148, 58, 0.15);
+    border-color: var(--m-amber);
+  }
+
+  .option input[type="radio"] { display: none; }
+
+  .option-marker {
+    font-family: 'Courier New', monospace;
+    font-size: 0.65rem;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+    letter-spacing: 0.1em;
+  }
+
+  .panel-cutter .option-marker { color: var(--c-rust); }
+  .panel-cutter .option.selected .option-marker { color: var(--c-paper); }
+
+  .panel-morthalan .option-marker { color: var(--m-amber-dim); }
+  .panel-morthalan .option.selected .option-marker { color: var(--m-amber); }
+
+  .option-text {
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .panel-cutter .option-text { color: var(--c-mist); }
+  .panel-cutter .option.selected .option-text { color: var(--c-paper); }
+
+  .panel-morthalan .option-text {
+    color: var(--m-ash);
+    font-family: 'Courier New', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+  }
+  .panel-morthalan .option.selected .option-text { color: var(--m-ivory); }
+
+  /* ── SUBMIT ── */
+  .submit-btn {
+    margin-top: 2rem;
+    padding: 0.9rem 2rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s;
+    align-self: flex-start;
+  }
+
+  .panel-cutter .submit-btn {
+    background: var(--c-rust);
+    color: var(--c-paper);
+  }
+  .panel-cutter .submit-btn:hover { background: #a04520; }
+
+  .panel-morthalan .submit-btn {
+    background: transparent;
+    color: var(--m-amber);
+    border: 1px solid var(--m-amber-dim);
+  }
+  .panel-morthalan .submit-btn:hover {
+    background: rgba(200, 148, 58, 0.1);
+    border-color: var(--m-amber);
+  }
+
+  /* ── RESULTS ── */
+  .results {
+    display: none;
+    margin-top: 2rem;
+    padding: 1.5rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .panel-cutter .results {
+    background: rgba(240, 232, 216, 0.05);
+    border: 1px solid var(--c-rust-dim);
+  }
+
+  .panel-morthalan .results {
+    background: rgba(200, 148, 58, 0.05);
+    border: 1px solid var(--m-amber-dim);
+  }
+
+  .results.visible { display: flex; }
+
+  .results-title {
+    font-family: 'Courier New', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .panel-cutter .results-title {
+    color: var(--c-rust);
+    border-bottom: 1px solid var(--c-rust-dim);
+  }
+
+  .panel-morthalan .results-title {
+    color: var(--m-amber);
+    border-bottom: 1px solid var(--m-amber-dim);
+  }
+
+  .results-flavor {
+    font-size: 0.8rem;
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .panel-cutter .results-flavor { color: var(--c-mist); }
+  .panel-morthalan .results-flavor {
+    color: var(--m-ash);
+    font-family: 'Courier New', monospace;
+    font-size: 0.72rem;
+    font-style: normal;
+    letter-spacing: 0.02em;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+  }
+
+  .stat-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .panel-cutter .stat-row { background: rgba(139, 58, 26, 0.12); }
+  .panel-morthalan .stat-row { background: rgba(200, 148, 58, 0.08); }
+
+  .stat-label {
+    font-family: 'Courier New', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .panel-cutter .stat-label { color: var(--c-mist); }
+  .panel-morthalan .stat-label { color: var(--m-ash); }
+
+  .stat-value {
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  .panel-cutter .stat-value { color: var(--c-paper); }
+  .panel-morthalan .stat-value { color: var(--m-amber); }
+
+  .results-note {
+    font-family: 'Courier New', monospace;
+    font-size: 0.65rem;
+    line-height: 1.6;
+    letter-spacing: 0.03em;
+    padding: 0.75rem;
+    margin-top: 0.25rem;
+  }
+
+  .panel-cutter .results-note {
+    color: var(--c-rust);
+    border-left: 2px solid var(--c-rust-dim);
+  }
+
+  .panel-morthalan .results-note {
+    color: var(--m-amber-dim);
+    border-left: 2px solid var(--m-amber-dim);
+  }
+
+  /* ── GAME LINKS ── */
+  .game-links {
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .game-links.visible { display: flex; }
+
+  .game-links-title {
+    font-family: 'Courier New', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+  }
+
+  .panel-cutter .game-links-title { color: var(--c-rust-dim); }
+  .panel-morthalan .game-links-title { color: var(--m-amber-dim); }
+
+  .game-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.85rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+
+  .panel-cutter .game-link { color: var(--c-mist); }
+  .panel-cutter .game-link:hover {
+    color: var(--c-paper);
+    border-color: var(--c-rust-dim);
+    background: rgba(139, 58, 26, 0.1);
+  }
+
+  .panel-morthalan .game-link {
+    color: var(--m-ash);
+    font-family: 'Courier New', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+  }
+  .panel-morthalan .game-link:hover {
+    color: var(--m-ivory);
+    border-color: var(--m-amber-dim);
+    background: rgba(200, 148, 58, 0.08);
+  }
+
+  .game-link-arrow {
+    font-size: 0.7rem;
+    flex-shrink: 0;
+  }
+
+  .panel-cutter .game-link-arrow { color: var(--c-rust); }
+  .panel-morthalan .game-link-arrow { color: var(--m-amber-dim); }
+
+  .game-link-name { font-size: 0.78rem; }
+  .game-link-slug {
+    font-family: 'Courier New', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    margin-left: auto;
+    opacity: 0.4;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 1.25rem;
+    background: #0a0a0a;
+    border-top: 1px solid #1a1a1a;
+  }
+
+  .footer-text {
+    font-family: 'Courier New', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    color: #333;
+    text-transform: uppercase;
+  }
+
+  /* ── ERROR ── */
+  .error-msg {
+    font-family: 'Courier New', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    padding: 0.5rem 0;
+    display: none;
+  }
+
+  .panel-cutter .error-msg { color: var(--c-rust); }
+  .panel-morthalan .error-msg { color: var(--m-flame); }
+  .error-msg.visible { display: block; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 760px) {
+    .arena { flex-direction: column; }
+    .arena-divider { width: 100%; height: 1px; background: linear-gradient(to right, transparent, #444 15%, #444 85%, transparent); }
+    .panel { padding: 2rem 1.25rem 3rem; }
+    .stat-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span class="header-eyebrow">Semantic Ecology — Game Series</span>
+  <h1 class="header-title">Character Assessment</h1>
+  <p class="header-sub">Complete one quiz. Record your stats. Enter them when you choose your game.</p>
+</div>
+
+<div class="arena">
+
+  <!-- ══ CUTTER'S SIDE ══ -->
+  <div class="panel panel-cutter">
+    <div class="panel-header">
+      <span class="panel-label">Assessment One — 1946 Framework</span>
+      <h2 class="panel-title">Cutter Malone's Intake</h2>
+      <p class="panel-intro">
+        Five questions. No right answers. The city doesn't grade on a curve —
+        it just calculates what you're worth and adjusts accordingly.
+        Answer honest. The bones don't lie.
+      </p>
+    </div>
+
+    <div class="quiz" id="cutter-quiz">
+
+      <!-- Q1 -->
+      <div class="question-block">
+        <span class="question-number">Question 01 of 05</span>
+        <p class="question-text">You walk into the Rusty Anchor. Three men at the bar clock you the second the door opens. What do you do first?</p>
+        <div class="options" data-question="c1">
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="c1" value="SS2">
+            <span class="option-marker">A —</span>
+            <span class="option-text">Read the room. Clocked their positions before your boot cleared the threshold. You know which one is carrying and which one is bluffing.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="c1" value="MOX2">
+            <span class="option-marker">B —</span>
+            <span class="option-text">Hold the stare. Let them know you saw them looking. The first man to look away loses the hand before the cards are dealt.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="c1" value="DRP2">
+            <span class="option-marker">C —</span>
+            <span class="option-text">Find the back exit before you find a stool. You know where the door is. You always know where the door is.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="c1" value="TGH2">
+            <span class="option-marker">D —</span>
+            <span class="option-text">Order a drink and wait. If they want trouble they know where to find you. You've been in worse bars.</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question-block">
+        <span class="question-number">Question 02 of 05</span>
+        <p class="question-text">The mark you've been tailing leads you into a dead-end alley. He's smarter than you figured. How do you play it?</p>
+        <div class="options" data-question="c2">
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="c2" value="DRP2">
+            <span class="option-marker">A —</span>
+            <span class="option-text">You were already moving before he turned around. You don't get caught in dead ends. That's a rule, not a habit.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="c2" value="MOX2">
+            <span class="option-marker">B —</span>
+            <span class="option-text">You tip your hat and introduce yourself. You weren't tailing him — you were heading somewhere. And now maybe you're old friends.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="c2" value="TGH2">
+            <span class="option-marker">C —</span>
+            <span class="option-text">You let him run the play. See what he's got. You've absorbed worse. The alley is as good a place as any to settle the math.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="c2" value="SS2">
+            <span class="option-marker">D —</span>
+            <span class="option-text">You already know two things about him he doesn't know you know. The alley is just where the conversation starts.</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question-block">
+        <span class="question-number">Question 03 of 05</span>
+        <p class="question-text">Red O'Malley gives you one round with a gym champion to test your mettle before the Gauntlet. What does your game look like?</p>
+        <div class="options" data-question="c3">
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="c3" value="TGH2">
+            <span class="option-marker">A —</span>
+            <span class="option-text">Walk forward. Absorb what you have to. Make him work for every inch. You can take more than he expects and you both know it after the first exchange.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="c3" value="DRP2">
+            <span class="option-marker">B —</span>
+            <span class="option-text">Don't be where he's swinging. You're already moving when the punch leaves his shoulder. The ring is yours if you stay a half-step ahead.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="c3" value="SS2">
+            <span class="option-marker">C —</span>
+            <span class="option-text">You watched him work three men before you got in the ring. You know his tell. He drops his right shoulder before the hook. You're waiting for it.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="c3" value="MOX2">
+            <span class="option-marker">D —</span>
+            <span class="option-text">Get in his head first. You say something before the bell. Something specific. By round two he's fighting angry and angry men fight stupid.</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="question-block">
+        <span class="question-number">Question 04 of 05</span>
+        <p class="question-text">The NOPD Detective at the table is either clean or bent. You need to know before you open your mouth. How do you read him?</p>
+        <div class="options" data-question="c4">
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="c4" value="SS2">
+            <span class="option-marker">A —</span>
+            <span class="option-text">His shoes. The cut of his suit. The brand of cigarettes. The watch. A bent cop either overpays or underpays. Clean cops wear what they earn.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="c4" value="MOX2">
+            <span class="option-marker">B —</span>
+            <span class="option-text">You say something mildly incriminating. Nothing actionable. Just enough to see if he reaches for a pen or shifts in his chair. Bent men relax at that. Clean men don't.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="c4" value="DRP1,SS1">
+            <span class="option-marker">C —</span>
+            <span class="option-text">You don't read him at the table. You read who he sat with at the bar before you arrived. A man's company is his ledger.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="c4" value="TGH1,MOX1">
+            <span class="option-marker">D —</span>
+            <span class="option-text">You assume bent until he proves otherwise. It's the safer math. Clean cops are a pleasant surprise. Bent cops are just cops.</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="question-block">
+        <span class="question-number">Question 05 of 05</span>
+        <p class="question-text">The Midnight Star is running hot and you've got two Syndicate cars in the mirror. Mickey's driving. What do you tell him?</p>
+        <div class="options" data-question="c5">
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="c5" value="DRP2">
+            <span class="option-marker">A —</span>
+            <span class="option-text">"Take the Marigny cut. Left on Decatur. Don't signal." You already mapped three exits when you left the Anchor. You're always three moves ahead on the road.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="c5" value="TGH2">
+            <span class="option-marker">B —</span>
+            <span class="option-text">"Hold the line. Let them close." You wait until they're riding the bumper and then you hit the Zippos. The fire ends the conversation.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="c5" value="MOX2">
+            <span class="option-marker">C —</span>
+            <span class="option-text">"Pull over. Let me out." You handle it on the street. The car goes free, the men get talked to, and the Syndicate loses two men and gains nothing useful.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="c5" value="SS2">
+            <span class="option-marker">D —</span>
+            <span class="option-text">"They're from the Waterfront crew. Go left — Pier 9 is their turf boundary. They won't cross it in a company car." You know who drives what in this city.</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="error-msg" id="cutter-error">Answer all five questions before Cutter runs the math.</div>
+
+      <button class="submit-btn" onclick="calculateCutter()">
+        Run the Math →
+      </button>
+
+      <!-- Cutter Results -->
+      <div class="results" id="cutter-results">
+        <span class="results-title">The Biological Loadout</span>
+        <p class="results-flavor" id="cutter-flavor"></p>
+        <div class="stat-grid" id="cutter-stats"></div>
+        <p class="results-note">
+          Write these down. When you enter a game, you'll be asked for your stats.
+          These numbers are yours until the city takes them.
+        </p>
+
+        <div class="game-links visible">
+          <span class="game-links-title">1946 Framework — Your Games</span>
+          <a href="the-ring.html" class="game-link">
+            <span class="game-link-arrow">→</span>
+            <span class="game-link-name">The Ring</span>
+            <span class="game-link-slug">the-ring.html</span>
+          </a>
+          <a href="golden-gloves.html" class="game-link">
+            <span class="game-link-arrow">→</span>
+            <span class="game-link-name">The Golden Gloves</span>
+            <span class="game-link-slug">golden-gloves.html</span>
+          </a>
+          <a href="breaking-kayfabe.html" class="game-link">
+            <span class="game-link-arrow">→</span>
+            <span class="game-link-name">Breaking Kayfabe</span>
+            <span class="game-link-slug">breaking-kayfabe.html</span>
+          </a>
+          <a href="the-dirt.html" class="game-link">
+            <span class="game-link-arrow">→</span>
+            <span class="game-link-name">The Dirt</span>
+            <span class="game-link-slug">the-dirt.html</span>
+          </a>
+          <a href="the-cage.html" class="game-link">
+            <span class="game-link-arrow">→</span>
+            <span class="game-link-name">The Cage</span>
+            <span class="game-link-slug">the-cage.html</span>
+          </a>
+          <a href="the-iron-oval.html" class="game-link">
+            <span class="game-link-arrow">→</span>
+            <span class="game-link-name">The Iron Oval</span>
+            <span class="game-link-slug">the-iron-oval.html</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="arena-divider"></div>
+
+  <!-- ══ MORTHALAN'S SIDE ══ -->
+  <div class="panel panel-morthalan">
+    <div class="panel-header">
+      <span class="panel-label">Assessment Two — Black Flame Architecture</span>
+      <h2 class="panel-title">IWBF Intake Form 663-B</h2>
+      <p class="panel-intro">
+        FORM 663-B: WARLOCK APTITUDE ASSESSMENT — MANDATORY FILING<br><br>
+        YOU HAVE NOT BEEN GIVEN A CHOICE IN THIS MATTER. THE LEDGER IS OPEN.
+        ANSWER ALL FIVE QUESTIONS OR THE DEAD-LETTER OFFICE WILL HANDLE YOUR CASE.
+        THE INK IS MADE OF ASH. TRY TO STAY HYDRATED.
+      </p>
+    </div>
+
+    <div class="quiz" id="morthalan-quiz">
+
+      <!-- Q1 -->
+      <div class="question-block">
+        <span class="question-number">Inquiry 01 of 05</span>
+        <p class="question-text">
+          The I.P.S. demands you produce documentation for a Relic you do not, technically, own.
+          The clerk has a Threat Weight of 7. Your response?
+        </p>
+        <div class="options" data-question="m1">
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="m1" value="SUB2">
+            <span class="option-marker">A —</span>
+            <span class="option-text">You produce documentation. The documentation is forged. The forgery is excellent. The clerk's Threat Weight drops to 3 after he reads it because he genuinely cannot tell.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="m1" value="FORT2">
+            <span class="option-marker">B —</span>
+            <span class="option-text">You stand firm. The Relic is yours by virtue of the fact that you are currently holding it and he is not. You let him weigh that reality in silence.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="m1" value="SUB1,ETH1">
+            <span class="option-marker">C —</span>
+            <span class="option-text">You request to speak with Morthalan directly. This is technically above the clerk's authority to deny. You have made this a filing problem, not a confrontation.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="m1" value="ETH2">
+            <span class="option-marker">D —</span>
+            <span class="option-text">You ignite the documentation. Clerks cannot record what no longer exists. The Black Flame is not just metaphor — it is also useful for filing disputes.</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question-block">
+        <span class="question-number">Inquiry 02 of 05</span>
+        <p class="question-text">
+          Nug Nug owes you seventeen favors and is currently pretending he doesn't know you.
+          This is happening in front of the Council. Your move, Damp Squib?
+        </p>
+        <div class="options" data-question="m2">
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="m2" value="SUB2">
+            <span class="option-marker">A —</span>
+            <span class="option-text">You produce the ledger. Every favor itemized, dated, and witnessed. You read it aloud at a volume the Council cannot ignore. Nug Nug's Tally position drops visibly.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="m2" value="ETH2">
+            <span class="option-marker">B —</span>
+            <span class="option-text">You channel the void and make something in the room very briefly catch fire. Nothing important. Just enough that the Council looks at you instead of Nug Nug. You handle it quietly afterward.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="m2" value="FORT2">
+            <span class="option-marker">C —</span>
+            <span class="option-text">You say nothing. You find a seat across the chamber and you wait. He knows you're there. This will resolve itself before the session ends because Nug Nug cannot endure the weight of being owed.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="m2" value="SUB1,FORT1">
+            <span class="option-marker">D —</span>
+            <span class="option-text">You let him pretend. Then you file the debt with the Dead-Letter Office as an outstanding Postage claim. It compounds. You can wait longer than he can.</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question-block">
+        <span class="question-number">Inquiry 03 of 05</span>
+        <p class="question-text">
+          The Spear of the Sun has set up a shield-wall between you and the Tower gate.
+          Logos the White is personally supervising. He smells of pork fat.
+          How do you breach the perimeter?
+        </p>
+        <div class="options" data-question="m3">
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="m3" value="FORT2">
+            <span class="option-marker">A —</span>
+            <span class="option-text">Through. Not around. Not over. The shield-wall holds until it doesn't, and your job is to become the thing it doesn't hold against. You've absorbed worse than holy light.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="m3" value="SUB2">
+            <span class="option-marker">B —</span>
+            <span class="option-text">You are already wearing a Staff Uniform. You purchased it from Quark last Tuesday. Good evening, General Mordon. Your paperwork appears to be in order.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="m3" value="ETH2">
+            <span class="option-marker">C —</span>
+            <span class="option-text">You create a distraction in the precise location most likely to produce maximum chaos. The shield-wall cannot be everywhere simultaneously. Neither can Logos.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="m3" value="SUB1,ETH1">
+            <span class="option-marker">D —</span>
+            <span class="option-text">You file an emergency I.P.S. transit claim. The Postal Service has dimensional right-of-way through all permanent structures. Even Logos cannot deny a properly stamped manifest.</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="question-block">
+        <span class="question-number">Inquiry 04 of 05</span>
+        <p class="question-text">
+          Morthalan is hecklng you from the reliquary. He says your sleeve-work is clumsy
+          and your marrow is leaking. How do you respond to the Grand Guide?
+        </p>
+        <div class="options" data-question="m4">
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="m4" value="SUB2">
+            <span class="option-marker">A —</span>
+            <span class="option-text">You offer him a joke. A good one. Specific to something he's mentioned before. He laughs like dry leaves on a tombstone. While he's laughing, you move. The Ghostly Heckler cannot heckle what he's already approved of.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="m4" value="FORT2">
+            <span class="option-marker">B —</span>
+            <span class="option-text">You do not respond. You continue. He is a ghost. Ghosts cannot stop you physically, only psychologically. You have already audited the psychological threat and found it insufficient.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="m4" value="ETH1,SUB1">
+            <span class="option-marker">C —</span>
+            <span class="option-text">You ask him a question. Something about the North Tower, the Poison Room, the specific layout of what you're trying to reach. He cannot resist showing off. The heckle becomes a briefing.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="m4" value="ETH2">
+            <span class="option-marker">D —</span>
+            <span class="option-text">You demonstrate that your sleeve-work is not, in fact, clumsy. Loudly. With visible consequences to the nearest Spear of the Sun soldier. Morthalan goes quiet. For a moment.</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="question-block">
+        <span class="question-number">Inquiry 05 of 05</span>
+        <p class="question-text">
+          You are forty-seven slots from a Tower seat. The Festival of the Veil ends at midnight.
+          You have one Pulse roll left. Your current Failure Scale reads eight.
+          What is your operational posture?
+        </p>
+        <div class="options" data-question="m5">
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="m5" value="ETH2">
+            <span class="option-marker">A —</span>
+            <span class="option-text">Maximum expenditure. Everything left in the tank, all available Pillar, all accumulated Momentum, deployed in a single committed action. Either you reach the Threshold or you don't. The math is the math.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="m5" value="SUB2">
+            <span class="option-marker">B —</span>
+            <span class="option-text">You find the warlock immediately ahead of you in the Tally and make their next two minutes genuinely complicated. Forty-seven slots become thirty if your neighbors have problems of their own.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="m5" value="FORT2">
+            <span class="option-marker">C —</span>
+            <span class="option-text">Conservative. The Failure Scale is the danger. You play for a Stable result, protect the Scale, and trust the next Festival. You have been forty-seven slots away before. You will be again. The Tower isn't going anywhere.</span>
+          </label>
+          <label class="option" onclick="selectOption(this)">
+            <input type="radio" name="m5" value="SUB1,ETH1">
+            <span class="option-marker">D —</span>
+            <span class="option-text">You file a procedural challenge against the slot allocation methodology. Morthalan has to review it before midnight. The Festival cannot formally end while an active I.P.S. audit is pending. You just bought time.</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="error-msg" id="morthalan-error">The Ledger is incomplete. Answer all five questions or the Dead-Letter Office will handle your case.</div>
+
+      <button class="submit-btn" onclick="calculateMorthalan()">
+        File Assessment →
+      </button>
+
+      <!-- Morthalan Results -->
+      <div class="results" id="morthalan-results">
+        <span class="results-title">FORM 663-B — RESULTS FILED</span>
+        <p class="results-flavor" id="morthalan-flavor"></p>
+        <div class="stat-grid" id="morthalan-stats"></div>
+        <p class="results-note">
+          MANDATORY RECORD: Copy these values. You will be required to enter them
+          upon accessing any Black Flame facility. Failure to present accurate
+          documentation constitutes a Postage Violation. The I.P.S. has been notified.
+        </p>
+
+        <div class="game-links visible">
+          <span class="game-links-title">Black Flame Architecture — Your Games</span>
+          <a href="mage-wrestling.html" class="game-link">
+            <span class="game-link-arrow">→</span>
+            <span class="game-link-name">Mage Wrestling</span>
+            <span class="game-link-slug">mage-wrestling.html</span>
+          </a>
+          <a href="dabo.html" class="game-link">
+            <span class="game-link-arrow">→</span>
+            <span class="game-link-name">The Felt (Dabo)</span>
+            <span class="game-link-slug">dabo.html</span>
+          </a>
+          <a href="quarks-black-market.html" class="game-link">
+            <span class="game-link-arrow">→</span>
+            <span class="game-link-name">Quark's Black Market</span>
+            <span class="game-link-slug">quarks-black-market.html</span>
+          </a>
+          <a href="wizards-wager.html" class="game-link">
+            <span class="game-link-arrow">→</span>
+            <span class="game-link-name">Wizard's Wager</span>
+            <span class="game-link-slug">wizards-wager.html</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p class="footer-text">Semantic Ecology — Hard Times in the Big Easy &amp; IWBF © 2026 Michael Tesney. All Rights Reserved.</p>
+</div>
+
+<script>
+  // ── Option selection ──
+  function selectOption(label) {
+    const name = label.querySelector('input').name;
+    document.querySelectorAll(`input[name="${name}"]`).forEach(input => {
+      input.closest('.option').classList.remove('selected');
+    });
+    label.classList.add('selected');
+    label.querySelector('input').checked = true;
+  }
+
+  // ── Cutter stat calculation ──
+  function calculateCutter() {
+    const questions = ['c1','c2','c3','c4','c5'];
+    const stats = { MOX: 4, SS: 4, DRP: 4, TGH: 4 };
+    let allAnswered = true;
+
+    questions.forEach(q => {
+      const selected = document.querySelector(`input[name="${q}"]:checked`);
+      if (!selected) { allAnswered = false; return; }
+      const bonuses = selected.value.split(',');
+      bonuses.forEach(bonus => {
+        const match = bonus.match(/^([A-Z]+)(\d+)$/);
+        if (match) {
+          const stat = match[1];
+          const val = parseInt(match[2]);
+          if (stats.hasOwnProperty(stat)) stats[stat] += val;
+        }
+      });
+    });
+
+    const err = document.getElementById('cutter-error');
+    if (!allAnswered) {
+      err.classList.add('visible');
+      return;
+    }
+    err.classList.remove('visible');
+
+    // Cap at 10
+    Object.keys(stats).forEach(k => { stats[k] = Math.min(stats[k], 10); });
+
+    // Flavor text based on dominant stat
+    const dominant = Object.entries(stats).sort((a,b) => b[1]-a[1])[0][0];
+    const flavors = {
+      MOX: "The city reads pressure and you read the city. You don't need the odds in your favor — you need them to think you're bluffing when you're not. Moxie is your primary currency.",
+      SS:  "You've been in this room before. Not this specific room — but every room has the same bones. You find the load-bearing information before anyone else knows it matters. Street Smarts runs the play.",
+      DRP: "You're already moving when the other man is still deciding. The Drop is your edge — initiative, precision, the half-second that separates a clean exit from a bad decision.",
+      TGH: "You take what the city gives you and you keep standing. Toughness isn't the absence of damage — it's the refusal to let damage change the math. You absorb and you continue."
+    };
+
+    document.getElementById('cutter-flavor').textContent = flavors[dominant];
+
+    const statGrid = document.getElementById('cutter-stats');
+    statGrid.innerHTML = '';
+    const labels = { MOX: 'Moxie', SS: 'Street Smarts', DRP: 'The Drop', TGH: 'Toughness' };
+    Object.entries(stats).forEach(([key, val]) => {
+      statGrid.innerHTML += `
+        <div class="stat-row">
+          <span class="stat-label">${labels[key]}</span>
+          <span class="stat-value">${val}</span>
+        </div>`;
+    });
+
+    document.getElementById('cutter-results').classList.add('visible');
+    document.getElementById('cutter-results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // ── Morthalan stat calculation ──
+  function calculateMorthalan() {
+    const questions = ['m1','m2','m3','m4','m5'];
+    const stats = { SUB: 4, FORT: 4, ETH: 4 };
+    let allAnswered = true;
+
+    questions.forEach(q => {
+      const selected = document.querySelector(`input[name="${q}"]:checked`);
+      if (!selected) { allAnswered = false; return; }
+      const bonuses = selected.value.split(',');
+      bonuses.forEach(bonus => {
+        const match = bonus.match(/^([A-Z]+)(\d+)$/);
+        if (match) {
+          const stat = match[1];
+          const val = parseInt(match[2]);
+          if (stats.hasOwnProperty(stat)) stats[stat] += val;
+        }
+      });
+    });
+
+    const err = document.getElementById('morthalan-error');
+    if (!allAnswered) {
+      err.classList.add('visible');
+      return;
+    }
+    err.classList.remove('visible');
+
+    Object.keys(stats).forEach(k => { stats[k] = Math.min(stats[k], 10); });
+
+    const dominant = Object.entries(stats).sort((a,b) => b[1]-a[1])[0][0];
+    const flavors = {
+      SUB: "Subterfuge is your primary Pillar. You work through information asymmetry — you know things the opponent doesn't know you know, and you deploy that gap precisely. The ledger is your weapon.",
+      FORT: "Fortitude is your foundation. Where other warlocks rely on trickery or raw power, you simply endure. The Black Flame burns hotter in bones that have already learned not to break.",
+      ETH: "Ethereal Light runs through you. Your Pulse is volatile and strong — high ceiling, high risk. You hit harder than anyone in the room and occasionally the room itself notices."
+    };
+
+    // Morthalan voices the results
+    const mortyLines = {
+      SUB: "Ah. A paper-filer. A ledger-keeper. I see you've discovered that the most dangerous weapon in the Tower isn't fire — it's documentation. Disappointing, in the best possible way.",
+      FORT: "You're not clever, are you? No, no — you're durable. Like a very determined piece of furniture that refuses to stop being in the way. I've seen worse strategies. Not many.",
+      ETH: "Volatile. Incandescent. Completely unreliable at the worst possible moment. You're exactly what the Black Flame prefers. Try not to explode the mountains. I had a tavern under those."
+    };
+
+    document.getElementById('morthalan-flavor').textContent = mortyLines[dominant] + " " + flavors[dominant];
+
+    const statGrid = document.getElementById('morthalan-stats');
+    statGrid.innerHTML = '';
+    const labels = { SUB: 'Subterfuge', FORT: 'Fortitude', ETH: 'Ethereal Light' };
+    Object.entries(stats).forEach(([key, val]) => {
+      statGrid.innerHTML += `
+        <div class="stat-row">
+          <span class="stat-label">${labels[key]}</span>
+          <span class="stat-value">${val}</span>
+        </div>`;
+    });
+
+    document.getElementById('morthalan-results').classList.add('visible');
+    document.getElementById('morthalan-results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>
+
+</body>
+</html>
