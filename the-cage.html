@@ -659,13 +659,13 @@
   <span class="section-label">Place Your Bet</span>
 
   <div class="side-picker">
-    <button class="side-btn mongoose" onclick="selectSide('mongoose')" id="btn-mongoose">
+    <button type="button" class="side-btn mongoose" onclick="selectSide('mongoose')" id="btn-mongoose">
       <span class="side-animal">🦡</span>
       <span class="side-name">Mongoose</span>
       <span class="side-desc">Speed. Aggression.<br>Death from the front.</span>
     </button>
     <div class="side-divider">vs</div>
-    <button class="side-btn cobra" onclick="selectSide('cobra')" id="btn-cobra">
+    <button type="button" class="side-btn cobra" onclick="selectSide('cobra')" id="btn-cobra">
       <span class="side-animal">🐍</span>
       <span class="side-name">Cobra</span>
       <span class="side-desc">Patience. Venom.<br>Death from nowhere.</span>
@@ -694,7 +694,7 @@
 
   <div class="error" id="bet-error">Pick a side before you lay the cash.</div>
 
-  <button class="bet-btn" id="bet-btn" onclick="placeBet()">
+  <button type="button" class="bet-btn" id="bet-btn" onclick="placeBet()">
     Lay the Bet →
   </button>
 </div>
@@ -735,7 +735,7 @@
     <div class="round-log-entries" id="round-log"></div>
   </div>
 
-  <button id="roll-btn" onclick="rollRound()">
+  <button type="button" id="roll-btn" onclick="rollRound()">
     Roll →
   </button>
 </div>
@@ -757,12 +757,12 @@
   <span class="outcome-headline">⚠ Raid — Blue Shields in the Alley</span>
   <p class="outcome-flavor" id="raid-flavor"></p>
   <div class="raid-options">
-    <button class="raid-btn bribe" onclick="handleRaid('bribe')">Pay the $50 Bribe</button>
-    <button class="raid-btn run"   onclick="handleRaid('run')">Run for It</button>
+    <button type="button" class="raid-btn bribe" onclick="handleRaid('bribe')">Pay the $50 Bribe</button>
+    <button type="button" class="raid-btn run"   onclick="handleRaid('run')">Run for It</button>
   </div>
 </div>
 
-<button class="play-again-btn" id="play-again-btn" onclick="resetGame()">
+<button type="button" class="play-again-btn" id="play-again-btn" onclick="resetGame()">
   Back to the Cage →
 </button>
 
