@@ -655,7 +655,7 @@
 </div>
 
 <!-- BET SECTION -->
-<div class="bet-section">
+<div class="bet-section" id="bet-section">
   <span class="section-label">Place Your Bet</span>
 
   <div class="side-picker">
@@ -686,11 +686,10 @@
     </div>
   </div>
 
-  <label class="folk-hero-row" onclick="toggleFolkHero()">
-    <input type="checkbox" id="folk-hero-check">
+  <div class="folk-hero-row" id="folk-hero-row">
     <div class="folk-hero-box" id="folk-hero-box"></div>
-    <span class="folk-hero-text">FOLK HERO STATUS — The locals cover for you. Free re-roll on any Raid check.</span>
-  </label>
+    <span class="folk-hero-text">FOLK HERO STATUS — The locals cover for you. Free re-roll on any Raid check. <button type="button" onclick="toggleFolkHero()" style="background:none;border:none;color:var(--gold);font-family:'Courier New',monospace;font-size:0.62rem;cursor:pointer;letter-spacing:0.1em;padding:0;">[TOGGLE]</button></span>
+  </div>
 
   <div class="error" id="bet-error">Pick a side before you lay the cash.</div>
 
