@@ -607,6 +607,25 @@
     text-transform: uppercase;
   }
 
+  #roll-btn {
+    width: 100%;
+    padding: 1rem;
+    background: var(--gold-dim);
+    color: var(--pit);
+    border: none;
+    font-family: 'Courier New', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 1px;
+    display: block;
+  }
+
+  #roll-btn:hover:not(:disabled) { background: var(--gold); }
+  #roll-btn:disabled { background: #2a1f0e; color: var(--tobacco); cursor: not-allowed; }
+
   @media (max-width: 480px) {
     .bet-controls { grid-template-columns: 1fr; }
     .dice-arena { padding: 1.25rem 0.75rem; }
@@ -716,7 +735,7 @@
     <div class="round-log-entries" id="round-log"></div>
   </div>
 
-  <button class="bet-btn" id="roll-btn" onclick="rollRound()" style="margin-top: 1px;">
+  <button id="roll-btn" onclick="rollRound()">
     Roll →
   </button>
 </div>
@@ -855,7 +874,7 @@
     }
 
     wager = parseInt(document.getElementById('wager-input').value) || 50;
-    wager = Math.max(10, Math.min(wager, bankroll, 500));
+    wager = Math.max(10, Math.min(wager, 500));
 
     if (bankroll < wager) {
       document.getElementById('bet-error').textContent = "You don't have the stake. Reduce your wager.";
