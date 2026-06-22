@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Willy's Place — Hard Times in the Big Easy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Crimson+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#15110d;
+    --ink-2:#1f1812;
+    --paper:#ece0c4;
+    --paper-dim:#cdbf9c;
+    --brass:#c79a4b;
+    --brass-dim:#8a6a32;
+    --rust:#a23b2e;
+    --rust-hot:#e0512f;
+    --felt:#4c6b4f;
+    --shadow:rgba(0,0,0,.55);
+    --radius:3px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Crimson Pro', Georgia, serif;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    padding:28px 14px 60px;
+  }
+  .case{
+    width:100%;
+    max-width:760px;
+  }
+
+  /* ---------- letterhead ---------- */
+  .letterhead{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:6px 16px;
+    border-bottom:2px solid var(--brass-dim);
+    padding-bottom:10px;
+    margin-bottom:16px;
+  }
+  .letterhead h1{
+    font-family:'Special Elite', monospace;
+    font-size:1.05rem;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    margin:0;
+    color:var(--paper);
+    white-space:nowrap;
+  }
+  .letterhead .stamp{
+    font-family:'Special Elite', monospace;
+    font-size:.72rem;
+    color:var(--paper-dim);
+    letter-spacing:.05em;
+    text-align:right;
+    line-height:1.5;
+  }
+  @media (max-width:480px){
+    .letterhead{
+      flex-direction:column;
+      align-items:flex-start;
+      gap:6px;
+    }
+    .letterhead .stamp{ text-align:left; }
+  }
+
+  /* ---------- scene ---------- */
+  .scene{
+    position:relative;
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow:0 14px 38px var(--shadow);
+    border:1px solid #000;
+  }
+  .scene img.bg{
+    display:block;
+    width:100%;
+    height:auto;
+    filter:saturate(.85) contrast(1.05) brightness(.92);
+  }
+  .scene::after{
+    /* vignette so the dialogue strip and portraits read cleanly over the photo */
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,.05) 0%, rgba(0,0,0,.15) 55%, rgba(0,0,0,.78) 100%);
+    pointer-events:none;
+  }
+
+  .portrait-rail{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    padding:0 16px 14px;
+    z-index:2;
+  }
+
+  .portrait{
+    width:84px; height:84px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid var(--brass-dim);
+    box-shadow:0 4px 14px var(--shadow);
+    background:#000;
+    flex-shrink:0;
+  }
+  .portrait.willy{
+    width:104px; height:104px;
+    border-color:var(--brass);
+  }
+
+  .angel-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+  }
+  .angel-wrap .portrait{
+    transition:border-color .4s ease, box-shadow .4s ease;
+  }
+  .angel-label{
+    font-family:'Special Elite', monospace;
+    font-size:.6rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    text-align:center;
+    color:var(--paper-dim);
+    text-shadow:0 1px 2px #000;
+  }
+
+  /* Angel's signal ladder — the one signature animated element */
+  .angel-wrap[data-stage="0"] .portrait{ border-color:var(--brass-dim); box-shadow:0 4px 14px var(--shadow); }
+  .angel-wrap[data-stage="1"] .portrait{ border-color:var(--brass); box-shadow:0 0 10px 1px rgba(199,154,75,.5); }
+  .angel-wrap[data-stage="2"] .portrait{ border-color:var(--rust); box-shadow:0 0 14px 2px rgba(162,59,46,.6); animation:pulse-slow 2.4s ease-in-out infinite; }
+  .angel-wrap[data-stage="3"] .portrait{ border-color:var(--rust-hot); box-shadow:0 0 18px 4px rgba(224,81,47,.85); animation:pulse-fast 0.9s ease-in-out infinite; }
+
+  @keyframes pulse-slow{ 0%,100%{filter:brightness(1)} 50%{filter:brightness(1.18)} }
+  @keyframes pulse-fast{ 0%,100%{filter:brightness(1)} 50%{filter:brightness(1.35)} }
+  @media (prefers-reduced-motion: reduce){
+    .angel-wrap[data-stage="2"] .portrait,
+    .angel-wrap[data-stage="3"] .portrait{ animation:none; }
+  }
+
+  /* ---------- dialogue ---------- */
+  .dialogue{
+    background:var(--ink-2);
+    border:1px solid var(--brass-dim);
+    border-top:none;
+    padding:14px 16px;
+    font-size:1.02rem;
+    line-height:1.5;
+    min-height:3.2em;
+    font-style:italic;
+    color:var(--paper);
+  }
+  .dialogue .who{
+    font-family:'Special Elite', monospace;
+    font-style:normal;
+    font-size:.65rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--brass);
+    display:block;
+    margin-bottom:4px;
+  }
+
+  /* ---------- meters ---------- */
+  .meters{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin:14px 0;
+  }
+  .meter h2{
+    font-family:'Special Elite', monospace;
+    font-size:.66rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    margin:0 0 5px;
+    color:var(--paper-dim);
+    display:flex;
+    justify-content:space-between;
+  }
+  .meter h2 span.val{ color:var(--paper); }
+  .bar-track{
+    height:10px;
+    background:#000;
+    border:1px solid #000;
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .bar-fill{
+    height:100%;
+    width:0%;
+    transition:width .35s ease;
+  }
+  .bar-fill.pressure{ background:linear-gradient(90deg, var(--brass-dim), var(--brass)); }
+  .bar-fill.heat{ background:linear-gradient(90deg, var(--rust), var(--rust-hot)); }
+
+  /* ---------- actions ---------- */
+  .actions{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:8px;
+  }
+  @media (min-width:520px){
+    .actions{ grid-template-columns:repeat(3, 1fr); }
+  }
+  button.act{
+    font-family:'Special Elite', monospace;
+    background:var(--ink-2);
+    border:1px solid var(--brass-dim);
+    color:var(--paper);
+    padding:10px 8px 9px;
+    border-radius:var(--radius);
+    cursor:pointer;
+    text-align:left;
+    transition:background .15s ease, border-color .15s ease, transform .1s ease;
+  }
+  button.act:hover{ background:#2a2018; border-color:var(--brass); }
+  button.act:active{ transform:translateY(1px); }
+  button.act:focus-visible{ outline:2px solid var(--brass); outline-offset:2px; }
+  button.act:disabled,
+  button.leave:disabled{
+    cursor:default;
+    opacity:.38;
+  }
+  button.act:disabled:hover{ background:var(--ink-2); border-color:var(--brass-dim); }
+  button.act[data-action="grabWilly"]{
+    grid-column:1 / -1;
+  }
+  button.act .name{
+    display:block;
+    font-size:.74rem;
+    letter-spacing:.03em;
+    text-transform:uppercase;
+    margin-bottom:3px;
+  }
+  button.act .delta{
+    display:block;
+    font-family:'Crimson Pro', serif;
+    font-style:italic;
+    font-size:.78rem;
+    color:var(--paper-dim);
+  }
+  button.act .delta b{ color:var(--brass); font-style:normal; }
+  button.act .delta b.hot{ color:var(--rust-hot); font-style:normal; }
+
+  .leave-row{ margin-top:10px; }
+  button.leave{
+    width:100%;
+    background:transparent;
+    border:1px dashed var(--paper-dim);
+    color:var(--paper-dim);
+    font-family:'Special Elite', monospace;
+    font-size:.72rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    padding:9px;
+    border-radius:var(--radius);
+    cursor:pointer;
+  }
+  button.leave:hover{ color:var(--paper); border-color:var(--paper); }
+
+  /* ---------- outcome overlay ---------- */
+  .overlay{
+    position:fixed; inset:0;
+    background:rgba(10,8,6,.88);
+    display:flex; align-items:center; justify-content:center;
+    padding:20px;
+    z-index:10;
+  }
+  .overlay[hidden]{ display:none; }
+  .ticket{
+    background:var(--ink-2);
+    border:1px solid var(--brass-dim);
+    max-width:420px;
+    width:100%;
+    max-height:100%;
+    overflow-y:auto;
+    padding:28px 26px 24px;
+    text-align:center;
+    border-radius:var(--radius);
+    box-shadow:0 20px 50px rgba(0,0,0,.6);
+  }
+  .ticket .verdict{
+    font-family:'Special Elite', monospace;
+    font-size:1.4rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    margin:0 0 10px;
+  }
+  .ticket.success .verdict{ color:var(--brass); }
+  .ticket.failure .verdict{ color:var(--rust-hot); }
+  .ticket.walkaway .verdict{ color:var(--paper-dim); }
+  .ticket p.flavor{
+    font-style:italic;
+    line-height:1.5;
+    color:var(--paper);
+    margin:0 0 18px;
+  }
+  .ticket .stats{
+    font-family:'Special Elite', monospace;
+    font-size:.68rem;
+    color:var(--paper-dim);
+    letter-spacing:.04em;
+    margin-bottom:18px;
+  }
+  button.again{
+    font-family:'Special Elite', monospace;
+    background:var(--brass-dim);
+    border:none;
+    color:var(--ink);
+    padding:11px 22px;
+    border-radius:var(--radius);
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    font-size:.78rem;
+    cursor:pointer;
+  }
+  button.again:hover{ background:var(--brass); }
+
+  footer{
+    text-align:center;
+    margin-top:18px;
+    font-family:'Special Elite', monospace;
+    font-size:.6rem;
+    letter-spacing:.06em;
+    color:var(--brass-dim);
+  }
+</style>
+</head>
+<body>
+
+<div class="case">
+
+  <div class="letterhead">
+    <h1>Willy's Place</h1>
+    <div class="stamp">Dutch Alley, French Quarter<br>May 3, 1946</div>
+  </div>
+
+  <div class="scene">
+    <img class="bg" src="assets/background.webp" alt="Inside Willy's Place, a dim French Quarter bar">
+    <div class="portrait-rail">
+      <img class="portrait willy" id="willyPortrait" src="assets/willy.webp" alt="Willy">
+      <div class="angel-wrap" id="angelWrap" data-stage="0">
+        <img class="portrait" id="angelPortrait" src="assets/angel.webp" alt="Angel">
+        <span class="angel-label" id="angelLabel">Polishing Glass</span>
+      </div>
+      <img class="portrait" id="buffyPortrait" src="assets/buffy.webp" alt="Buffy">
+    </div>
+  </div>
+
+  <div class="dialogue" aria-live="polite">
+    <span class="who">Willy</span>
+    <span id="dialogueText">Well now, look who's asking questions. This city don't hand out answers for free.</span>
+  </div>
+
+  <div class="meters">
+    <div class="meter">
+      <h2>Pressure <span class="val"><span id="pressureVal">0</span>/10</span></h2>
+      <div class="bar-track"><div class="bar-fill pressure" id="pressureBar"></div></div>
+    </div>
+    <div class="meter">
+      <h2>Buffy's Heat <span class="val"><span id="heatVal">0</span>/10</span></h2>
+      <div class="bar-track"><div class="bar-fill heat" id="heatBar"></div></div>
+    </div>
+  </div>
+
+  <div class="actions" id="actionGrid"></div>
+
+  <div class="leave-row">
+    <button class="leave" id="leaveBtn">Leave — walk away clean</button>
+  </div>
+
+  <footer>HARD TIMES IN THE BIG EASY &mdash; NEW ORLEANS, 1946</footer>
+</div>
+
+<div class="overlay" id="overlay" hidden role="dialog" aria-modal="true" aria-labelledby="verdictText">
+  <div class="ticket" id="ticket">
+    <h2 class="verdict" id="verdictText">—</h2>
+    <p class="flavor" id="flavorText">—</p>
+    <div class="stats" id="finalStats">—</div>
+    <button class="again" id="againBtn">Try Again</button>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+/* ===================================================================
+   ENGINE — ported 1:1 from willy_pressure_test.js (validated:
+   26/26 assertions, 20,000-round stress test, zero crashes).
+   Do not change these numbers without re-running that validation file.
+   =================================================================== */
+
+const THRESHOLD = 10;
+const LEAVE = 'leave';
+
+const ACTIONS = {
+  buyDrink:  { label: 'Buy a Drink',  pressure: 1, heat: 0 },
+  tipWilly:  { label: 'Tip Willy',    pressure: 1, heat: 1 },
+  askNicely: { label: 'Ask Nicely',   pressure: 1, heat: 1 },
+  nameDrop:  { label: 'Name Drop',    pressure: 2, heat: 1 },
+  leanOnHim: { label: 'Lean on Him',  pressure: 2, heat: 2 },
+  threaten:  { label: 'Threaten',     pressure: 3, heat: 3 },
+  grabWilly: { label: 'Grab Willy',   pressure: 4, heat: 5 },
+};
+const ACTION_ORDER = ['buyDrink','tipWilly','askNicely','nameDrop','leanOnHim','threaten','grabWilly'];
+
+function angelStage(heat){
+  if (heat <= 2) return { idx: 0, label: 'Polishing Glass' };
+  if (heat <= 5) return { idx: 1, label: 'Watching You' };
+  if (heat <= 8) return { idx: 2, label: 'Hand Under Counter' };
+  return { idx: 3, label: 'Breaker Switch' };
+}
+
+function newGame(){
+  return { pressure: 0, heat: 0, ended: false, outcome: null };
+}
+
+// Mirrors playTurn() from the validation engine exactly: heat resolves
+// first; if it would clamp to >=10 the pressure delta for that same
+// turn is withheld entirely.
+function playTurn(state, actionKey){
+  if (state.ended) return state;
+
+  if (actionKey === LEAVE){
+    state.ended = true;
+    state.outcome = 'WALKAWAY';
+    return state;
+  }
+
+  const action = ACTIONS[actionKey];
+  if (!action) throw new Error('Unknown action: ' + actionKey);
+
+  const projectedHeat = state.heat + action.heat;
+  if (projectedHeat >= THRESHOLD){
+    state.heat = THRESHOLD;
+    state.ended = true;
+    state.outcome = 'FAILURE';
+    return state;
+  }
+  state.heat = projectedHeat;
+
+  const projectedPressure = state.pressure + action.pressure;
+  if (projectedPressure >= THRESHOLD){
+    state.pressure = THRESHOLD;
+    state.ended = true;
+    state.outcome = 'SUCCESS';
+    return state;
+  }
+  state.pressure = projectedPressure;
+  return state;
+}
+
+/* ===================================================================
+   FLAVOR TEXT — presentation layer only, no effect on resolution.
+   =================================================================== */
+
+const WILLY_LINES = {
+  buyDrink:  "That's the good stuff — Special Reserve, off the books, behind the Bayou Bites menu. Loosens tongues, know what I mean?",
+  tipWilly:  "Well, aren't you a gentleman. Almost makes a man forget who's buying who here.",
+  askNicely: "See, now that's all I ask. A little respect. I'm not a rat — I'm a... facilitator.",
+  nameDrop:  "Whoa, whoa, hold up — you know him? Okay. Okay, that's a different color of conversation.",
+  leanOnHim: "Easy, easy! I treat the wise guys good, they treat me good — that's the whole arrangement. No call to lean on it.",
+  threaten:  "H-hey now, let's not do anything bad for the upholstery, huh? It's just business — always has been—",
+  grabWilly: "HEY! Watch the suit, watch the suit — this is silk! Well. Silk-adjacent. Okay, OKAY, just let go—",
+};
+
+const OUTCOME = {
+  SUCCESS: {
+    verdict: 'He Talks',
+    flavor: "Willy's shoulders drop. \u201cOkay — okay! It was Sclaiborne, down by the levee, Sunday, I swear it. Now smack me around a little before you go, will ya? Can't have the wise guys thinking I just hand this stuff out for free.\u201d",
+    dialogue: "Fine! It was Sclaiborne — now make it look like a struggle on your way out, huh?",
+  },
+  FAILURE: {
+    verdict: 'Thrown Out',
+    flavor: "Buffy's already moving before you finish the sentence. \u201cKeep your hands on the table and your eyes on the drink, pal — or I'll show you exactly how delicate I really am.\u201d Behind her, Angel doesn't even look up from the glass. \u201cOutside.\u201d That's the only word you get.",
+    dialogue: "",
+  },
+  WALKAWAY: {
+    verdict: 'Walked Away',
+    flavor: "Willy exhales like he's been holding it since you walked in. \u201cSmart move, pal. No disagreements tonight, no unfortunate bookkeeping. Come back when you've got cash for the Special Reserve.\u201d",
+    dialogue: "",
+  },
+};
+
+/* ===================================================================
+   UI WIRING
+   =================================================================== */
+
+let state = newGame();
+
+const el = {
+  pressureVal: document.getElementById('pressureVal'),
+  heatVal: document.getElementById('heatVal'),
+  pressureBar: document.getElementById('pressureBar'),
+  heatBar: document.getElementById('heatBar'),
+  angelWrap: document.getElementById('angelWrap'),
+  angelLabel: document.getElementById('angelLabel'),
+  dialogueText: document.getElementById('dialogueText'),
+  actionGrid: document.getElementById('actionGrid'),
+  leaveBtn: document.getElementById('leaveBtn'),
+  overlay: document.getElementById('overlay'),
+  ticket: document.getElementById('ticket'),
+  verdictText: document.getElementById('verdictText'),
+  flavorText: document.getElementById('flavorText'),
+  finalStats: document.getElementById('finalStats'),
+  againBtn: document.getElementById('againBtn'),
+};
+
+function buildActionGrid(){
+  el.actionGrid.innerHTML = '';
+  ACTION_ORDER.forEach(key => {
+    const a = ACTIONS[key];
+    const btn = document.createElement('button');
+    btn.className = 'act';
+    btn.type = 'button';
+    btn.dataset.action = key;
+    btn.innerHTML =
+      '<span class="name">' + a.label + '</span>' +
+      '<span class="delta">Pressure <b>+' + a.pressure + '</b> &middot; Heat <b class="' + (a.heat >= 3 ? 'hot' : '') + '">+' + a.heat + '</b></span>';
+    btn.addEventListener('click', () => handleAction(key));
+    el.actionGrid.appendChild(btn);
+  });
+}
+
+function render(){
+  el.pressureVal.textContent = state.pressure;
+  el.heatVal.textContent = state.heat;
+  el.pressureBar.style.width = (state.pressure / THRESHOLD * 100) + '%';
+  el.heatBar.style.width = (state.heat / THRESHOLD * 100) + '%';
+
+  const stage = angelStage(state.heat);
+  el.angelWrap.dataset.stage = stage.idx;
+  el.angelLabel.textContent = stage.label;
+
+  const disabled = state.ended;
+  el.actionGrid.querySelectorAll('button.act').forEach(b => b.disabled = disabled);
+  el.leaveBtn.disabled = disabled;
+}
+
+function handleAction(actionKey){
+  if (state.ended) return;
+  playTurn(state, actionKey);
+
+  if (state.ended){
+    if (state.outcome === 'FAILURE'){
+      render();
+      el.dialogueText.textContent = "";
+    } else {
+      el.dialogueText.textContent = OUTCOME[state.outcome].dialogue || WILLY_LINES[actionKey];
+      render();
+    }
+    showOverlay(state.outcome);
+    return;
+  }
+
+  el.dialogueText.textContent = WILLY_LINES[actionKey];
+  render();
+}
+
+function handleLeave(){
+  if (state.ended) return;
+  playTurn(state, LEAVE);
+  render();
+  showOverlay(state.outcome);
+}
+
+function showOverlay(outcome){
+  const o = OUTCOME[outcome];
+  el.ticket.className = 'ticket ' + outcome.toLowerCase();
+  el.verdictText.textContent = o.verdict;
+  el.flavorText.textContent = o.flavor;
+  el.finalStats.textContent = 'Final reading — Pressure ' + state.pressure + '/10 · Heat ' + state.heat + '/10';
+  el.overlay.hidden = false;
+  el.againBtn.focus();
+}
+
+function resetGame(){
+  state = newGame();
+  el.overlay.hidden = true;
+  el.dialogueText.textContent = "Well now, look who's asking questions. This city don't hand out answers for free.";
+  render();
+  const firstAction = el.actionGrid.querySelector('button.act');
+  if (firstAction) firstAction.focus();
+}
+
+buildActionGrid();
+el.leaveBtn.addEventListener('click', handleLeave);
+el.againBtn.addEventListener('click', resetGame);
+render();
+</script>
+</body>
+</html>
