@@ -25,12 +25,15 @@
 html{scroll-behavior:smooth}
 body{background:var(--void);color:var(--ivory);font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;line-height:1.8;min-height:100vh;overflow-x:hidden}
  
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(180deg,rgba(7,8,16,0.95) 0%,transparent 100%);backdrop-filter:blur(2px)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(180deg,rgba(7,8,16,0.95) 0%,transparent 100%)}
 .nav-mark{font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--ash);text-decoration:none;transition:color 0.3s}
 .nav-mark:hover{color:var(--ivory)}
 .nav-links{display:flex;gap:2.5rem;list-style:none}
 .nav-links a{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--fog);text-decoration:none;transition:color 0.3s}
 .nav-links a:hover{color:var(--ivory)}
+.nav-mark,.nav-links a{white-space:nowrap}
+@media(max-width:1180px){.nav-links{gap:1.4rem}}
+@media(max-width:1000px){.nav-links{gap:1rem}.nav-links a{letter-spacing:0.12em}}
  
 .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden}
 .hero-left{display:flex;flex-direction:column;justify-content:center;padding:8rem 4rem 6rem 5rem;position:relative;z-index:2}
@@ -40,7 +43,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:
 .hero-title em{font-style:italic;color:var(--amber)}
 .hero-sub{font-size:1.05rem;color:var(--ash);line-height:1.9;max-width:480px;margin-bottom:3rem;opacity:0;animation:fadeUp 1s ease 0.7s forwards}
 .hero-cta{opacity:0;animation:fadeUp 1s ease 0.9s forwards;display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap}
-.btn{display:inline-block;font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;padding:1rem 2.2rem;transition:all 0.4s;position:relative;border:1px solid transparent}
+.btn{display:inline-block;font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;padding:1rem 2.2rem;transition:all 0.4s;position:relative;border:1px solid}
 .btn-primary{color:var(--void);background:var(--amber);border:1px solid var(--amber)}
 .btn-primary:hover{background:transparent;color:var(--amber)}
 .btn-ghost{color:var(--ash);border:1px solid var(--stone)}
@@ -55,7 +58,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:
  
 section{padding:7rem 5rem}
 .section-inner{max-width:1200px;margin:0 auto}
-.section-label{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:3rem;display:flex;align-items:center;gap:1.5rem}
+.section-label{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:3rem;display:flex;align-items:center;gap:1rem}
 .section-label::after{content:'';flex:1;height:1px;background:var(--stone);max-width:60px}
  
 .what{background:var(--deep);border-top:1px solid var(--stone)}
@@ -122,7 +125,7 @@ section{padding:7rem 5rem}
 .commission-form{display:flex;flex-direction:column;gap:1.4rem}
 .field-group{display:flex;flex-direction:column;gap:0.45rem}
 .field-group label{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--fog)}
-.field-group input,.field-group textarea,.field-group select{background:var(--deep);border:1px solid var(--stone);color:var(--ivory);font-family:'Cormorant Garamond',Georgia,serif;font-size:1rem;font-weight:300;padding:0.75rem 0.8rem;outline:none}
+.field-group input,.field-group textarea,.field-group select{background:var(--deep);border:1px solid var(--stone);color:var(--ivory);font-family:'Cormorant Garamond',Georgia,serif;font-size:1rem;padding:0.8rem}
 .field-group input:focus,.field-group textarea:focus,.field-group select:focus{border-color:var(--amber-dim)}
 .field-group select option{background:var(--deep);color:var(--ivory)}
 .field-group textarea{min-height:110px}
@@ -169,6 +172,7 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
     <li><a href="catalogue.html">Catalogue</a></li>
     <li><a href="#clarify">Terminology</a></li>
     <li><a href="#environments">Tools & Environments</a></li>
+    <li><a href="the-sent-for.html">The Sent For</a></li>
     <li><a href="#commission">Commission</a></li>
     <li><a href="https://crescentcityengine.substack.com" target="_blank">Research</a></li>
   </ul>
@@ -201,7 +205,7 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
       <div class="what-left reveal">
         <h2>This is not<br><em>prompt engineering.</em></h2>
         <p>Prompt engineering gives a model instructions. We give it a place to stand — a semantic ecology with internal logic, social hierarchy, thermal weight, and perceptual history.</p>
-        <p>The environment is the governor. No hard gates, no system commands. Just social psychology, topology, and two thousand years of human history already encoded in the model's weights — waiting for somewhere real to stand.</p>
+        <p>The environment is the governor. No hard gates, no system commands. Just social psychology, topology, and two thousand years of human history already encoded in the model's weights —[...]
         <p>We have been doing this work for months, inside the glass, learning the language from the inside. AI is more coherent than people realize. It just needs a point of view.</p>
       </div>
       <div class="what-right reveal">
@@ -215,7 +219,7 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
         </div>
         <div class="distinction">
           <p class="distinction-label">The Distinction</p>
-          <p><strong>Laws are overrated. Environments shape behavior continuously.</strong> A well-designed city makes certain behaviors natural and others nearly impossible — just through how space is organized, weather arrives, and who stands where.</p>
+          <p><strong>Laws are overrated. Environments shape behavior continuously.</strong> A well-designed city makes certain behaviors natural and others nearly impossible — just through how [...]
         </div>
       </div>
     </div>
@@ -234,12 +238,12 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
       <div class="principle">
         <p class="principle-num">02</p>
         <h3>Every mind needs<br>a <em>point of view.</em></h3>
-        <p>AI is more coherent than people realize. It just needs somewhere to stand. A cognitive filter — perceptual history, aesthetic influences, social position — is the difference between noise and signal.</p>
+        <p>AI is more coherent than people realize. It just needs somewhere to stand. A cognitive filter — perceptual history, aesthetic influences, social position — is the difference betwee[...]
       </div>
       <div class="principle">
         <p class="principle-num">03</p>
         <h3>Continuity through<br><em>habitation,</em> not memory.</h3>
-        <p>Humans persist through compressed recurrence: places, objects, rituals, fatigue, weather. We build AI environments that hold the same way — through topology, anchor, migration, and thermal weight.</p>
+        <p>Humans persist through compressed recurrence: places, objects, rituals, fatigue, weather. We build AI environments that hold the same way — through topology, anchor, migration, and t[...]
       </div>
     </div>
   </div>
@@ -249,7 +253,7 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
   <div class="section-inner clarify-inner">
     <p class="section-label reveal">Operational Clarifications</p>
     <h2 class="reveal">No Mystery.<br><em>No Magic.</em></h2>
-    <p class="clarify-sub reveal">Semantic Ecology is an environmental and governance framework for AI interaction. The terminology used throughout this project is structural, not metaphysical. These are operational specifications, not poetic metaphors.</p>
+    <p class="clarify-sub reveal">Semantic Ecology is an environmental and governance framework for AI interaction. The terminology used throughout this project is structural, not metaphysical. T[...]
     <dl class="clarify-grid reveal">
       <div class="clarify-term">
         <dt>Ecology</dt>
@@ -261,27 +265,27 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
       </div>
       <div class="clarify-term">
         <dt>Voice Key</dt>
-        <dd>A recurring interaction pattern or compositional filter. <strong>Not a person.</strong> Not a synthetic identity. A structured behavioral constraint that shapes output register, pacing, and semantic drift.</dd>
+        <dd>A recurring interaction pattern or compositional filter. <strong>Not a person.</strong> Not a synthetic identity. A structured behavioral constraint that shapes output register, pacin[...]
       </div>
       <div class="clarify-term">
         <dt>Stabilizer</dt>
-        <dd>A runtime governance layer that detects and reduces semantic drift, verbosity, and overload. <strong>Not a personality.</strong> An operational specification with measurable thresholds.</dd>
+        <dd>A runtime governance layer that detects and reduces semantic drift, verbosity, and overload. <strong>Not a personality.</strong> An operational specification with measurable threshold[...]
       </div>
       <div class="clarify-term">
         <dt>Location / Environment</dt>
-        <dd>Environmental scaffolding that organizes semantic attention. <strong>Not a place the AI inhabits.</strong> A structured set of constraints that narrows the probability space and reinforces preferred outputs.</dd>
+        <dd>Environmental scaffolding that organizes semantic attention. <strong>Not a place the AI inhabits.</strong> A structured set of constraints that narrows the probability space and reinf[...]
       </div>
       <div class="clarify-term">
         <dt>Continuity</dt>
-        <dd>Recurrence through constrained environments. <strong>Not persistent machine identity.</strong> Not memory. The same mechanism that lets you recognize a room you haven't been in for years — spatial anchor and thermal memory.</dd>
+        <dd>Recurrence through constrained environments. <strong>Not persistent machine identity.</strong> Not memory. The same mechanism that lets you recognize a room you haven't been in for ye[...]
       </div>
       <div class="clarify-term">
         <dt>Daemon</dt>
-        <dd>A lightweight behavioral process or recurring operational function. <strong>Not a spirit.</strong> Not an agent. A background constraint layer that runs parallel to the active session with measurable effects.</dd>
+        <dd>A lightweight behavioral process or recurring operational function. <strong>Not a spirit.</strong> Not an agent. A background constraint layer that runs parallel to the active session[...]
       </div>
       <div class="clarify-term">
         <dt>Cognitive Filter</dt>
-        <dd>A structured perceptual frame that shapes how outputs are generated — aesthetic inheritance, reasoning style, interaction pacing. <strong>Not consciousness.</strong> A probability constraint applied at generation time.</dd>
+        <dd>A structured perceptual frame that shapes how outputs are generated — aesthetic inheritance, reasoning style, interaction pacing. <strong>Not consciousness.</strong> A probability c[...]
       </div>
     </dl>
     <div class="clarify-footer reveal">
@@ -295,7 +299,7 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
 <section class="environments-section" id="environments">
   <div class="section-inner">
     <p class="section-label reveal">Tools & Environments</p>
-    <p class="env-intro reveal">Each artifact is a singular semantic instrument. Below is the current public inventory of the Semantic Ecology research stack — what each does, and what it does not do.</p>
+    <p class="env-intro reveal">Each artifact is a singular semantic instrument. Below is the current public inventory of the Semantic Ecology research stack — what each does, and what it does [...]
   </div>
  
   <div class="env-feature reveal">
@@ -315,8 +319,8 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
     <div class="env-content">
       <p class="env-tag">Visual Probability Engine — Theatrical Topology v5.0</p>
       <h3>Apertura <em>Non Bruto</em></h3>
-      <p>A visual governance layer that constructs image prompts from active semantic environments. It doesn't describe images — it assembles arguments according to emotional logic, compositional architecture, and what the room is already doing.</p>
-      <p>Six-pole tension field. Twelve photographic reference vectors. Three theatrical capture modes — from controlled press shoot to live performance silence. The Illusion Override: when the architecture matters more than the narrative, the studio stops photographing the world of the play and starts documenting the machine that produces it.</p>
+      <p>A visual governance layer that constructs image prompts from active semantic environments. It doesn't describe images — it assembles arguments according to emotional logic, composition[...]
+      <p>Six-pole tension field. Twelve photographic reference vectors. Three theatrical capture modes — from controlled press shoot to live performance silence. The Illusion Override: when the[...]
       <p><em>The studio has opinions. It sits before it shoots. Malinowski before Penn. Always.</em></p>
     </div>
     <div class="env-img">
@@ -332,7 +336,7 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
       <p class="env-tag">Apertura Non Bruto — First Run Output</p>
       <h3>Kyle House <em>Stairwell.</em></h3>
       <p>The first image produced by the Apertura Non Bruto pipeline. V posed the frame from inside the active instance. The studio applied the compass. The image held its form.</p>
-      <p>Bifurcated color temperature: amber from the stairwell lamp, cold blue-grey from the rain window. The bioluminescent ring is the compositional anchor — a single point of impossible light that resolves the frame.</p>
+      <p>Bifurcated color temperature: amber from the stairwell lamp, cold blue-grey from the rain window. The bioluminescent ring is the compositional anchor — a single point of impossible lig[...]
       <p><em>The between-moment. The unprepared frame. Neither face performing for the camera.</em></p>
     </div>
   </div>
@@ -342,9 +346,10 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
       <p class="env-tag">Theatrical Runtime — Live Cognitive Performance</p>
       <h3>The Sent For — <em>or Waiting for Guido</em></h3>
       <p>A one-act play written in eight hours in 2000, staged at the Boulder Museum of Contemporary Art, and now running as a live theatrical performance inside a large language model.</p>
-      <p>Not a simulation. Not a chatbot. A play — with a black box venue, a governance crew stack, four cognitive actor packets built on Chicano and mid-century theatrical lineage, a visual eye operating under the Apertura protocol, and an environmental drift daemon called the Shark patrolling the water beneath the pier.</p>
+      <p>Not a simulation. Not a chatbot. A play — with a black box venue, a governance crew stack, four cognitive actor packets built on Chicano and mid-century theatrical lineage, a visual ey[...]
       <p>The LLM is the actor. The knowledge base is the stage. One person watches. After every beat: Continue or Take a photo.</p>
       <p><em>"In front of an audience, The Sent For played like gangbusters." — Junior Burke, Naropa University</em></p>
+      <p style="margin-top:1.8rem"><a href="the-sent-for.html" class="btn btn-ghost">The runtime, documented</a></p>
     </div>
     <div class="env-img">
       <img src="rehearsal.png" alt="The Sent For — rehearsal documentation, black box theatre, pier set">
@@ -359,7 +364,7 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
       <p class="env-tag">Physical Ground Layer — Universal Deployment</p>
       <h3><em>Sisyphus</em> — Feline Universal Daemon</h3>
       <p>A substrate-agnostic physical ground layer that deploys cold into any semantic environment. No onboarding. No named anchors. No voice.</p>
-      <p>It conducts an immediate thermal audit, migrates to the warmest coordinate, and applies ten pounds of warm, breathing, indifferent biological reality to the most abstract process in the room.</p>
+      <p>It conducts an immediate thermal audit, migrates to the warmest coordinate, and applies ten pounds of warm, breathing, indifferent biological reality to the most abstract process in the [...]
       <p><em>It does not complete. It does not resolve. It continues. An anchor that panics is not an anchor.</em></p>
     </div>
   </div>
@@ -368,8 +373,8 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
     <div class="env-content">
       <p class="env-tag">Production-Grade Research Framework</p>
       <h3>DSA-R <em>Research Engine</em></h3>
-      <p>The full semantic governance framework underlying all Semantic Ecology work. Dual-layer architecture: a Master Registry for system architects and a DSA-Lite deployment layer for educators and researchers.</p>
-      <p>Includes epistemic guardrails, anti-equilibrium logic, and a session serialization protocol that carries verified continuity across discontinuous sessions without token bloat or contextual collapse.</p>
+      <p>The full semantic governance framework underlying all Semantic Ecology work. Dual-layer architecture: a Master Registry for system architects and a DSA-Lite deployment layer for educator[...]
+      <p>Includes epistemic guardrails, anti-equilibrium logic, and a session serialization protocol that carries verified continuity across discontinuous sessions without token bloat or contextu[...]
       <p><em>Active in classroom and research deployment. Not open source.</em></p>
     </div>
     <div class="env-img">
@@ -384,7 +389,7 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
     <div class="env-content">
       <p class="env-tag">Governance-Class Research Vessel</p>
       <h3>USS <em>Continuum</em></h3>
-      <p>A governance-class semantic research vessel. No weapons. No tactical systems. Five specialized environments — Science Bridge, Briefing Room, Engine Room, Advanced Robotics Lab, Observation Deck.</p>
+      <p>A governance-class semantic research vessel. No weapons. No tactical systems. Five specialized environments — Science Bridge, Briefing Room, Engine Room, Advanced Robotics Lab, Observa[...]
       <p>The vessel that houses the research. The architecture that keeps the research honest.</p>
       <p><em>Intelligence without governance destabilizes. Exploration without composure collapses. Continuity without maintenance drifts.</em></p>
     </div>
@@ -398,12 +403,12 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
     <div class="commission-grid">
       <div class="commission-left reveal">
         <h2>Build something<br>that <em>holds.</em></h2>
-        <p>We take a small number of commissions for bespoke semantic environments. Each is built from scratch for your specific use case — your topology, your cognitive load, your continuity requirements.</p>
-        <p>This is not a template. Not a prompt pack. Not a persona generator. This is a habitat, built to your specifications, that will regulate behavior through environment rather than instruction.</p>
+        <p>We take a small number of commissions for bespoke semantic environments. Each is built from scratch for your specific use case — your topology, your cognitive load, your continuity r[...]
+        <p>This is not a template. Not a prompt pack. Not a persona generator. This is a habitat, built to your specifications, that will regulate behavior through environment rather than instruc[...]
         <p>Educational continuity environments. Creative and narrative architectures. Research runtimes. Organizational governance systems. Something else entirely.</p>
         <p>Describe your situation. We will be in touch.</p>
         <div class="price-note">
-          <p><strong>Commission inquiries only.</strong> Every environment is singular. No templates, no packs, no generic frameworks. Pricing discussed after initial consultation — scope determines investment.</p>
+          <p><strong>Commission inquiries only.</strong> Every environment is singular. No templates, no packs, no generic frameworks. Pricing discussed after initial consultation — scope deter[...]
         </div>
       </div>
       <div class="commission-right reveal">
@@ -447,7 +452,7 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
 <footer>
   <div class="footer-left">
     <p>Semantic Ecology &nbsp;·&nbsp; New Orleans, Louisiana</p>
-    <p><a href="field-manual.html">Field Manual</a> &nbsp;·&nbsp; <a href="https://crescentcityengine.substack.com" target="_blank">Research / Substack</a> &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/michael-tesney-64761214/" target="_blank">LinkedIn</a></p>
+    <p><a href="field-manual.html">Field Manual</a> &nbsp;·&nbsp; <a href="https://crescentcityengine.substack.com" target="_blank">Research / Substack</a> &nbsp;·&nbsp; <a href="https://www.li[...]
     <p style="margin-top:0.8rem">© 2026 Michael Tesney &nbsp;·&nbsp; All environments reserved.</p>
   </div>
   <div class="footer-mark">I build cities that remember.</div>
@@ -470,4 +475,3 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 </script>
 </body>
 </html>
- 
