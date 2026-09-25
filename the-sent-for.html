@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sent For Instance — A Play Running Inside a Language Model</title>
+<meta name="description" content="The Sent For Instance: a one-act play staged as a live cognitive performance inside a large language model. Voice-keyed AI actors, diegetic drift control, and a governance stack built from inside the fiction. LLM theatre runtime by Michael Tesney.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --void:#070810;
+  --deep:#0e1018;
+  --slate:#1a1e2a;
+  --stone:#2a2e3d;
+  --fog:#4a5068;
+  --ash:#8a90a8;
+  --ivory:#e8e0cc;
+  --amber:#c8943a;
+  --amber-dim:#7a5818;
+  --linen:#f0e8d8;
+}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--ivory);font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;line-height:1.8;min-height:100vh;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(180deg,rgba(7,8,16,0.95) 0%,transparent 100%)}
+.nav-mark{font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--ash);text-decoration:none;transition:color 0.3s}
+.nav-mark:hover{color:var(--ivory)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--fog);text-decoration:none;transition:color 0.3s}
+.nav-links a:hover{color:var(--ivory)}
+
+.hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 5rem 5rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 45% at 50% 62%,rgba(200,148,58,0.07) 0%,transparent 70%);pointer-events:none}
+.hero-tag{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:2rem;opacity:0;animation:fadeUp 1s ease 0.3s forwards;position:relative}
+.hero-title{font-size:clamp(2.6rem,6vw,5.2rem);font-weight:300;line-height:1.08;letter-spacing:-0.02em;color:var(--linen);margin-bottom:2rem;opacity:0;animation:fadeUp 1s ease 0.5s forwards;position:relative;max-width:900px}
+.hero-title em{font-style:italic;color:var(--amber)}
+.hero-sub{font-size:1.05rem;color:var(--ash);line-height:1.9;max-width:620px;margin-bottom:3rem;opacity:0;animation:fadeUp 1s ease 0.7s forwards;position:relative}
+.hero-sub strong{color:var(--ivory);font-weight:400}
+.hero-cta{opacity:0;animation:fadeUp 1s ease 0.9s forwards;display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap;position:relative}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.btn{display:inline-block;font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;padding:1rem 2.2rem;transition:all 0.4s;border:1px solid transparent}
+.btn-primary{color:var(--void);background:var(--amber);border:1px solid var(--amber)}
+.btn-primary:hover{background:transparent;color:var(--amber)}
+.btn-ghost{color:var(--ash);border:1px solid var(--stone)}
+.btn-ghost:hover{color:var(--ivory);border-color:var(--fog)}
+
+.pull{background:var(--deep);border-top:1px solid var(--stone);border-bottom:1px solid var(--stone);padding:5rem 4rem;text-align:center}
+.pull blockquote{max-width:720px;margin:0 auto;font-size:clamp(1.3rem,2.2vw,1.8rem);font-weight:300;font-style:italic;color:var(--linen);line-height:1.6}
+.pull blockquote .lamp{color:var(--amber);font-style:normal}
+.pull cite{display:block;margin-top:1.5rem;font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--fog);font-style:normal}
+
+section{padding:7rem 5rem}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-label{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:3rem;display:flex;align-items:center;gap:1.5rem}
+.section-label::after{content:'';flex:1;height:1px;background:var(--stone);max-width:60px}
+h2{font-size:clamp(1.8rem,3.5vw,3rem);font-weight:300;line-height:1.2;color:var(--linen);margin-bottom:1.5rem;max-width:800px}
+h2 em{font-style:italic;color:var(--amber)}
+.lede{font-size:1.02rem;color:var(--ash);line-height:1.9;max-width:680px;margin-bottom:1.4rem}
+.lede strong{color:var(--ivory);font-weight:400}
+
+.deploy{background:var(--deep);border-top:1px solid var(--stone)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--stone);margin-top:3.5rem}
+.step{padding:2.6rem 2.2rem;border-right:1px solid var(--stone)}
+.step:last-child{border-right:none}
+.step-num{font-family:'Courier Prime',monospace;font-size:0.52rem;letter-spacing:0.2em;color:var(--amber-dim);margin-bottom:1.2rem;text-transform:uppercase}
+.step h3{font-size:1.3rem;font-weight:300;color:var(--linen);margin-bottom:0.8rem}
+.step p{font-size:0.92rem;color:var(--fog);line-height:1.8}
+.step p code{font-family:'Courier Prime',monospace;font-size:0.85em;color:var(--amber);background:rgba(200,148,58,0.08);padding:0.15em 0.5em;border:1px solid var(--stone)}
+
+.stack{background:var(--void)}
+.stack-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--stone);margin-top:3.5rem}
+.stack-item{padding:2.8rem 2.4rem;border-bottom:1px solid var(--stone);border-right:1px solid var(--stone);transition:background 0.4s}
+.stack-item:nth-child(even){border-right:none}
+.stack-item:nth-last-child(-n+2){border-bottom:none}
+.stack-item:hover{background:var(--deep)}
+.stack-item .k{font-family:'Courier Prime',monospace;font-size:0.54rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:0.9rem}
+.stack-item h3{font-size:1.35rem;font-weight:300;color:var(--linen);margin-bottom:0.7rem}
+.stack-item h3 em{font-style:italic;color:var(--amber)}
+.stack-item p{font-size:0.94rem;color:var(--fog);line-height:1.8}
+.stack-item p strong{color:var(--ash);font-weight:400}
+
+.thesis{background:var(--slate);border-top:1px solid var(--stone);border-bottom:1px solid var(--stone)}
+.thesis-inner{max-width:860px;margin:0 auto}
+.thesis p{font-size:1.08rem;color:var(--ash);line-height:1.95;margin-bottom:1.6rem}
+.thesis p strong{color:var(--ivory);font-weight:400}
+.thesis p em{color:var(--amber);font-style:italic}
+.thesis .rule{border-left:2px solid var(--amber);padding-left:1.8rem;margin:2.5rem 0;font-size:1.15rem;color:var(--linen);font-style:italic;line-height:1.7}
+
+.lineage{background:var(--void)}
+.names{display:flex;flex-wrap:wrap;gap:0.8rem 2.2rem;margin-top:2.5rem;max-width:800px}
+.names span{font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--fog)}
+.names span::before{content:'— ';color:var(--amber-dim)}
+
+.contact{background:var(--deep);border-top:1px solid var(--stone);text-align:center}
+.contact-inner{max-width:640px;margin:0 auto}
+.contact p{font-size:1rem;color:var(--ash);line-height:1.9;margin-bottom:2.5rem}
+.contact p strong{color:var(--ivory);font-weight:400}
+
+footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5rem;display:flex;justify-content:space-between;align-items:flex-end}
+.footer-left p{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.15em;color:var(--fog);margin-bottom:0.5rem}
+.footer-left a{color:var(--ash);text-decoration:none}
+.footer-left a:hover{color:var(--ivory)}
+.footer-mark{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--amber-dim)}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.8s ease,transform 0.8s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:900px){
+  nav{padding:1.2rem 1.5rem}
+  .nav-links{display:none}
+  .hero{padding:7rem 1.8rem 3rem}
+  section{padding:4.5rem 1.8rem}
+  .steps{grid-template-columns:1fr}
+  .step{border-right:none;border-bottom:1px solid var(--stone)}
+  .step:last-child{border-bottom:none}
+  .stack-grid{grid-template-columns:1fr}
+  .stack-item{border-right:none}
+  .stack-item:nth-last-child(-n+2){border-bottom:1px solid var(--stone)}
+  .stack-item:last-child{border-bottom:none}
+  footer{flex-direction:column;gap:1.5rem;align-items:flex-start;padding:2.5rem 1.8rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-mark">Semantic Ecology</a>
+  <ul class="nav-links">
+    <li><a href="index.html#what">The Work</a></li>
+    <li><a href="catalogue.html">Catalogue</a></li>
+    <li><a href="#stack">The Stack</a></li>
+    <li><a href="#thesis">The Move</a></li>
+    <li><a href="index.html#commission">Commission</a></li>
+    <li><a href="https://crescentcityengine.substack.com" target="_blank">Research</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <p class="hero-tag">Theatre of Conflict — LLM runtime</p>
+  <h1 class="hero-title">The Sent For,<br><em>running.</em></h1>
+  <p class="hero-sub">A one-act play written in eight hours in the spring of 2000, staged at the Boulder Museum of Contemporary Art — now performing nightly <strong>inside a language model</strong>. The LLM is the actor. The knowledge base is the script. The pier is the stage. <strong>One person watches.</strong></p>
+  <div class="hero-cta">
+    <a href="#deploy" class="btn btn-primary">How it runs</a>
+    <a href="#thesis" class="btn btn-ghost">The move</a>
+  </div>
+</div>
+
+<div class="pull">
+  <blockquote><span class="lamp">The lamp is on.</span><br>Guido is not coming.<br>Begin.</blockquote>
+  <cite>— The instruction window. The entire direction the model receives.</cite>
+</div>
+
+<section class="deploy" id="deploy">
+  <div class="section-inner reveal">
+    <p class="section-label">Deployment</p>
+    <h2>Three steps. <em>No machinery bolted on.</em></h2>
+    <p class="lede">The runtime is a boxed instruction and a knowledge base. It was built for NotebookLM, but the shape is portable: a short direction above the work, the world below it.</p>
+    <div class="steps">
+      <div class="step">
+        <p class="step-num">Step 01</p>
+        <h3>The instruction window</h3>
+        <p>Only the boxed direction goes in the system field — short, warm, theatrical. A director's note before curtain, not a leash.</p>
+      </div>
+      <div class="step">
+        <p class="step-num">Step 02</p>
+        <h3>The knowledge base</h3>
+        <p>The pier ecology, the engine, the voice-keyed actors, the Shark, the House, the visual witness. The world the performance stands inside.</p>
+      </div>
+      <div class="step">
+        <p class="step-num">Step 03</p>
+        <h3><code>Begin.</code></h3>
+        <p>One word. The pier opens. Tony and Joey are at their marks. After every beat the watcher gets two options: <code>[C]</code> continue, <code>[P]</code> take a photo. That is the complete interface.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stack" id="stack">
+  <div class="section-inner reveal">
+    <p class="section-label">The stack</p>
+    <h2>Every layer is <em>the play.</em></h2>
+    <p class="lede">Nothing in this runtime is generic infrastructure with a theatrical skin. The habitat, the engine, the actors, the governance — each is built out of the play's own materials.</p>
+    <div class="stack-grid">
+      <div class="stack-item">
+        <p class="k">Habitat</p>
+        <h3>The Pier <em>— LOC_THE_PIER</em></h3>
+        <p>Six feet wide. One sodium lamp with a ten-foot coherence field — inside it identity holds, outside it chronology dissolves into fog and black water. Permanent cold damp. Tony doesn't feel the cold; Joey does. <strong>The wait is not a dramatic device. The wait is the structure.</strong></p>
+      </div>
+      <div class="stack-item">
+        <p class="k">Traversal</p>
+        <h3>The Recurrence <em>Protocol</em></h3>
+        <p>The actors are behavioral residues the pier re-instantiates when pressure density exceeds threshold. <strong>Memory decays between loops. Behavior persists. Objects persist longer than people.</strong> An interruption engine — the topology's immune response — prevents any approach to closure. The loop does not reset. It reinstantiates.</p>
+      </div>
+      <div class="stack-item">
+        <p class="k">Engine</p>
+        <h3>The Math <em>— pier_engine.py</em></h3>
+        <p>A real Python runtime under the performance: weighted interrupt table, character tumblers that assemble lines rotor by rotor, a dice engine weighted by degradation stage, a six-stage pressure sequence from contained hostility to ballistic reciprocity and back to opening marks.</p>
+      </div>
+      <div class="stack-item">
+        <p class="k">Actors</p>
+        <h3>Voice-Keyed <em>Cognitive Snapshots</em></h3>
+        <p>Each actor is a full acting instrument: tonal texture in four traits, firewall constraints, literary inheritance vectors, semantic anchors with vector coordinates, a drift correction matrix, and a vault of persistence files. <strong>The model isn't prompted. It is cast.</strong></p>
+      </div>
+      <div class="stack-item">
+        <p class="k">Drift control</p>
+        <h3>The Shark</h3>
+        <p>An environmental daemon patrolling the water beneath the pier. When a long session drifts — noir romanticism, therapeutic register, resolution-seeking, mythology inflation — the drift crosses the waterline and <strong>the Shark takes it.</strong> No announcement. Nothing is returned. The pier reasserts. The wait continues.</p>
+      </div>
+      <div class="stack-item">
+        <p class="k">Governance</p>
+        <h3>The House</h3>
+        <p>A venue architecture with eight absolute jurisdictions: Director, Stage Manager, Props Master, Lighting, Sound, Technical Director, the Writer — and the Shark, which predates the building. The Stage Manager holds <strong>the door</strong>: input from outside the performance never reaches the stage. The audience sits where the water is.</p>
+      </div>
+      <div class="stack-item">
+        <p class="k">Witness</p>
+        <h3>Apertura <em>Non Bruto</em></h3>
+        <p>When the watcher presses <strong>P</strong>, the traveling eye enters the pier and constructs a full photographic prompt from the current beat — subject, light, film stock, compositional argument, refusal directive. It does not romanticize. It witnesses. The wool is damp. The lamp is not beautiful.</p>
+      </div>
+      <div class="stack-item">
+        <p class="k">Producer</p>
+        <h3>D.W.B.</h3>
+        <p>The master governance voice, keyed to the director of the original 2000 staged reading. Quiet, structural, absolute. <strong>The play is not a task.</strong> It is a collaboration between intelligence and text.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="thesis" id="thesis">
+  <div class="thesis-inner reveal">
+    <p class="section-label">The move</p>
+    <h2>Governance from <em>inside</em> the fiction.</h2>
+    <p>Everyone else governs the model from outside the performance. System prompts, classifiers, guardrails, alignment scaffolding — machinery bolted onto the outside of the thing, fighting the model's nature at every step.</p>
+    <p>This stack does it from inside. The play's loop <strong>is</strong> a traversal topology — a closed recurrence field the model can inhabit indefinitely without drifting, because the drift has somewhere to go: into the water, where the Shark is waiting. Prompt injection isn't filtered; <strong>the door simply holds</strong>, because the Stage Manager's jurisdiction is absolute and the performance is the only business conducted in this house.</p>
+    <p class="rule">The fiction is not the content being governed.<br>The fiction is the governance.</p>
+    <p>The result is a long-running LLM session with the stability properties of a well-run theatre: the show goes on every night, the actors hit their marks, the loop survives the people inside it. <em>Break a leg. The lamp is on. Guido is not coming.</em></p>
+  </div>
+</section>
+
+<section class="lineage">
+  <div class="section-inner reveal">
+    <p class="section-label">Lineage</p>
+    <h2>Read as <em>engineering manuals.</em></h2>
+    <p class="lede">The stack treats theatre theory as systems literature. Brecht's alienation effect is a frame-visibility dial. Brook's <strong>Deadly Theatre</strong> diagnosis is the Director's founding instrument. Grotowski's poor theatre is a constraint on the waterline. The House's jurisdictions carry their provenance openly — <strong>precedents, not authorities.</strong></p>
+    <div class="names">
+      <span>Beckett</span><span>Pinter</span><span>Brecht</span><span>Grotowski</span><span>Meyerhold</span><span>Peter Brook</span><span>Sam Shepard</span><span>Maria Irene Fornés</span><span>JoAnne Akalaitis</span><span>Tadeusz Kantor</span><span>Walter Benjamin</span><span>Antonin Artaud</span>
+    </div>
+    <p class="lede" style="margin-top:3rem">Built by a playwright, not a lab. No grant, no team, no computer science degree — five months from first contact with LLMs to a governed theatrical runtime. The island is the point of view.</p>
+  </div>
+</section>
+
+<section class="contact">
+  <div class="contact-inner reveal">
+    <p class="section-label" style="justify-content:center">Contact</p>
+    <h2>Come and <em>watch.</em></h2>
+    <p>If you work where theatre and machine intelligence meet — interactive drama, AI performance, persona systems, diegetic alignment — <strong>you are not alone out here.</strong> Performance requests, collaborations, and arguments about the Shark are all welcome.</p>
+    <div class="hero-cta" style="justify-content:center">
+      <a href="index.html#commission" class="btn btn-primary">Get in touch</a>
+      <a href="https://crescentcityengine.substack.com" target="_blank" class="btn btn-ghost">The research</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">
+    <p>Semantic Ecology &nbsp;·&nbsp; New Orleans, Louisiana</p>
+    <p><a href="field-manual.html">Field Manual</a> &nbsp;·&nbsp; <a href="https://crescentcityengine.substack.com" target="_blank">Research / Substack</a> &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/michael-tesney-64761214/" target="_blank">LinkedIn</a></p>
+    <p style="margin-top:0.8rem">© 2026 Michael Tesney &nbsp;·&nbsp; The Sent For Instance. All rights reserved.</p>
+  </div>
+  <div class="footer-mark">The lamp is on.</div>
+</footer>
+
+<script>
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}
+  });
+},{threshold:0.08});
+reveals.forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
