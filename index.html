@@ -122,6 +122,14 @@ section{padding:7rem 5rem}
 .price-note{margin-top:2rem;padding:1.4rem 1.8rem;border:1px solid var(--stone);background:var(--deep)}
 .price-note p{font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.1em;color:var(--fog);line-height:1.7}
 .price-note strong{color:var(--amber);font-weight:700}
+.contact-card{border:1px solid var(--stone);padding:2.6rem 2.4rem;background:var(--deep)}
+.contact-k{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:1.2rem}
+.contact-lead{font-size:1.05rem;color:var(--ivory);margin-bottom:1rem}
+.contact-list{list-style:none;margin-bottom:2.2rem}
+.contact-list li{font-size:0.98rem;color:var(--ash);line-height:1.8;padding:0.5rem 0 0.5rem 1.4rem;border-bottom:1px solid var(--stone);position:relative}
+.contact-list li::before{content:'—';position:absolute;left:0;color:var(--amber-dim)}
+.contact-actions{display:flex;gap:1rem;flex-wrap:wrap}
+.contact-addr{font-family:'Courier Prime',monospace;font-size:0.8rem;letter-spacing:0.08em;color:var(--ivory);margin-top:1.6rem;user-select:all}
 .commission-form{display:flex;flex-direction:column;gap:1.4rem}
 .field-group{display:flex;flex-direction:column;gap:0.45rem}
 .field-group label{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--fog)}
@@ -129,7 +137,7 @@ section{padding:7rem 5rem}
 .field-group input:focus,.field-group textarea:focus,.field-group select:focus{border-color:var(--amber-dim)}
 .field-group select option{background:var(--deep);color:var(--ivory)}
 .field-group textarea{min-height:110px}
-.form-note{font-family:'Courier Prime',monospace;font-size:0.52rem;letter-spacing:0.12em;color:var(--stone);margin-top:0.8rem;line-height:1.7}
+.form-note{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.12em;color:var(--fog);margin-top:0.8rem;line-height:1.7}
  
 footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5rem;display:flex;justify-content:space-between;align-items:flex-end}
 .footer-left p{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.18em;color:var(--fog);text-transform:uppercase;line-height:2.2}
@@ -477,38 +485,21 @@ a.gh-card:hover .gh-go{color:var(--amber)}
         </div>
       </div>
       <div class="commission-right reveal">
-        <form class="commission-form" action="mailto:michael@semanticecology.org" method="POST" enctype="text/plain">
-          <div class="field-group">
-            <label for="name">Your name</label>
-            <input type="text" id="name" name="name" placeholder="—" required>
+        <div class="contact-card">
+          <p class="contact-k">Get in touch</p>
+          <p class="contact-lead">Email is the fastest way to reach me. Tell me:</p>
+          <ul class="contact-list">
+            <li>Who you are and what you&rsquo;re building toward</li>
+            <li>The environment &mdash; what the room feels like, who is in it, what pressure it needs to hold</li>
+            <li>Your timeline and context</li>
+          </ul>
+          <div class="contact-actions">
+            <a href="mailto:radiohour@gmail.com?subject=Commission%20inquiry" class="btn btn-primary">Email me</a>
+            <a href="https://www.linkedin.com/in/michael-tesney-64761214/" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn</a>
           </div>
-          <div class="field-group">
-            <label for="email">Contact</label>
-            <input type="email" id="email" name="email" placeholder="—" required>
-          </div>
-          <div class="field-group">
-            <label for="usecase">What are you building toward</label>
-            <select id="usecase" name="usecase">
-              <option value="">—</option>
-              <option>Educational continuity environment</option>
-              <option>Creative / narrative architecture</option>
-              <option>Research runtime</option>
-              <option>Organizational / governance system</option>
-              <option>Therapeutic or support context</option>
-              <option>Something else entirely</option>
-            </select>
-          </div>
-          <div class="field-group">
-            <label for="environment">Describe your environment — what does the room feel like, who is in it, what pressure does it need to hold</label>
-            <textarea id="environment" name="environment" placeholder="—"></textarea>
-          </div>
-          <div class="field-group">
-            <label for="timeline">Timeline and context</label>
-            <input type="text" id="timeline" name="timeline" placeholder="—">
-          </div>
-          <button type="submit" class="btn btn-primary" style="margin-top:0.5rem">Send inquiry</button>
-          <p class="form-note">The work takes the time it takes. We respond to every inquiry.</p>
-        </form>
+          <p class="contact-addr">radiohour@gmail.com</p>
+          <p class="form-note">The work takes the time it takes. Every inquiry gets a reply.</p>
+        </div>
       </div>
     </div>
   </div>
