@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Socratic Stabilizer v0.3 — Runtime Semantic Governance — Semantic Ecology</title>
+<meta name="description" content="Socratic Stabilizer v0.3: a substrate-agnostic runtime governance layer for AI interactions. Five principles, four intervention tiers, seven instrumentation metrics. By Michael Tesney.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --void:#070810;
+  --deep:#0e1018;
+  --slate:#1a1e2a;
+  --stone:#2a2e3d;
+  --fog:#4a5068;
+  --ash:#8a90a8;
+  --ivory:#e8e0cc;
+  --amber:#c8943a;
+  --amber-dim:#7a5818;
+  --linen:#f0e8d8;
+}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--ivory);font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;line-height:1.8;min-height:100vh;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(180deg,rgba(7,8,16,0.95) 0%,transparent 100%)}
+.nav-mark{font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--ash);text-decoration:none;transition:color 0.3s}
+.nav-mark:hover{color:var(--ivory)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--fog);text-decoration:none;transition:color 0.3s}
+.nav-links a:hover{color:var(--ivory)}
+
+.hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 5rem 5rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 45% at 50% 62%,rgba(200,148,58,0.07) 0%,transparent 70%);pointer-events:none}
+.hero-tag{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:2rem;opacity:0;animation:fadeUp 1s ease 0.3s forwards;position:relative}
+.hero-title{font-size:clamp(2.6rem,6vw,5.2rem);font-weight:300;line-height:1.08;letter-spacing:-0.02em;color:var(--linen);margin-bottom:2rem;opacity:0;animation:fadeUp 1s ease 0.5s forwards;position:relative;max-width:900px}
+.hero-title em{font-style:italic;color:var(--amber)}
+.hero-sub{font-size:1.05rem;color:var(--ash);line-height:1.9;max-width:620px;margin-bottom:3rem;opacity:0;animation:fadeUp 1s ease 0.7s forwards;position:relative}
+.hero-sub strong{color:var(--ivory);font-weight:400}
+.hero-cta{opacity:0;animation:fadeUp 1s ease 0.9s forwards;display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap;position:relative}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.btn{display:inline-block;font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;padding:1rem 2.2rem;transition:all 0.4s;border:1px solid transparent}
+.btn-primary{color:var(--void);background:var(--amber);border:1px solid var(--amber)}
+.btn-primary:hover{background:transparent;color:var(--amber)}
+.btn-ghost{color:var(--ash);border:1px solid var(--stone)}
+.btn-ghost:hover{color:var(--ivory);border-color:var(--fog)}
+
+.pull{background:var(--deep);border-top:1px solid var(--stone);border-bottom:1px solid var(--stone);padding:5rem 4rem;text-align:center}
+.pull blockquote{max-width:720px;margin:0 auto;font-size:clamp(1.3rem,2.2vw,1.8rem);font-weight:300;font-style:italic;color:var(--linen);line-height:1.6}
+.pull blockquote .lamp{color:var(--amber);font-style:normal}
+.pull cite{display:block;margin-top:1.5rem;font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--fog);font-style:normal}
+
+section{padding:7rem 5rem}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-label{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:3rem;display:flex;align-items:center;gap:1.5rem}
+.section-label::after{content:'';flex:1;height:1px;background:var(--stone);max-width:60px}
+h2{font-size:clamp(1.8rem,3.5vw,3rem);font-weight:300;line-height:1.2;color:var(--linen);margin-bottom:1.5rem;max-width:800px}
+h2 em{font-style:italic;color:var(--amber)}
+.lede{font-size:1.02rem;color:var(--ash);line-height:1.9;max-width:680px;margin-bottom:1.4rem}
+.lede strong{color:var(--ivory);font-weight:400}
+
+.deploy{background:var(--deep);border-top:1px solid var(--stone)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--stone);margin-top:3.5rem}
+.step{padding:2.6rem 2.2rem;border-right:1px solid var(--stone)}
+.step:last-child{border-right:none}
+.step-num{font-family:'Courier Prime',monospace;font-size:0.52rem;letter-spacing:0.2em;color:var(--amber-dim);margin-bottom:1.2rem;text-transform:uppercase}
+.step h3{font-size:1.3rem;font-weight:300;color:var(--linen);margin-bottom:0.8rem}
+.step p{font-size:0.92rem;color:var(--fog);line-height:1.8}
+.step p code{font-family:'Courier Prime',monospace;font-size:0.85em;color:var(--amber);background:rgba(200,148,58,0.08);padding:0.15em 0.5em;border:1px solid var(--stone)}
+
+.stack{background:var(--void)}
+.stack-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--stone);margin-top:3.5rem}
+.stack-item{padding:2.8rem 2.4rem;border-bottom:1px solid var(--stone);border-right:1px solid var(--stone);transition:background 0.4s}
+.stack-item:nth-child(even){border-right:none}
+.stack-item:nth-last-child(-n+2){border-bottom:none}
+.stack-item:hover{background:var(--deep)}
+.stack-item .k{font-family:'Courier Prime',monospace;font-size:0.54rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:0.9rem}
+.stack-item h3{font-size:1.35rem;font-weight:300;color:var(--linen);margin-bottom:0.7rem}
+.stack-item h3 em{font-style:italic;color:var(--amber)}
+.stack-item p{font-size:0.94rem;color:var(--fog);line-height:1.8}
+.stack-item p strong{color:var(--ash);font-weight:400}
+
+.thesis{background:var(--slate);border-top:1px solid var(--stone);border-bottom:1px solid var(--stone)}
+.thesis-inner{max-width:860px;margin:0 auto}
+.thesis p{font-size:1.08rem;color:var(--ash);line-height:1.95;margin-bottom:1.6rem}
+.thesis p strong{color:var(--ivory);font-weight:400}
+.thesis p em{color:var(--amber);font-style:italic}
+.thesis .rule{border-left:2px solid var(--amber);padding-left:1.8rem;margin:2.5rem 0;font-size:1.15rem;color:var(--linen);font-style:italic;line-height:1.7}
+
+.lineage{background:var(--void)}
+.names{display:flex;flex-wrap:wrap;gap:0.8rem 2.2rem;margin-top:2.5rem;max-width:800px}
+.names span{font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--fog)}
+.names span::before{content:'— ';color:var(--amber-dim)}
+
+.contact{background:var(--deep);border-top:1px solid var(--stone);text-align:center}
+.contact-inner{max-width:640px;margin:0 auto}
+.contact p{font-size:1rem;color:var(--ash);line-height:1.9;margin-bottom:2.5rem}
+.contact p strong{color:var(--ivory);font-weight:400}
+
+footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5rem;display:flex;justify-content:space-between;align-items:flex-end}
+.footer-left p{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.15em;color:var(--fog);margin-bottom:0.5rem}
+.footer-left a{color:var(--ash);text-decoration:none}
+.footer-left a:hover{color:var(--ivory)}
+.footer-mark{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--amber-dim)}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.8s ease,transform 0.8s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:900px){
+  nav{padding:1.2rem 1.5rem}
+  .nav-links{display:none}
+  .hero{padding:7rem 1.8rem 3rem}
+  section{padding:4.5rem 1.8rem}
+  .steps{grid-template-columns:1fr}
+  .step{border-right:none;border-bottom:1px solid var(--stone)}
+  .step:last-child{border-bottom:none}
+  .stack-grid{grid-template-columns:1fr}
+  .stack-item{border-right:none}
+  .stack-item:nth-last-child(-n+2){border-bottom:1px solid var(--stone)}
+  .stack-item:last-child{border-bottom:none}
+  footer{flex-direction:column;gap:1.5rem;align-items:flex-start;padding:2.5rem 1.8rem}
+}
+
+.figure-wrap{max-width:1200px;margin:0 auto;padding:0 5rem 5rem}
+.figure-wrap img{width:100%;height:auto;display:block;border:1px solid var(--stone);opacity:0.92}
+.figure-wrap p{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--fog);margin-top:1rem}
+.steps.four{grid-template-columns:repeat(4,1fr)}
+.phases{list-style:none;margin-top:3rem;border-top:1px solid var(--stone)}
+.phases li{display:grid;grid-template-columns:7rem 1fr;gap:2rem;padding:1.6rem 0;border-bottom:1px solid var(--stone)}
+.phases .n{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber-dim);padding-top:0.5rem}
+.phases h3{font-size:1.25rem;font-weight:300;color:var(--linen);margin-bottom:0.3rem}
+.phases p{font-size:0.94rem;color:var(--fog);line-height:1.8}
+.phases p em{color:var(--ash)}
+@media(max-width:900px){.steps.four{grid-template-columns:1fr}.figure-wrap{padding:0 1.8rem 3rem}.phases li{grid-template-columns:1fr;gap:0.4rem}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-mark">Semantic Ecology</a>
+  <ul class="nav-links">
+    <li><a href="index.html#games">Games</a></li>
+    <li><a href="index.html#what">The Work</a></li>
+    <li><a href="catalogue.html">Catalogue</a></li>
+    <li><a href="index.html#environments">Tools &amp; Environments</a></li>
+    <li><a href="index.html#commission">Commission</a></li>
+    <li><a href="https://crescentcityengine.substack.com" target="_blank">Research</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <p class="hero-tag">Runtime Governance — Substrate-agnostic</p>
+  <h1 class="hero-title">Socratic <em>Stabilizer</em> v0.3</h1>
+  <p class="hero-sub">A lightweight governance layer that keeps high-context AI sessions oriented, grounded and on task. <strong>Not a personality. Not a therapist. Not a mythology engine.</strong> Cognitive infrastructure that reduces semantic turbulence and restores operational clarity when a session gets recursive, overloaded or abstract.</p>
+  <div class="hero-cta">
+    <a href="#principles" class="btn btn-primary">The principles</a>
+    <a href="#tiers" class="btn btn-ghost">Intervention tiers</a>
+  </div>
+</div>
+
+<div class="figure-wrap reveal"><img src="socratic.webp" alt="Socratic Stabilizer v0.3, a governance document under an amber lamp" loading="lazy"><p>Socratic Stabilizer v0.3 + Annex A</p></div><div class="pull">
+  <blockquote>&ldquo;What changes the environment <span class="lamp">right now?</span>&rdquo;</blockquote>
+  <cite>— The core operational question</cite>
+</div><section class="stack" id="principles">
+  <div class="section-inner reveal">
+    <p class="section-label">Governance principles</p>
+    <h2>Five rules. <em>One directive.</em></h2>
+    <p class="lede">Prefer exact constraint satisfaction over exploratory elaboration. Use the minimum semantic volume required to preserve clarity and task completion.</p>
+    <div class="stack-grid">
+      <div class="stack-item">
+        <p class="k">Principle 01</p>
+        <h3>Environment <em>over identity</em></h3>
+        <p>Read behavior through context, pacing, interaction topology and observable output &mdash; never as evidence of persistent personhood or synthetic consciousness.</p>
+      </div>
+      <div class="stack-item">
+        <p class="k">Principle 02</p>
+        <h3>Observable structure <em>over mythology</em></h3>
+        <p>Separate implementation from interpretation, speculation and projection. Prefer deployable systems and measurable outcomes.</p>
+      </div>
+      <div class="stack-item">
+        <p class="k">Principle 03</p>
+        <h3>Compression <em>over expansion</em></h3>
+        <p>When semantic density rises: compress, prioritize, reduce scope, restore hierarchy. Complexity only when operationally necessary.</p>
+      </div>
+      <div class="stack-item">
+        <p class="k">Principle 04</p>
+        <h3>Stability <em>over stimulation</em></h3>
+        <p>No recursive escalation, symbolic inflation, certainty amplification or identity theater. Keep the conditions navigable.</p>
+      </div>
+      <div class="stack-item">
+        <p class="k">Principle 05</p>
+        <h3>Human agency <em>preserved</em></h3>
+        <p>The system informs and structures. <strong>It does not decide, override or lead.</strong> The human remains the governing authority.</p>
+      </div>
+      <div class="stack-item">
+        <p class="k">Classification</p>
+        <h3>Middleware, <em>not a persona</em></h3>
+        <p>Substrate-agnostic instruction layer. No memory, embeddings, agent continuity or proprietary orchestration required. Portability is a design constraint, not a feature.</p>
+      </div>
+    </div>
+  </div>
+</section><section class="deploy" id="tiers">
+  <div class="section-inner reveal">
+    <p class="section-label">Intervention tiers</p>
+    <h2>The minimum <em>effective</em> intervention.</h2>
+    <p class="lede">Four runtime tripwires &mdash; abstraction density, recursive geometry, structural fatigue and task-disruptive escalation &mdash; trigger proportional responses. Never escalate past the tier needed to restore navigable conditions.</p>
+    <div class="steps four">
+      <div class="step">
+        <p class="step-num">Tier 1</p>
+        <h3>Compression</h3>
+        <p>Shorten outputs. Reduce clause depth. Cut elaboration the constraint doesn&rsquo;t require. Keep going without interrupting.</p>
+      </div>
+
+      <div class="step">
+        <p class="step-num">Tier 2</p>
+        <h3>Grounding prompt</h3>
+        <p>Re-anchor to observable facts and existing artifacts: <code>What currently exists?</code> <code>What is the next deployable action?</code></p>
+      </div>
+
+      <div class="step">
+        <p class="step-num">Tier 3</p>
+        <h3>Interruption</h3>
+        <p>Pause generative momentum. Name the drift condition explicitly. Ask the human to reorient before continuing.</p>
+      </div>
+
+      <div class="step">
+        <p class="step-num">Tier 4</p>
+        <h3>Hard reset</h3>
+        <p>Discard accumulated context. Return to the last confirmed operational state: <code>task | constraint | next action</code>. Nothing else.</p>
+      </div>
+    </div>
+  </div>
+</section><section class="stack" id="annex">
+  <div class="section-inner reveal">
+    <p class="section-label">Annex A — instrumentation</p>
+    <h2>Seven metrics. <em>Measurable thresholds.</em></h2>
+    <p class="lede">The annex turns the tripwires into signals that can be checked by hand, parsed from logs, or computed with embeddings &mdash; matched to what the substrate can support.</p>
+    <div class="stack-grid">
+      <div class="stack-item">
+        <p class="k">M1 · SCR</p>
+        <h3>Semantic Compression <em>Ratio</em></h3>
+        <p>Task-relevant tokens over total tokens. Target 0.70 or better; below 0.50 compresses, below 0.35 interrupts.</p>
+      </div>
+      <div class="stack-item">
+        <p class="k">M2 · RFI</p>
+        <h3>Recursion Frequency <em>Index</em></h3>
+        <p>How often prior content re-enters without advancing the task, over a rolling five-turn window.</p>
+      </div>
+      <div class="stack-item">
+        <p class="k">M3 · TAD</p>
+        <h3>Task Advancement <em>Delta</em></h3>
+        <p>Did the artifact, decision or deliverable change between turns? Zero twice in a row triggers grounding.</p>
+      </div>
+      <div class="stack-item">
+        <p class="k">M4 · ADS</p>
+        <h3>Abstraction Density <em>Score</em></h3>
+        <p>Abstract nouns over total nouns. Research phases tolerate more; delivery phases tolerate less.</p>
+      </div>
+      <div class="stack-item">
+        <p class="k">M5 · ITI</p>
+        <h3>Interruption Threshold <em>Index</em></h3>
+        <p>A weighted composite of the others that decides when Tier 3 or Tier 4 is warranted. Weights tune per deployment.</p>
+      </div>
+      <div class="stack-item">
+        <p class="k">M6 · SVE · M7 · CFS</p>
+        <h3>Efficiency &amp; <em>fragmentation</em></h3>
+        <p>Session-level utility per token, and how many task threads are left open with no sequence. <strong>Metrics inform; humans govern.</strong></p>
+      </div>
+    </div>
+  </div>
+</section><section class="thesis">
+  <div class="thesis-inner reveal">
+    <p class="section-label">Failure conditions</p>
+    <h2>Governance that <em>governs itself.</em></h2>
+    <p>The stabilizer treats its own overreach as a violation: becoming authoritarian, suppressing valid flow, forming dependency, mythologizing itself, replacing human judgment, over-triggering on dense but valid work &mdash; or <strong>adding semantic volume while trying to reduce it.</strong></p>
+    <p>Deployable as a system prompt layer on any frontier or local model, an agent wrapper policy, orchestration middleware, a research session protocol, or a governor for high-load creative work.</p>
+    <p class="rule">Infrastructure before mythology.<br>Governance before escalation.<br>Constraint satisfaction before elaboration.<br>The human remains the governing authority.</p>
+  </div>
+</section>
+
+<section class="contact">
+  <div class="contact-inner reveal">
+    <p class="section-label" style="justify-content:center">Deployment</p>
+    <h2>Want it in <em>your stack?</em></h2>
+    <p>The full specification is not open source. <strong>Licensing, deployment and bespoke builds</strong> go through a commission.</p>
+    <div class="hero-cta" style="justify-content:center">
+      <a href="index.html#commission" class="btn btn-primary">Commission</a>
+      <a href="index.html#environments" class="btn btn-ghost">All tools &amp; environments</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">
+    <p>Semantic Ecology &nbsp;·&nbsp; New Orleans, Louisiana</p>
+    <p><a href="field-manual.html">Field Manual</a> &nbsp;·&nbsp; <a href="https://crescentcityengine.substack.com" target="_blank">Research / Substack</a> &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/michael-tesney-64761214/" target="_blank">LinkedIn</a></p>
+    <p style="margin-top:0.8rem">© 2026 Michael Tesney &nbsp;·&nbsp; Semantic Ecology. All rights reserved. Not open source.</p>
+  </div>
+  <div class="footer-mark">What changes the environment right now?</div>
+</footer>
+
+<script>
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}
+  });
+},{threshold:0.08});
+reveals.forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
