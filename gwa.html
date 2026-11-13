@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The G.W.A. — Territorial wrestling tabletop RPG</title>
+<meta name="description" content="The G.W.A.: a tabletop RPG of late-1970s territorial professional wrestling, in development. Territory maps and design by Michael Tesney.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --void:#070810;
+  --deep:#0e1018;
+  --slate:#1a1e2a;
+  --stone:#2a2e3d;
+  --fog:#4a5068;
+  --ash:#8a90a8;
+  --ivory:#e8e0cc;
+  --amber:#c8943a;
+  --amber-dim:#7a5818;
+  --linen:#f0e8d8;
+}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--ivory);font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;line-height:1.8;min-height:100vh;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(180deg,rgba(7,8,16,0.95) 0%,transparent 100%)}
+.nav-mark{font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--ash);text-decoration:none;transition:color 0.3s}
+.nav-mark:hover{color:var(--ivory)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--fog);text-decoration:none;transition:color 0.3s}
+.nav-links a:hover{color:var(--ivory)}
+
+.hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 5rem 5rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 45% at 50% 62%,rgba(200,148,58,0.07) 0%,transparent 70%);pointer-events:none}
+.hero-tag{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:2rem;opacity:0;animation:fadeUp 1s ease 0.3s forwards;position:relative}
+.hero-title{font-size:clamp(2.6rem,6vw,5.2rem);font-weight:300;line-height:1.08;letter-spacing:-0.02em;color:var(--linen);margin-bottom:2rem;opacity:0;animation:fadeUp 1s ease 0.5s forwards;position:relative;max-width:900px}
+.hero-title em{font-style:italic;color:var(--amber)}
+.hero-sub{font-size:1.05rem;color:var(--ash);line-height:1.9;max-width:620px;margin-bottom:3rem;opacity:0;animation:fadeUp 1s ease 0.7s forwards;position:relative}
+.hero-sub strong{color:var(--ivory);font-weight:400}
+.hero-cta{opacity:0;animation:fadeUp 1s ease 0.9s forwards;display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap;position:relative}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.btn{display:inline-block;font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;padding:1rem 2.2rem;transition:all 0.4s;border:1px solid transparent}
+.btn-primary{color:var(--void);background:var(--amber);border:1px solid var(--amber)}
+.btn-primary:hover{background:transparent;color:var(--amber)}
+.btn-ghost{color:var(--ash);border:1px solid var(--stone)}
+.btn-ghost:hover{color:var(--ivory);border-color:var(--fog)}
+
+.pull{background:var(--deep);border-top:1px solid var(--stone);border-bottom:1px solid var(--stone);padding:5rem 4rem;text-align:center}
+.pull blockquote{max-width:720px;margin:0 auto;font-size:clamp(1.3rem,2.2vw,1.8rem);font-weight:300;font-style:italic;color:var(--linen);line-height:1.6}
+.pull blockquote .lamp{color:var(--amber);font-style:normal}
+.pull cite{display:block;margin-top:1.5rem;font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--fog);font-style:normal}
+
+section{padding:7rem 5rem}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-label{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:3rem;display:flex;align-items:center;gap:1.5rem}
+.section-label::after{content:'';flex:1;height:1px;background:var(--stone);max-width:60px}
+h2{font-size:clamp(1.8rem,3.5vw,3rem);font-weight:300;line-height:1.2;color:var(--linen);margin-bottom:1.5rem;max-width:800px}
+h2 em{font-style:italic;color:var(--amber)}
+.lede{font-size:1.02rem;color:var(--ash);line-height:1.9;max-width:680px;margin-bottom:1.4rem}
+.lede strong{color:var(--ivory);font-weight:400}
+
+.deploy{background:var(--deep);border-top:1px solid var(--stone)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--stone);margin-top:3.5rem}
+.step{padding:2.6rem 2.2rem;border-right:1px solid var(--stone)}
+.step:last-child{border-right:none}
+.step-num{font-family:'Courier Prime',monospace;font-size:0.52rem;letter-spacing:0.2em;color:var(--amber-dim);margin-bottom:1.2rem;text-transform:uppercase}
+.step h3{font-size:1.3rem;font-weight:300;color:var(--linen);margin-bottom:0.8rem}
+.step p{font-size:0.92rem;color:var(--fog);line-height:1.8}
+.step p code{font-family:'Courier Prime',monospace;font-size:0.85em;color:var(--amber);background:rgba(200,148,58,0.08);padding:0.15em 0.5em;border:1px solid var(--stone)}
+
+.stack{background:var(--void)}
+.stack-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--stone);margin-top:3.5rem}
+.stack-item{padding:2.8rem 2.4rem;border-bottom:1px solid var(--stone);border-right:1px solid var(--stone);transition:background 0.4s}
+.stack-item:nth-child(even){border-right:none}
+.stack-item:nth-last-child(-n+2){border-bottom:none}
+.stack-item:hover{background:var(--deep)}
+.stack-item .k{font-family:'Courier Prime',monospace;font-size:0.54rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:0.9rem}
+.stack-item h3{font-size:1.35rem;font-weight:300;color:var(--linen);margin-bottom:0.7rem}
+.stack-item h3 em{font-style:italic;color:var(--amber)}
+.stack-item p{font-size:0.94rem;color:var(--fog);line-height:1.8}
+.stack-item p strong{color:var(--ash);font-weight:400}
+
+.thesis{background:var(--slate);border-top:1px solid var(--stone);border-bottom:1px solid var(--stone)}
+.thesis-inner{max-width:860px;margin:0 auto}
+.thesis p{font-size:1.08rem;color:var(--ash);line-height:1.95;margin-bottom:1.6rem}
+.thesis p strong{color:var(--ivory);font-weight:400}
+.thesis p em{color:var(--amber);font-style:italic}
+.thesis .rule{border-left:2px solid var(--amber);padding-left:1.8rem;margin:2.5rem 0;font-size:1.15rem;color:var(--linen);font-style:italic;line-height:1.7}
+
+.lineage{background:var(--void)}
+.names{display:flex;flex-wrap:wrap;gap:0.8rem 2.2rem;margin-top:2.5rem;max-width:800px}
+.names span{font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--fog)}
+.names span::before{content:'— ';color:var(--amber-dim)}
+
+.contact{background:var(--deep);border-top:1px solid var(--stone);text-align:center}
+.contact-inner{max-width:640px;margin:0 auto}
+.contact p{font-size:1rem;color:var(--ash);line-height:1.9;margin-bottom:2.5rem}
+.contact p strong{color:var(--ivory);font-weight:400}
+
+footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5rem;display:flex;justify-content:space-between;align-items:flex-end}
+.footer-left p{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.15em;color:var(--fog);margin-bottom:0.5rem}
+.footer-left a{color:var(--ash);text-decoration:none}
+.footer-left a:hover{color:var(--ivory)}
+.footer-mark{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--amber-dim)}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.8s ease,transform 0.8s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:900px){
+  nav{padding:1.2rem 1.5rem}
+  .nav-links{display:none}
+  .hero{padding:7rem 1.8rem 3rem}
+  section{padding:4.5rem 1.8rem}
+  .steps{grid-template-columns:1fr}
+  .step{border-right:none;border-bottom:1px solid var(--stone)}
+  .step:last-child{border-bottom:none}
+  .stack-grid{grid-template-columns:1fr}
+  .stack-item{border-right:none}
+  .stack-item:nth-last-child(-n+2){border-bottom:1px solid var(--stone)}
+  .stack-item:last-child{border-bottom:none}
+  footer{flex-direction:column;gap:1.5rem;align-items:flex-start;padding:2.5rem 1.8rem}
+}
+
+.games{background:var(--deep);border-top:1px solid var(--stone)}
+.games.alt{background:var(--void)}
+.game-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));border-top:1px solid var(--stone);border-left:1px solid var(--stone);margin-top:3rem}
+.game{display:block;text-decoration:none;color:inherit;padding:2.4rem 2.2rem;border-right:1px solid var(--stone);border-bottom:1px solid var(--stone);transition:background 0.4s}
+.game:hover{background:var(--slate)}
+.game .k{font-family:'Courier Prime',monospace;font-size:0.54rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:0.9rem}
+.game h3{font-size:1.35rem;font-weight:300;color:var(--linen);margin-bottom:0.7rem}
+.game h3 em{font-style:italic;color:var(--amber)}
+.game p{font-size:0.94rem;color:var(--fog);line-height:1.8}
+.game .go{display:inline-block;margin-top:1.2rem;font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--ash)}
+.game:hover .go{color:var(--amber)}
+.maps{background:var(--deep);border-top:1px solid var(--stone)}
+.maps.alt{background:var(--void)}
+.map{margin:3rem 0 0}
+.map a{display:block;border:1px solid var(--stone);line-height:0;transition:border-color 0.4s}
+.map a:hover{border-color:var(--amber-dim)}
+.map img{width:100%;height:auto;display:block}
+.map figcaption{font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--fog);margin-top:1rem;line-height:1.8}
+.map figcaption strong{color:var(--ash);font-weight:400}
+.map-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 2.5rem}
+@media(max-width:900px){.map-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-mark">Semantic Ecology</a>
+  <ul class="nav-links">
+    <li><a href="index.html#what">The Work</a></li>
+    <li><a href="catalogue.html">Catalogue</a></li>
+    <li><a href="index.html#games">Games</a></li>
+    <li><a href="hard-times.html">Hard Times</a></li>
+    <li><a href="the-sent-for.html">The Sent For</a></li>
+    <li><a href="index.html#commission">Commission</a></li>
+    <li><a href="https://crescentcityengine.substack.com" target="_blank">Research</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <p class="hero-tag">Tabletop RPG &nbsp;·&nbsp; Territorial wrestling &nbsp;·&nbsp; In development</p>
+  <h1 class="hero-title">The <em>G.W.A.</em></h1>
+  <p class="hero-sub">A tabletop roleplaying game of the late-1970s territory era &mdash; promoters, faces and heels working regional circuits <strong>from Harbor City to Sunset City</strong>. Built on the Crescent City Engine, the same engine behind Hard Times in the Big Easy.</p>
+  <div class="hero-cta">
+    <a href="#territories" class="btn btn-primary">See the territories</a>
+    <a href="index.html#games" class="btn btn-ghost">All the games</a>
+  </div>
+</div>
+
+<section class="maps" id="territories">
+  <div class="section-inner reveal">
+    <p class="section-label">The territories</p>
+    <h2>Five territories, <em>late 1970s.</em></h2>
+    <p class="lede">Each territory runs from a flagship city, with towns, county-road venues, wrestling schools and the radio voices that sell the cards. Meridian Crossing, seat of the Commission, sits on neutral ground where they meet.</p>
+      <figure class="map">
+        <a href="gwa_territories.webp" target="_blank"><img src="gwa_territories.webp" alt="GWA Territories — hand-drawn GWA territory map, late 1970s" loading="lazy" width="1535" height="1024"></a>
+        <figcaption><strong>GWA Territories</strong> &nbsp;·&nbsp; Eastern Syndicate · Southern Loop · Rust Belt · The Frontier · Pacific Circuit</figcaption>
+      </figure>
+  </div>
+</section>
+
+<section class="maps alt">
+  <div class="section-inner reveal">
+    <p class="section-label">Regional detail</p>
+    <h2>The <em>circuits.</em></h2>
+    <div class="map-grid">
+      <figure class="map">
+        <a href="gwa_eastern_syndicate.webp" target="_blank"><img src="gwa_eastern_syndicate.webp" alt="Eastern Syndicate — hand-drawn GWA territory map, late 1970s" loading="lazy" width="1535" height="1024"></a>
+        <figcaption><strong>Eastern Syndicate</strong> &nbsp;·&nbsp; Flagship: Harbor City, &ldquo;The Gotham Colossus&rdquo;</figcaption>
+      </figure>
+      <figure class="map">
+        <a href="gwa_rust_belt.webp" target="_blank"><img src="gwa_rust_belt.webp" alt="The Rust Belt — hand-drawn GWA territory map, late 1970s" loading="lazy" width="1535" height="1024"></a>
+        <figcaption><strong>The Rust Belt</strong> &nbsp;·&nbsp; Flagship: Iron Junction, &ldquo;The Apex Foundry&rdquo;</figcaption>
+      </figure>
+      <figure class="map">
+        <a href="gwa_southern_loop.webp" target="_blank"><img src="gwa_southern_loop.webp" alt="The Southern Loop — hand-drawn GWA territory map, late 1970s" loading="lazy" width="1535" height="1024"></a>
+        <figcaption><strong>The Southern Loop</strong> &nbsp;·&nbsp; Flagship: Magnolia City, &ldquo;Capital Municipal Auditorium&rdquo;</figcaption>
+      </figure>
+      <figure class="map">
+        <a href="gwa_frontier.webp" target="_blank"><img src="gwa_frontier.webp" alt="The Frontier — hand-drawn GWA territory map, late 1970s" loading="lazy" width="1535" height="1024"></a>
+        <figcaption><strong>The Frontier</strong> &nbsp;·&nbsp; Flagship: Dry Gulch, &ldquo;The Maverick Coliseum&rdquo;</figcaption>
+      </figure>
+      <figure class="map">
+        <a href="gwa_pacific_circuit.webp" target="_blank"><img src="gwa_pacific_circuit.webp" alt="Pacific Circuit — hand-drawn GWA territory map, late 1970s" loading="lazy" width="1535" height="1024"></a>
+        <figcaption><strong>Pacific Circuit</strong> &nbsp;·&nbsp; Flagship: Sunset City, &ldquo;The Olympic Grand Amphitheater&rdquo;</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="contact">
+  <div class="contact-inner reveal">
+    <p class="section-label" style="justify-content:center">Follow development</p>
+    <h2>Michael Tesney, <em>lead designer.</em></h2>
+    <p>The G.W.A. is in development. Design notes go out on the Substack; <strong>playtesters and collaborators</strong> are welcome to get in touch.</p>
+    <div class="hero-cta" style="justify-content:center">
+      <a href="index.html#commission" class="btn btn-primary">Get in touch</a>
+      <a href="https://crescentcityengine.substack.com" target="_blank" class="btn btn-ghost">Substack</a>
+    </div>
+    <p style="margin:2.5rem 0 0;font-family:'Courier Prime',monospace;font-size:0.72rem;letter-spacing:0.12em"><a href="mailto:radiohour@gmail.com" style="color:var(--ash);text-decoration:none">radiohour@gmail.com</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">
+    <p>Semantic Ecology &nbsp;·&nbsp; New Orleans, Louisiana</p>
+    <p><a href="field-manual.html">Field Manual</a> &nbsp;·&nbsp; <a href="https://crescentcityengine.substack.com" target="_blank">Research / Substack</a> &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/michael-tesney-64761214/" target="_blank">LinkedIn</a></p>
+    <p style="margin-top:0.8rem">© 2026 Michael Tesney &nbsp;·&nbsp; The G.W.A. All rights reserved.</p>
+  </div>
+  <div class="footer-mark">See you down the road.</div>
+</footer>
+
+<script>
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}
+  });
+},{threshold:0.08});
+reveals.forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
