@@ -144,6 +144,18 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
 .map figcaption strong{color:var(--ash);font-weight:400}
 .map-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 2.5rem}
 @media(max-width:900px){.map-grid{grid-template-columns:1fr}}
+.intro{background:var(--void);border-top:1px solid var(--stone)}
+.intro h2{font-size:clamp(1.8rem,3.5vw,3rem);font-weight:300;line-height:1.2;color:var(--linen);margin-bottom:0.6rem}
+.intro h2 em{font-style:italic;color:var(--amber)}
+.intro-by{font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--ash);margin-bottom:2.5rem}
+.intro-fig{margin:0 0 3.5rem}
+.intro-fig img{width:100%;height:auto;display:block;border:1px solid var(--stone);opacity:0.92}
+.intro-text{max-width:720px;margin:0 auto}
+.intro-text p{font-size:1.12rem;color:var(--ash);line-height:1.95;margin-bottom:1.5rem}
+.intro-text p:first-child::first-letter{font-size:3.4em;float:left;line-height:0.9;padding:0.08em 0.12em 0 0;color:var(--amber)}
+.intro-pull{max-width:820px;margin:3.5rem auto 0;border-left:2px solid var(--amber);padding-left:1.8rem}
+.intro-pull blockquote{font-size:clamp(1.25rem,2vw,1.6rem);font-style:italic;color:var(--linen);line-height:1.55}
+.intro-pull blockquote em{color:var(--amber)}
 </style>
 </head>
 <body>
@@ -166,10 +178,39 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
   <h1 class="hero-title">The <em>G.W.A.</em></h1>
   <p class="hero-sub">A tabletop roleplaying game of the late-1970s territory era &mdash; promoters, faces and heels working regional circuits <strong>from Harbor City to Sunset City</strong>. Built on the Crescent City Engine, the same engine behind Hard Times in the Big Easy.</p>
   <div class="hero-cta">
-    <a href="#territories" class="btn btn-primary">See the territories</a>
-    <a href="index.html#games" class="btn btn-ghost">All the games</a>
+    <a href="#rocco" class="btn btn-primary">Read the introduction</a>
+    <a href="#territories" class="btn btn-ghost">See the territories</a>
   </div>
 </div>
+
+<section class="intro" id="rocco">
+  <div class="section-inner reveal">
+    <p class="section-label">Rulebook Vol. 1 &nbsp;·&nbsp; Introduction</p>
+    <h2>Where it <em>started.</em></h2>
+    <p class="intro-by">Rocco &ldquo;Ironman&rdquo; Salvatore</p>
+    <figure class="intro-fig"><img src="gwa_rocco.webp" alt="Rocco &ldquo;Ironman&rdquo; Salvatore, a weathered old wrestler, at a desk covered in territory maps and an open ledger, wrestling photos on the wall behind him" width="1024" height="572" loading="lazy"></figure>
+  </div>
+  <div class="intro-text reveal">
+    <p>People always want to know where professional wrestling started, and I never know what answer they expect, because there was no morning when somebody unlocked a building, put up a sign that said PROFESSIONAL WRESTLING, and decided this was how the business was going to work from then on. It came together over a long time, in a lot of towns, with a lot of men who disagreed about nearly everything except that there was money to be made if you could get enough people interested in watching two fellows wrestle.</p>
+    <p>When I was coming up, you still met old-timers who had worked carnivals, fairs, athletic clubs and whatever hall a promoter could get for the night. Some of them were legitimate catch wrestlers who could tie you in knots before you understood what had happened. Some were shooters, some were hookers, and some were just tough sons of bitches who had learned enough wrestling to keep themselves from getting embarrassed in public. The business was not as cleanly divided between a work and a shoot as people like to imagine afterward. There were nights when everybody knew the finish, nights when nobody knew it, and nights when two men went into the ring thinking they had an understanding and discovered somewhere around the third minute that they did not.</p>
+    <p>What changed everything was not that wrestling suddenly became worked. Wrestling had been worked in one form or another for a long time. What changed was that promoters learned there was more money in giving people a reason to care about the next match than there was in simply giving them a match tonight.</p>
+    <p>You could put two fine wrestlers together and draw a crowd once. If one of them cheated the other, embarrassed him, stole something from him or left the people convinced that justice had not been done, you had a chance of drawing that same crowd again. Once people started arguing about what ought to happen next Saturday before they had even left the building this Saturday, you had something better than a wrestling match. You had a business that could keep moving.</p>
+    <p>That is where Kayfabe comes into it, and I want to straighten something out because people who were never around the business have always had a bad habit of explaining Kayfabe to people who were. Kayfabe was never as simple as convincing every person in the building that everything they saw was a legitimate contest. Plenty of people knew damn well they were watching professional wrestling. What mattered was that everybody involved treated the thing seriously enough that the people buying tickets were allowed to care about it without being made fools for caring.</p>
+    <p>If the champion carried himself like the championship mattered, The Office treated the championship like it mattered, the other boys wanted it like it mattered, and the promoter protected it like it mattered, then sooner or later the people in the seats treated it the same way. That is how a piece of leather and metal becomes The Strap. You cannot manufacture that by telling people it is important. You build it slowly, and you can destroy it a hell of a lot faster than you built it.</p>
+    <p>The territory system grew for the same reason most businesses used to be local. The country is enormous, travel is expensive, television does not reach everywhere, and a fellow in one town has no particular reason to care about a wrestler from five states away unless somebody gives him one.</p>
+    <p>A promoter learned his towns. He knew which buildings drew, which buildings looked bigger on television than they really were, which sheriff wanted free tickets for half his family, which newspaper man could be trusted, which radio fellow would put you over, and which local politician suddenly remembered he hated wrestling every time an election came around. He knew where people got paid on Friday and where the mill changed shifts at four-thirty. He knew whether a babyface ought to shake hands all the way to the ring or whether the crowd in that particular town would think he looked like a fool for doing it.</p>
+    <p>That was a territory. It was not just a line somebody drew on a map. It was a relationship between a promotion and a population.</p>
+    <p>The boys traveled because the people did not. You could work a man hard in one part of the country, get everything you could out of him, and then send him somewhere else where nobody had seen him before. He could arrive with a clean slate, a new opponent and, if he had any sense, a different shirt.</p>
+    <p>Sometimes a man left because his program was finished. Sometimes he left because The Office had nothing else for him. Sometimes he left because he had gotten himself so hot that somebody thought he could draw better money somewhere else. Sometimes he left because three people in the dressing room wanted to kill him and the promoter decided geography was cheaper than diplomacy.</p>
+    <p>That movement is what made the territories depend on one another whether the promoters admitted it or not. Talent crossed boundaries. Champions crossed boundaries. Money crossed boundaries. One territory needed fresh heels, another needed a babyface, somebody else had a tag team that had run out of people to fight. Arrangements got made over telephones, in restaurants, in hotel rooms, at gas stations and plenty of places where nobody thought to bring a contract.</p>
+    <p>For a long time, a handshake and a man&rsquo;s reputation were enough to hold most of it together. Then the business got bigger, television got better, more money started moving, and there were enough championships and enough competing interests that memory stopped being good enough.</p>
+    <p>That is where the Association came from. Now here&rsquo;s a thing that trips people up who weren&rsquo;t around for it. When the Association actually came together and started running things like one operation instead of five separate outfits doing each other favors, somebody in an office somewhere decided the training schools all needed cleaner names. Made sense from where they were sitting &mdash; you can&rsquo;t run a continental operation with every school still going by whatever a founder scrawled on a barn door forty years earlier. So the paperwork changed. The names on the letterhead changed.</p>
+    <p>But you try telling an old-timer who trained at a place his whole life that it&rsquo;s got a different name now. Half of them never stopped calling it what they always called it&hellip;</p>
+  </div>
+  <div class="intro-pull reveal">
+    <blockquote>It was not just a line somebody drew on a map.<br>It was a relationship between <em>a promotion and a population.</em></blockquote>
+  </div>
+</section>
 
 <section class="maps" id="territories">
   <div class="section-inner reveal">
