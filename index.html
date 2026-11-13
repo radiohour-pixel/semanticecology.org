@@ -146,6 +146,8 @@ footer{background:var(--deep);border-top:1px solid var(--stone);padding:3.5rem 5
 .games-home h2 em{font-style:italic;color:var(--amber)}
 .games-home .lede{font-size:1rem;color:var(--ash);line-height:1.9;max-width:680px}
 .gh-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--stone);border-left:1px solid var(--stone);margin-top:3rem}
+.gh-art{display:block;width:calc(100% + 4.8rem);max-width:none;margin:-2.6rem -2.4rem 1.8rem;aspect-ratio:16/9;object-fit:cover;opacity:0.85;transition:opacity 0.4s;border-bottom:1px solid var(--stone)}
+a.gh-card:hover .gh-art{opacity:1}
 .gh-card{display:block;text-decoration:none;color:inherit;padding:2.6rem 2.4rem;border-right:1px solid var(--stone);border-bottom:1px solid var(--stone);transition:background 0.4s}
 a.gh-card:hover{background:var(--slate)}
 .gh-status{display:inline-block;font-family:'Courier Prime',monospace;font-size:0.54rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--amber);border:1px solid var(--amber-dim);padding:0.3rem 0.7rem;margin-bottom:1.2rem}
@@ -218,6 +220,7 @@ a.gh-card:hover .gh-go{color:var(--amber)}
     <p class="lede reveal">Every game here is built the same way as the AI work below: a place with rules, history and people who want things. Some you can play today. The rest are on the table.</p>
     <div class="gh-grid reveal">
       <a class="gh-card" href="hard-times.html">
+        <img class="gh-art" src="card_hardtimes.webp" alt="Engraved illustration of a scowling boxer, gloves raised, before French Quarter balconies" loading="lazy">
         <span class="gh-status">Launching December</span>
         <h3>Hard Times in the <em>Big Easy</em></h3>
         <p class="gh-kind">Noir game ecology · New Orleans, 1946</p>
@@ -225,19 +228,23 @@ a.gh-card:hover .gh-go{color:var(--amber)}
         <span class="gh-go">Play the previews &rarr;</span>
       </a>
       <a class="gh-card" href="hard-times.html#iwbf">
+        <img class="gh-art" src="card_iwbf.webp" alt="A lone figure outside Quark's Tavern, an I.W.B.F. outpost, at night" loading="lazy">
         <span class="gh-status dim">Next up</span>
         <h3><em>I.W.B.F.</em></h3>
         <p class="gh-kind">Infernal Warlocks of the Black Flame</p>
         <p class="desc">Hell runs on paperwork. Quark&rsquo;s tent, the Festival of the Veil and the field claims office &mdash; the world behind Dabo and Mage Wrestling, and next in line after Hard Times.</p>
         <span class="gh-go">Try Dabo &amp; Mage Wrestling &rarr;</span>
       </a>
-      <div class="gh-card">
+      <a class="gh-card" href="gwa.html">
+        <img class="gh-art" src="card_gwa.webp" alt="Hand-drawn map of the GWA wrestling territories, late 1970s" loading="lazy">
         <span class="gh-status dim">In development</span>
         <h3>The <em>G.W.A.</em></h3>
         <p class="gh-kind">Tabletop RPG · 1970s territorial wrestling</p>
         <p class="desc">The Global Wrestling Alliance: promoters, territories, faces and heels in the regional-circuit era of professional wrestling. Built on the same Crescent City Engine as Hard Times.</p>
-      </div>
+        <span class="gh-go">See the territories &rarr;</span>
+      </a>
       <a class="gh-card" href="wizards-wager.html">
+        <img class="gh-art" src="card_wizardswager.webp" alt="A ragged handler clutching a jar before I.W.B.F. clerks and a wizard" loading="lazy">
         <span class="gh-status dim">In development</span>
         <h3>Wizard&rsquo;s <em>Wager</em></h3>
         <p class="gh-kind">Full card game · VGA pixel art</p>
