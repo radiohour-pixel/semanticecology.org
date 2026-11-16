@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE DIAMOND — Crescent City Cranes (1946)</title>
+<style>
+  :root {
+    --paper: #F2ECE1;
+    --paper-dark: #E2D9C8;
+    --ink: #1A1917;
+    --slate: #5C5852;
+    --brass: #A68942;
+    --brass-bright: #C4A459;
+  }
+
+  * {
+    box-sizing: border-box;
+    user-select: none;
+  }
+
+  body {
+    margin: 0;
+    padding: 12px;
+    background-color: #141312;
+    color: var(--paper);
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .cabinet {
+    background: var(--ink);
+    border: 4px solid var(--brass);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.85), inset 0 0 0 2px #3A3222;
+    padding: 12px;
+    max-width: 680px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .header-plate {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--brass);
+    padding-bottom: 6px;
+  }
+
+  .title-block h1 {
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.25rem;
+    letter-spacing: 2px;
+    color: var(--paper);
+    text-transform: uppercase;
+  }
+
+  .title-block .sub {
+    font-size: 0.72rem;
+    color: var(--brass-bright);
+    letter-spacing: 1px;
+  }
+
+  .top-controls {
+    display: flex;
+    gap: 6px;
+  }
+
+  button.brass-btn {
+    background: var(--paper);
+    color: var(--ink);
+    border: 2px solid var(--brass);
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 0.75rem;
+    padding: 5px 9px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background 0.1s;
+  }
+
+  button.brass-btn:hover:not(:disabled) {
+    background: var(--brass-bright);
+    color: var(--ink);
+  }
+
+  button.brass-btn:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  button.brass-btn:disabled {
+    opacity: 0.38;
+    cursor: not-allowed;
+  }
+
+  button.brass-btn.active {
+    background: var(--brass);
+    color: var(--ink);
+  }
+
+  .screen-bezel {
+    position: relative;
+    background: var(--paper);
+    border: 3px solid var(--slate);
+    width: 100%;
+    aspect-ratio: 10 / 9;
+    max-height: 540px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  canvas {
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    display: block;
+  }
+
+  /* Title Overlay */
+  .title-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--paper);
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 16px;
+    z-index: 10;
+    text-align: center;
+  }
+
+  .title-overlay.hidden {
+    display: none;
+  }
+
+  .logo-frame {
+    width: 155px;
+    height: 155px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-frame img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .title-heading {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.55rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin: 4px 0;
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    padding: 4px 14px;
+  }
+
+  .setup-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 0.78rem;
+  }
+
+  .setup-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .setup-group label {
+    font-weight: bold;
+    color: var(--slate);
+    font-size: 0.7rem;
+  }
+
+  select.noir-select {
+    background: var(--paper-dark);
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 0.78rem;
+    padding: 4px 6px;
+  }
+
+  /* Tactical Deck */
+  .tactical-deck {
+    background: var(--paper);
+    color: var(--ink);
+    border: 2px solid var(--brass);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .duel-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 6px;
+    font-size: 0.75rem;
+  }
+
+  .card-box {
+    background: var(--paper-dark);
+    border: 1px solid var(--slate);
+    padding: 5px 7px;
+  }
+
+  .card-box .role-tag {
+    font-size: 0.65rem;
+    font-weight: bold;
+    color: var(--slate);
+    text-transform: uppercase;
+  }
+
+  .card-box .player-name {
+    font-family: Georgia, serif;
+    font-weight: bold;
+    font-size: 0.88rem;
+    margin: 1px 0 3px 0;
+  }
+
+  .card-box .stat-line {
+    font-size: 0.7rem;
+    line-height: 1.3;
+  }
+
+  .badge-plus {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0 3px;
+    font-weight: bold;
+  }
+
+  .badge-minus {
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    padding: 0 3px;
+    font-weight: bold;
+  }
+
+  .controls-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .row-label {
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: var(--slate);
+    min-width: 64px;
+    text-transform: uppercase;
+  }
+
+  .wire-box {
+    background: #141312;
+    color: var(--paper);
+    border: 1px solid var(--slate);
+    padding: 6px 8px;
+    font-size: 0.76rem;
+    line-height: 1.35;
+    min-height: 46px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .wire-box .headline {
+    color: var(--brass-bright);
+    font-weight: bold;
+  }
+
+  .math-tape {
+    background: #EFE7D6;
+    color: var(--ink);
+    border: 2px dashed var(--ink);
+    padding: 6px 8px;
+    font-size: 0.7rem;
+    line-height: 1.35;
+    display: none;
+  }
+
+  .math-tape.visible {
+    display: block;
+  }
+
+  .footer-hint {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.68rem;
+    color: var(--slate);
+  }
+</style>
+</head>
+<body>
+
+<div class="cabinet">
+  <div class="header-plate">
+    <div class="title-block">
+      <h1>THE DIAMOND</h1>
+      <div class="sub">HARD TIMES IN THE BIG EASY &bull; 1946 SBC EXHIBITION</div>
+    </div>
+    <div class="top-controls">
+      <button id="btnMathToggle" class="brass-btn" title="Toggle Arbiter Math Tape [M]">Math Tape</button>
+      <button id="btnSoundToggle" class="brass-btn active" title="Toggle Telegraph Audio">Sound: ON</button>
+      <button id="btnReset" class="brass-btn">New Game</button>
+    </div>
+  </div>
+
+  <div class="screen-bezel">
+    <canvas id="gameCanvas" width="320" height="288"></canvas>
+
+    <div id="titleOverlay" class="title-overlay">
+      <div style="font-size:0.72rem; letter-spacing:2px; font-weight:bold; color:var(--slate);">BYWATER RIVERFRONT &bull; LOT 635</div>
+      
+      <div class="logo-frame" id="logoContainer">
+        <img id="cccLogoImg" src="CCC logo.png" alt="Crescent City Cranes" onerror="renderFallbackEmblem()">
+      </div>
+
+      <div class="title-heading">CRESCENT CITY CRANES</div>
+
+      <div class="setup-row">
+        <div class="setup-group">
+          <label>OPPONENT CLUB</label>
+          <select id="selOpponent" class="noir-select">
+            <option value="MUDDERS">MISSISSIPPI MUDDERS</option>
+            <option value="SLUGGERS">NASHVILLE SLUGGERS</option>
+            <option value="STOGIES">BIRMINGHAM STOGIES</option>
+          </select>
+        </div>
+        <div class="setup-group">
+          <label>INNINGS</label>
+          <select id="selInnings" class="noir-select">
+            <option value="3">3 INNINGS (SPRINT)</option>
+            <option value="6">6 INNINGS (SHOWDOWN)</option>
+            <option value="9">9 INNINGS (FULL)</option>
+          </select>
+        </div>
+        <div class="setup-group">
+          <label>CRANES ROSTER</label>
+          <select id="selRosterMode" class="noir-select">
+            <option value="CANON">STUDD'S CANON SQUAD</option>
+            <option value="ROLLED">ROLL FRESH 4D6 CLUB</option>
+          </select>
+        </div>
+      </div>
+
+      <button id="btnStartGame" class="brass-btn" style="font-size:0.95rem; padding:8px 24px; border-width:3px;">PLAY BALL</button>
+    </div>
+  </div>
+
+  <div class="tactical-deck">
+    <div class="duel-strip">
+      <div class="card-box" id="pitcherCard">
+        <div class="role-tag">ON THE MOUND</div>
+        <div class="player-name" id="pName">—</div>
+        <div class="stat-line" id="pInfo">—</div>
+      </div>
+      <div class="card-box" id="batterCard">
+        <div class="role-tag">AT THE PLATE</div>
+        <div class="player-name" id="bName">—</div>
+        <div class="stat-line" id="bInfo">—</div>
+      </div>
+    </div>
+
+    <div class="controls-grid" id="controlsContainer">
+      <!-- Populated dynamically based on offense / defense -->
+    </div>
+
+    <div class="wire-box" id="telegraphWire">
+      <div class="headline">PRESS WIRE READY</div>
+      <div>Select your club and step onto the Bywater dirt.</div>
+    </div>
+
+    <div class="math-tape" id="mathTape">
+      <strong>ARBITER MATH TAPE:</strong> Waiting for first pitch...
+    </div>
+
+    <div class="footer-hint">
+      <span>[1-5] SELECT &bull; [SPACE] EXECUTE &bull; [M] MATH TAPE</span>
+      <span id="heatReadout">HEAT: 0/5 (CLEAN)</span>
+    </div>
+  </div>
+</div>
+
+<script>
+/**
+ * THE DIAMOND — 1946 Hard Times in the Big Easy Baseball Engine
+ * Palette: 4-Shade Newsprint & Brass (#F2ECE1, #E2D9C8, #5C5852, #1A1917, #A68942)
+ */
+
+const PAL = {
+  paper: '#F2ECE1',
+  paperDark: '#E2D9C8',
+  slate: '#5C5852',
+  ink: '#1A1917',
+  brass: '#A68942',
+  brassBright: '#C4A459'
+};
+
+const PITCH_TYPES = ['FASTBALL', 'CURVE', 'CHANGE-UP', 'KNUCKLER', 'SPITTER'];
+
+// --- WEB AUDIO SYNTHESIZER (Zero External Files) ---
+class NoirAudio {
+  constructor() {
+    this.enabled = true;
+    this.ctx = null;
+  }
+  init() {
+    if (!this.ctx) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtx) this.ctx = new AudioCtx();
+    }
+    if (this.ctx && this.ctx.state === 'suspended') {
+      this.ctx.resume();
+    }
+  }
+  tone(freq, type, duration, vol = 0.08, delay = 0) {
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime + delay;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, now);
+    gain.gain.setValueAtTime(vol, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + duration);
+  }
+  click() { this.tone(520, 'square', 0.04, 0.05); }
+  pitch() {
+    this.tone(240, 'triangle', 0.08, 0.06, 0);
+    this.tone(180, 'triangle', 0.10, 0.06, 0.06);
+  }
+  crack() {
+    this.tone(140, 'sawtooth', 0.14, 0.14, 0);
+    this.tone(420, 'square', 0.09, 0.10, 0.02);
+  }
+  mitt() {
+    this.tone(110, 'sine', 0.09, 0.12, 0);
+  }
+  homer() {
+    const notes = [261.6, 329.6, 392.0, 523.2];
+    notes.forEach((n, i) => this.tone(n, 'square', 0.16, 0.08, i * 0.11));
+  }
+  foulBlowback() {
+    this.tone(130, 'sawtooth', 0.25, 0.12, 0);
+    this.tone(98, 'sawtooth', 0.35, 0.12, 0.18);
+  }
+}
+const sfx = new NoirAudio();
+
+// Fallback emblem if CCC logo.png isn't adjacent
+function renderFallbackEmblem() {
+  const container = document.getElementById('logoContainer');
+  container.innerHTML = `
+    <svg width="144" height="144" viewBox="0 0 144 144">
+      <circle cx="72" cy="72" r="66" fill="#1A1917" stroke="#A68942" stroke-width="4"/>
+      <circle cx="72" cy="72" r="56" fill="#F2ECE1"/>
+      <path d="M 48 42 A 34 34 0 1 0 98 98 A 26 26 0 1 1 48 42 Z" fill="#A68942"/>
+      <text x="72" y="70" font-family="Georgia, serif" font-weight="bold" font-size="22" fill="#1A1917" text-anchor="middle">CCC</text>
+      <text x="72" y="92" font-family="Courier New, monospace" font-weight="bold" font-size="11" fill="#1A1917" text-anchor="middle">NEW ORLEANS</text>
+    </svg>
+  `;
+}
+
+// --- V14 BASEBALL ENGINE & CHARACTER BUILDER ---
+function rollD6() {
+  return Math.floor(Math.random() * 6) + 1;
+}
+
+function rollStatDie() {
+  let d = rollD6();
+  if (d === 1) {
+    d = rollD6();
+    if (d === 1) d = 2;
+  }
+  return 4 + d;
+}
+
+function getTierInfo(sum) {
+  if (sum <= 14) return { label: 'Greenhorn', dice: 3 };
+  if (sum <= 17) return { label: 'Local', dice: 5 };
+  if (sum <= 19) return { label: 'Pro', dice: 6 };
+  return { label: 'Hall of Famer', dice: 7 };
+}
+
+function rollV14Pool(numDice, isAsset = false) {
+  let rolls = [];
+  let assets = 0;
+  let liabilities = 0;
+  let ones = 0;
+  for (let i = 0; i < numDice; i++) {
+    const r = rollD6();
+    rolls.push(r);
+    if (r === 6) assets += 4;
+    else if (r === 5) assets += 3;
+    else if (r === 4) assets += 2;
+    else if (r === 2) liabilities += 1;
+    else if (r === 1) {
+      liabilities += 2;
+      if (isAsset) ones++;
+    }
+  }
+  return {
+    rolls,
+    assets,
+    liabilities,
+    net: assets - liabilities,
+    ones
+  };
+}
+
+const FIRST_NAMES = ['Buster', 'Booker', 'Dewey', 'Clyde', 'Otis', 'Hollis', 'Rufus', 'Virgil', 'Mack', 'Jules', 'Leroy', 'Percy', 'Bennie', 'Amos'];
+const LAST_NAMES = ['Broussard', 'Thibodeaux', 'Washington', 'Landry', 'Fontenot', 'Boudreaux', 'Guidry', 'Dufrene', 'Mouton', 'Arceneaux', 'Delacroix', 'Comeaux'];
+
+function generateBallplayer(customName, roleHint) {
+  let stats = {
+    MOX: rollStatDie(),
+    SS: rollStatDie(),
+    DRP: rollStatDie(),
+    TGH: rollStatDie()
+  };
+
+  // Chassis (1d6)
+  const cRoll = rollD6();
+  let chassis = { name: 'Plugger', speed: 2 };
+  if (cRoll <= 2) {
+    chassis = { name: 'Rabbit', speed: 3 };
+    stats.DRP += 2;
+    stats.TGH = Math.max(4, stats.TGH - 1);
+  } else if (cRoll <= 4) {
+    chassis = { name: 'Plugger', speed: 2 };
+    stats.TGH += 1;
+    stats.DRP = Math.max(4, stats.DRP - 1);
+  } else if (cRoll === 5) {
+    chassis = { name: 'Ace', speed: 2.5 };
+    stats.TGH += 1;
+    stats.DRP += 1;
+  } else {
+    chassis = { name: 'Slugger', speed: 1.4 };
+    stats.TGH += 2;
+    stats.DRP = Math.max(4, stats.DRP - 3);
+  }
+
+  // Backgrounds (8+)
+  let backgrounds = [];
+  if (stats.DRP >= 8) backgrounds.push('Tremé Pickup Regular');
+  if (stats.MOX >= 8) backgrounds.push('Passed-Over Schoolboy');
+  if (stats.TGH >= 8) backgrounds.push(Math.random() < 0.5 ? 'Returning Serviceman' : 'Mill League Man');
+  if (stats.SS >= 8) backgrounds.push(Math.random() < 0.5 ? 'Barnstormer' : 'Ex-Big Club Prospect');
+  if (backgrounds.length === 0) backgrounds.push('Sandlot Hand');
+
+  // Pitching & Batting specialties/weaknesses
+  const pPool = [...PITCH_TYPES];
+  const specIdx = Math.floor(Math.random() * pPool.length);
+  const specialty = pPool.splice(specIdx, 1)[0];
+  const weakIdx = Math.floor(Math.random() * pPool.length);
+  const weakness = pPool[weakIdx];
+
+  const bPool = [...PITCH_TYPES];
+  const sweetIdx = Math.floor(Math.random() * bPool.length);
+  const sweetSpot = bPool.splice(sweetIdx, 1)[0];
+  const coldIdx = Math.floor(Math.random() * bPool.length);
+  const coldZone = bPool[coldIdx];
+
+  const name = customName || `${FIRST_NAMES[Math.floor(Math.random()*FIRST_NAMES.length)]} ${LAST_NAMES[Math.floor(Math.random()*LAST_NAMES.length)]}`;
+
+  const pitchSum = stats.SS + stats.TGH;
+  const pitchTier = getTierInfo(pitchSum);
+
+  return {
+    name,
+    role: roleHint || 'UTIL',
+    stats,
+    chassis,
+    backgrounds,
+    specialty,
+    weakness,
+    sweetSpot,
+    coldZone,
+    maxSteam: pitchTier.dice * 10,
+    steam: pitchTier.dice * 10,
+    physPenalty: 0, // -1 from Partial hit or tie steal
+    lastAtBat: null, // 'DOUBLE', 'HOMER', 'K'
+    homeredOffPitcher: false
+  };
+}
+
+function buildCanonCranes() {
+  const mk = (name, role, stats, chassisName, speed, bg, spec, weak, sweet, cold) => {
+    const pTier = getTierInfo(stats.SS + stats.TGH);
+    return {
+      name, role, stats,
+      chassis: { name: chassisName, speed },
+      backgrounds: [bg],
+      specialty: spec, weakness: weak,
+      sweetSpot: sweet, coldZone: cold,
+      maxSteam: pTier.dice * 10,
+      steam: pTier.dice * 10,
+      physPenalty: 0,
+      lastAtBat: null,
+      homeredOffPitcher: false
+    };
+  };
+
+  return {
+    name: 'CRESCENT CITY CRANES',
+    short: 'CRANES',
+    pitchers: [
+      mk('Darnell "Lefty" Moreau', 'P', { MOX: 8, SS: 9, DRP: 7, TGH: 9 }, 'Ace', 2.5, 'Returning Serviceman', 'CURVE', 'KNUCKLER', 'FASTBALL', 'CURVE'),
+      mk('Bennie "Iron" Duplessis', 'RP', { MOX: 7, SS: 8, DRP: 6, TGH: 10 }, 'Plugger', 2, 'Mill League Man', 'FASTBALL', 'CHANGE-UP', 'CHANGE-UP', 'FASTBALL')
+    ],
+    lineup: [
+      mk('Clarence "Scooter" Vance', '2B', { MOX: 7, SS: 8, DRP: 10, TGH: 6 }, 'Rabbit', 3.1, 'Tremé Pickup Regular', 'FASTBALL', 'SPITTER', 'FASTBALL', 'CURVE'),
+      mk('Willie "Hawk" St. Cyr', 'CF', { MOX: 8, SS: 7, DRP: 9, TGH: 7 }, 'Rabbit', 3.0, 'Passed-Over Schoolboy', 'CHANGE-UP', 'CURVE', 'CHANGE-UP', 'KNUCKLER'),
+      mk('Big Earl Thibodeaux', '1B', { MOX: 9, SS: 6, DRP: 6, TGH: 10 }, 'Slugger', 1.4, 'Tremé Pickup Regular', 'FASTBALL', 'CURVE', 'FASTBALL', 'SPITTER'),
+      mk('Studd Cantreux (Player-Mgr)', 'C', { MOX: 10, SS: 9, DRP: 7, TGH: 9 }, 'Plugger', 2.0, 'Barnstormer', 'CURVE', 'KNUCKLER', 'CURVE', 'CHANGE-UP'),
+      mk('Hollis "Sarge" Mercer', '3B', { MOX: 9, SS: 8, DRP: 8, TGH: 8 }, 'Ace', 2.4, 'Returning Serviceman', 'CHANGE-UP', 'SPITTER', 'KNUCKLER', 'FASTBALL'),
+      mk('Antoine "Kid" Baptiste', 'SS', { MOX: 7, SS: 8, DRP: 8, TGH: 6 }, 'Rabbit', 2.9, 'Passed-Over Schoolboy', 'FASTBALL', 'CHANGE-UP', 'CURVE', 'SPITTER')
+    ]
+  };
+}
+
+function buildClub(clubKey, useRolled) {
+  if (clubKey === 'CRANES' && !useRolled) {
+    return buildCanonCranes();
+  }
+  const clubNames = {
+    CRANES: { name: 'CRESCENT CITY CRANES', short: 'CRANES' },
+    MUDDERS: { name: 'MISSISSIPPI MUDDERS', short: 'MUDDERS' },
+    SLUGGERS: { name: 'NASHVILLE SLUGGERS', short: 'SLUGGERS' },
+    STOGIES: { name: 'BIRMINGHAM STOGIES', short: 'STOGIES' }
+  };
+  const info = clubNames[clubKey] || clubNames.MUDDERS;
+  const positions = ['2B', 'CF', '1B', 'C', '3B', 'SS'];
+  return {
+    name: info.name,
+    short: info.short,
+    pitchers: [
+      generateBallplayer(null, 'SP'),
+      generateBallplayer(null, 'RP')
+    ],
+    lineup: positions.map(pos => generateBallplayer(null, pos))
+  };
+}
+
+// --- GAME STATE ---
+const state = {
+  screen: 'TITLE', // 'DUEL' | 'DIAMOND' | 'GAMEOVER'
+  maxInnings: 3,
+  inning: 1,
+  half: 'TOP', // 'TOP' (Opponent bats) | 'BOT' (Cranes bat)
+  outs: 0,
+  balls: 0,
+  strikes: 0,
+  bases: [null, null, null], // 1st, 2nd, 3rd runner objects
+  awayScore: 0,
+  homeScore: 0,
+  awayHits: 0,
+  homeHits: 0,
+  roadHeat: 0,
+  awayClub: null,
+  homeClub: null,
+  awayPitcherIdx: 0,
+  homePitcherIdx: 0,
+  awayBatterIdx: 0,
+  homeBatterIdx: 0,
+  inningRunsThisHalf: 0,
+
+  // Tactical selections
+  selectedPitch: 'FASTBALL',
+  bringHeat: false,
+  dirtyPlay: false,
+  batterApproach: 'SWING', // 'SWING' | 'IMPROVISE'
+
+  // Animation state
+  anim: {
+    active: false,
+    type: null, // 'PITCH_RESULT' | 'HIT_PLAY' | 'STEAL_PLAY'
+    timer: 0,
+    duration: 90,
+    ballX: 160,
+    ballY: 112,
+    targetX: 160,
+    targetY: 210,
+    runnersAnim: [],
+    outcomeBand: '',
+    bannerText: ''
+  }
+};
+
+// --- DOM ELEMENTS ---
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+const titleOverlay = document.getElementById('titleOverlay');
+const controlsContainer = document.getElementById('controlsContainer');
+const telegraphWire = document.getElementById('telegraphWire');
+const mathTape = document.getElementById('mathTape');
+const heatReadout = document.getElementById('heatReadout');
+
+// --- HELPER GETTERS ---
+function isPlayerPitching() {
+  return state.half === 'TOP'; // Cranes are Home team
+}
+function getActivePitcher() {
+  return isPlayerPitching()
+    ? state.homeClub.pitchers[state.homePitcherIdx]
+    : state.awayClub.pitchers[state.awayPitcherIdx];
+}
+function getActiveBatter() {
+  return isPlayerPitching()
+    ? state.awayClub.lineup[state.awayBatterIdx]
+    : state.homeClub.lineup[state.homeBatterIdx];
+}
+function getActiveCatcher() {
+  const club = isPlayerPitching() ? state.homeClub : state.awayClub;
+  return club.lineup.find(p => p.role === 'C') || club.lineup[3];
+}
+
+function getEffectivePitchPool(pitcher, batter, pitchType, useHeat) {
+  const rawStat = pitcher.stats.SS + pitcher.stats.TGH;
+  const baseTier = getTierInfo(rawStat);
+  let dice = baseTier.dice;
+
+  // Steam penalty: every 10 Steam lost below max costs 1 die
+  const steamLost = pitcher.maxSteam - pitcher.steam;
+  const steamPenalty = Math.floor(steamLost / 10);
+  dice -= steamPenalty;
+
+  // Specialty / Weakness
+  if (pitchType === pitcher.specialty) dice += 1;
+  if (pitchType === pitcher.weakness) dice -= 1;
+
+  // Heat die
+  if (useHeat) dice += 1;
+
+  // Pressure (-1 die each, stacking)
+  let pressure = 0;
+  if (state.bases[0] && state.bases[1] && state.bases[2]) pressure += 1; // Bases loaded
+  if (batter.homeredOffPitcher) pressure += 1;
+  if (pitcher.backgrounds.includes('Returning Serviceman') && pressure > 0) {
+    pressure -= 1; // Ignores 1 pressure die in a jam
+  }
+  dice -= pressure;
+
+  return Math.max(1, dice);
+}
+
+function getHeatSteamCost(pitcher, pitchType) {
+  if (pitchType === pitcher.specialty) return 3;
+  if (pitchType === pitcher.weakness) return 5;
+  return 2;
+}
+
+function getEffectiveBatPool(batter, pitcher, pitchType, approach) {
+  let effectiveMOX = batter.stats.MOX;
+  let effectiveDRP = batter.stats.DRP;
+
+  // Background conditional nudges
+  if (batter.backgrounds.includes('Passed-Over Schoolboy')) {
+    const pTier = getTierInfo(pitcher.stats.SS + pitcher.stats.TGH);
+    if (pTier.dice >= 6) effectiveMOX += 2;
+  }
+
+  const baseTier = getTierInfo(effectiveDRP + effectiveMOX);
+  let dice = baseTier.dice;
+
+  // Pitch matchup
+  if (pitchType === batter.sweetSpot) dice += 1;
+  if (pitchType === batter.coldZone) dice -= 1;
+
+  // Approach / Improvise
+  if (approach === 'IMPROVISE' && batter.backgrounds.includes('Tremé Pickup Regular')) {
+    dice += 1; // +2 stat equivalent -> +1 whole die
+  }
+
+  // Form
+  if (batter.lastAtBat === 'DOUBLE') dice += 1;
+  if (batter.lastAtBat === 'HOMER') dice += 2;
+
+  // Physical penalty from prior Partial hit / tie steal
+  if (batter.physPenalty > 0) dice -= batter.physPenalty;
+
+  // Batter Pressure (adds a Liability die each -> effectively -1 net die)
+  const myScore = isPlayerPitching() ? state.awayScore : state.homeScore;
+  const oppScore = isPlayerPitching() ? state.homeScore : state.awayScore;
+  if (batter.lastAtBat === 'K') dice -= 1;
+  if (oppScore - myScore >= 5) dice -= 1;
+
+  return Math.max(1, dice);
+}
+
+// --- TELEGRAPH & MATH LOGGING ---
+function setWire(headline, detail) {
+  telegraphWire.innerHTML = `<div class="headline">${headline}</div><div>${detail}</div>`;
+}
+
+function setMathTape(text) {
+  mathTape.innerHTML = `<strong>ARBITER MATH TAPE:</strong> ${text}`;
+}
+
+function updateHeatDisplay() {
+  let status = 'CLEAN';
+  if (state.roadHeat >= 5) status = 'CITY HALL RAID!';
+  else if (state.roadHeat >= 3) status = 'MAGNOLIA SOCIETY ALERT';
+  else if (state.roadHeat > 0) status = 'RUMORS ON THE WIRE';
+  heatReadout.textContent = `HEAT: ${state.roadHeat}/5 (${status})`;
+}
+
+// --- CORE AT-BAT & STEAL EXECUTION ---
+function resolveAtBat() {
+  if (state.anim.active || state.screen === 'GAMEOVER') return;
+  sfx.pitch();
+
+  const pitcher = getActivePitcher();
+  const batter = getActiveBatter();
+
+  // Determine pitch & heat (AI chooses if CPU is pitching)
+  let pitchType = state.selectedPitch;
+  let useHeat = state.bringHeat;
+  let useDirty = state.dirtyPlay;
+  let approach = state.batterApproach;
+
+  if (!isPlayerPitching()) {
+    // AI Pitcher logic: weighs specialty vs batter sweet spot
+    const options = PITCH_TYPES.filter(p => p !== 'SPITTER');
+    options.sort((a, b) => {
+      const scoreA = (a === pitcher.specialty ? 2 : 0) - (a === pitcher.weakness ? 2 : 0) - (a === batter.sweetSpot ? 2 : 0) + (a === batter.coldZone ? 2 : 0);
+      const scoreB = (b === pitcher.specialty ? 2 : 0) - (b === pitcher.weakness ? 2 : 0) - (b === batter.sweetSpot ? 2 : 0) + (b === batter.coldZone ? 2 : 0);
+      return scoreB - scoreA;
+    });
+    pitchType = Math.random() < 0.72 ? options[0] : options[1];
+    const cost = getHeatSteamCost(pitcher, pitchType);
+    useHeat = (pitcher.steam >= cost + 12 && (state.outs === 2 || state.bases[1] || state.bases[2])) && Math.random() < 0.45;
+    useDirty = false;
+  } else {
+    // AI Batter logic
+    approach = (batter.backgrounds.includes('Tremé Pickup Regular') && Math.random() < 0.35) ? 'IMPROVISE' : 'SWING';
+  }
+
+  // Pay Steam for Heat
+  let heatCost = 0;
+  if (useHeat) {
+    heatCost = getHeatSteamCost(pitcher, pitchType);
+    if (pitcher.steam >= heatCost) {
+      pitcher.steam -= heatCost;
+    } else {
+      useHeat = false;
+      heatCost = 0;
+    }
+  }
+
+  // 4th inning onward: 1 Steam lost per batter
+  if (state.inning >= 4) {
+    pitcher.steam = Math.max(0, pitcher.steam - 1);
+  }
+
+  // Check Spitter ejection (22% chance if spitter thrown)
+  if (pitchType === 'SPITTER') {
+    const umpCheck = rollD6();
+    if (umpCheck === 1) {
+      sfx.foulBlowback();
+      state.roadHeat = Math.min(5, state.roadHeat + 1);
+      updateHeatDisplay();
+      swapPitcher();
+      setWire('SPITTER CAUGHT! PITCHER TOSSED!', `The home plate umpire wipes grease off the cowhide and ejects ${pitcher.name}! Reliever enters.`);
+      setMathTape(`Spitter Ejection Check: Rolled 1 on 1d6. Road Heat +1.`);
+      updateUI();
+      return;
+    }
+  }
+
+  // Calculate pools
+  const pDice = getEffectivePitchPool(pitcher, batter, pitchType, useHeat);
+  const bDice = getEffectiveBatPool(batter, pitcher, pitchType, approach);
+
+  const pRoll = rollV14Pool(pDice, false);
+  const bRoll = rollV14Pool(bDice, false);
+
+  // Dirty Play Asset Die (bought umpire / rigged ball)
+  let dirtyRoll = null;
+  let dirtyBonus = 0;
+  if (useDirty) {
+    dirtyRoll = rollV14Pool(1, true);
+    if (isPlayerPitching()) {
+      dirtyBonus = -Math.max(0, dirtyRoll.net); // Hurts batter
+    } else {
+      dirtyBonus = Math.max(0, dirtyRoll.net); // Helps Cranes batter
+    }
+    if (dirtyRoll.ones > 0) {
+      state.roadHeat = Math.min(5, state.roadHeat + dirtyRoll.ones);
+      updateHeatDisplay();
+    }
+  }
+
+  // Clear one-time physical penalty on batter after swing
+  batter.physPenalty = 0;
+
+  const netDiff = (bRoll.net - pRoll.net) + dirtyBonus;
+
+  // Read Outcome Bands
+  let band = 'FAILURE';
+  if (netDiff >= 10) band = 'EXECUTION';
+  else if (netDiff >= 6) band = 'SUCCESS';
+  else if (netDiff >= 4) band = 'PARTIAL';
+  else if (netDiff <= -14) band = 'CRITICAL';
+  else band = 'FAILURE';
+
+  const mathSummary = `${pitcher.name} (${pitchType}${useHeat ? ' +HEAT' : ''}) rolled ${pDice}d6 [${pRoll.rolls.join(',')}] = Net ${pRoll.net >= 0 ? '+'+pRoll.net : pRoll.net} | ` +
+    `${batter.name} (${approach}) rolled ${bDice}d6 [${bRoll.rolls.join(',')}] = Net ${bRoll.net >= 0 ? '+'+bRoll.net : bRoll.net}` +
+    (dirtyRoll ? ` | Dirty Asset [${dirtyRoll.rolls.join(',')}]` : '') +
+    ` => Diff: ${netDiff >= 0 ? '+'+netDiff : netDiff} (${band})`;
+  setMathTape(mathSummary);
+
+  // Reset per-pitch toggles
+  state.bringHeat = false;
+  state.dirtyPlay = false;
+
+  // Trigger Animation & Outcome
+  startPlayAnimation(band, pitchType, pitcher, batter);
+}
+
+function resolveSteal() {
+  if (state.anim.active || state.screen === 'GAMEOVER') return;
+  // Find lead stealable runner (2nd -> 3rd, or 1st -> 2nd)
+  let fromBase = -1;
+  if (state.bases[1] && !state.bases[2]) fromBase = 1;
+  else if (state.bases[0] && !state.bases[1]) fromBase = 0;
+  if (fromBase === -1) return;
+
+  sfx.pitch();
+  const runner = state.bases[fromBase];
+  const catcher = getActiveCatcher();
+
+  let runStat = runner.stats.SS + runner.stats.DRP;
+  if (runner.backgrounds.includes('Tremé Pickup Regular')) runStat += 2;
+  const runTier = getTierInfo(runStat);
+  let runDice = Math.max(1, runTier.dice - runner.physPenalty);
+  runner.physPenalty = 0;
+
+  const catchTier = getTierInfo(catcher.stats.DRP + catcher.stats.TGH);
+  const catchDice = catchTier.dice;
+
+  const rRoll = rollV14Pool(runDice, false);
+  const cRoll = rollV14Pool(catchDice, false);
+  const diff = rRoll.net - cRoll.net;
+
+  setMathTape(`STEAL ATTEMPT: ${runner.name} (${runDice}d6 [${rRoll.rolls.join(',')}] Net ${rRoll.net}) vs ${catcher.name} (${catchDice}d6 [${cRoll.rolls.join(',')}] Net ${cRoll.net}) => Diff: ${diff}`);
+
+  state.screen = 'DIAMOND';
+  state.anim.active = true;
+  state.anim.type = 'STEAL_PLAY';
+  state.anim.timer = 0;
+  state.anim.duration = 75;
+
+  if (diff >= 1) {
+    // Safe clean
+    state.bases[fromBase + 1] = runner;
+    state.bases[fromBase] = null;
+    state.anim.bannerText = 'STOLEN BASE! SAFE!';
+    setWire('CLEAN SWIPE!', `${runner.name} breaks on the first move and slides under ${catcher.name}'s throw at ${fromBase === 0 ? '2nd' : '3rd'}!`);
+  } else if (diff === 0) {
+    // Tie: Safe, but -1 next physical check
+    runner.physPenalty = 1;
+    state.bases[fromBase + 1] = runner;
+    state.bases[fromBase] = null;
+    state.anim.bannerText = 'SAFE! SPIKED (-1 PENALTY)';
+    setWire('DUSTY TIE AT THE BAG!', `${runner.name} beats the tag by a whisker, taking a cleat to the calf (-1 on next check).`);
+  } else {
+    // Out
+    state.bases[fromBase] = null;
+    state.outs += 1;
+    state.anim.bannerText = 'GUNNED DOWN! OUT!';
+    setWire('CAUGHT STEALING!', `${catcher.name} fires a frozen rope to nail ${runner.name} at ${fromBase === 0 ? '2nd' : '3rd'}!`);
+  }
+
+  updateUI();
+}
+
+function startPlayAnimation(band, pitchType, pitcher, batter) {
+  state.anim.active = true;
+  state.anim.timer = 0;
+
+  if (band === 'FAILURE') {
+    sfx.mitt();
+    state.screen = 'DUEL';
+    state.anim.type = 'PITCH_RESULT';
+    state.anim.duration = 55;
+    state.anim.bannerText = 'STRIKE OUT / POP OUT!';
+    batter.lastAtBat = 'K';
+    state.outs += 1;
+    setWire(`${pitcher.name.toUpperCase()} WINS THE COUNT`, `${pitchType} freezes ${batter.name}. Retired for out #${state.outs}.`);
+    advanceBatter();
+  } else if (band === 'CRITICAL') {
+    sfx.crack();
+    state.screen = 'DIAMOND';
+    state.anim.type = 'HIT_PLAY';
+    state.anim.duration = 80;
+    batter.lastAtBat = 'K';
+
+    // Check if runner on base for Double Play, else broken bat / brawl scare
+    if (state.bases[0] && state.outs < 2) {
+      state.bases[0] = null;
+      state.outs += 2;
+      state.anim.bannerText = 'BROKEN ASH — DOUBLE PLAY!';
+      setWire('SHATTERED BAT DOUBLE PLAY!', `${batter.name} jams his hands on the ${pitchType}—twin killing wipes the basepath!`);
+    } else {
+      state.outs += 1;
+      state.anim.bannerText = 'BROKEN BAT — BENCHES STIR!';
+      setWire('SPLINTERED ASH & HOT TEMPERS!', `The ${pitchType} saws ${batter.name}'s bat in half! Both dugouts spill onto the chalk before the umpires restore order.`);
+    }
+    advanceBatter();
+  } else {
+    // Ball put in play on the Overhead Diamond!
+    sfx.crack();
+    state.screen = 'DIAMOND';
+    state.anim.type = 'HIT_PLAY';
+    state.anim.duration = 85;
+
+    let basesAdvanced = 1;
+    if (band === 'EXECUTION') {
+      sfx.homer();
+      // +10 or more: over the fence or into the gap
+      const isHomer = Math.random() < 0.65;
+      basesAdvanced = isHomer ? 4 : 2;
+      batter.lastAtBat = isHomer ? 'HOMER' : 'DOUBLE';
+      if (isHomer) batter.homeredOffPitcher = true;
+      state.anim.bannerText = isHomer ? 'GONE! OVER THE WOODEN WALL!' : 'ROPE INTO THE GAP! DOUBLE!';
+      setWire(isHomer ? 'CRUSHED OVER THE BYWATER FENCE!' : 'SCREAMER INTO THE ALLEY!',
+        `${batter.name} squares up ${pitcher.name}'s ${pitchType} and drives it deep!`);
+    } else if (band === 'SUCCESS') {
+      basesAdvanced = 1;
+      batter.lastAtBat = 'SINGLE';
+      state.anim.bannerText = 'SOLID BASE HIT!';
+      setWire('CLEAN SINGLE!', `${batter.name} lines the ${pitchType} cleanly into center field.`);
+    } else if (band === 'PARTIAL') {
+      basesAdvanced = 1;
+      batter.lastAtBat = 'SINGLE';
+      batter.physPenalty = 1;
+      state.anim.bannerText = 'INFIELD HIT! (-1 PENALTY)';
+      setWire('SCRATCH SINGLE!', `${batter.name} beats out a slow roller by half a step, twisting an ankle on the bag (-1 next check).`);
+    }
+
+    // Record hit & advance runners
+    if (isPlayerPitching()) state.awayHits += 1;
+    else state.homeHits += 1;
+
+    advanceRunnersOnHit(batter, basesAdvanced);
+    advanceBatter();
+  }
+
+  updateUI();
+}
+
+function advanceRunnersOnHit(batter, basesToAdvance) {
+  let runsScored = 0;
+  let newBases = [null, null, null];
+
+  // Move existing runners
+  for (let b = 2; b >= 0; b--) {
+    const r = state.bases[b];
+    if (r) {
+      const dest = b + basesToAdvance;
+      if (dest >= 3) {
+        runsScored++;
+      } else {
+        newBases[dest] = r;
+      }
+    }
+  }
+
+  // Place batter
+  if (basesToAdvance >= 4) {
+    runsScored++;
+  } else {
+    newBases[basesToAdvance - 1] = batter;
+  }
+
+  state.bases = newBases;
+  if (runsScored > 0) {
+    state.inningRunsThisHalf += runsScored;
+    if (isPlayerPitching()) state.awayScore += runsScored;
+    else state.homeScore += runsScored;
+  }
+}
+
+function advanceBatter() {
+  if (isPlayerPitching()) {
+    state.awayBatterIdx = (state.awayBatterIdx + 1) % state.awayClub.lineup.length;
+  } else {
+    state.homeBatterIdx = (state.homeBatterIdx + 1) % state.homeClub.lineup.length;
+  }
+}
+
+function swapPitcher() {
+  if (isPlayerPitching()) {
+    state.homePitcherIdx = (state.homePitcherIdx + 1) % state.homeClub.pitchers.length;
+  } else {
+    state.awayPitcherIdx = (state.awayPitcherIdx + 1) % state.awayClub.pitchers.length;
+  }
+  // Reset homered-off flags for new arm
+  state.awayClub.lineup.forEach(p => p.homeredOffPitcher = false);
+  state.homeClub.lineup.forEach(p => p.homeredOffPitcher = false);
+}
+
+function checkHalfInningEnd() {
+  // Check Road Heat raid trigger
+  if (state.roadHeat >= 5) {
+    state.screen = 'GAMEOVER';
+    setWire('CITY HALL SHUTDOWN!', 'Heat hit 5! Police sirens surround Lot 635 and padlock the gates. Game forfeited.');
+    updateUI();
+    return;
+  }
+
+  if (state.outs >= 3) {
+    // Shutout inning Steam refund (from 4th inning on, shutout gives back lost Steam)
+    const pitcher = getActivePitcher();
+    if (state.inning >= 4 && state.inningRunsThisHalf === 0) {
+      pitcher.steam = Math.min(pitcher.maxSteam, pitcher.steam + 3);
+    }
+
+    // Check walk-off or end of final inning
+    if (state.half === 'TOP' && state.inning >= state.maxInnings && state.homeScore > state.awayScore) {
+      finishGame();
+      return;
+    }
+    if (state.half === 'BOT' && state.inning >= state.maxInnings && state.homeScore !== state.awayScore) {
+      finishGame();
+      return;
+    }
+
+    // Flip half-inning
+    state.outs = 0;
+    state.bases = [null, null, null];
+    state.inningRunsThisHalf = 0;
+
+    if (state.half === 'TOP') {
+      state.half = 'BOT';
+      setWire(`BOTTOM OF INNING ${state.inning}`, 'Crescent City Cranes step up to the plate!');
+    } else {
+      state.half = 'TOP';
+      state.inning += 1;
+      setWire(`TOP OF INNING ${state.inning}`, `${state.awayClub.name} coming to bat.`);
+    }
+  }
+}
+
+function finishGame() {
+  state.screen = 'GAMEOVER';
+  const cranesWon = state.homeScore > state.awayScore;
+  if (cranesWon) sfx.homer();
+  setWire(
+    cranesWon ? `FINAL: CRANES WIN ${state.homeScore}–${state.awayScore}!` : `FINAL: ${state.awayClub.short} WIN ${state.awayScore}–${state.homeScore}`,
+    cranesWon ? 'The Bywater bleachers erupt! Studd Cantreux tips his cap from the dugout.' : 'A tough loss on the riverfront dirt. Back to the chalkboard.'
+  );
+  updateUI();
+}
+
+// --- UI & TACTICAL DECK RENDERING ---
+function updateUI() {
+  const pitcher = getActivePitcher();
+  const batter = getActiveBatter();
+  const pTier = getTierInfo(pitcher.stats.SS + pitcher.stats.TGH);
+  const bTier = getTierInfo(batter.stats.DRP + batter.stats.MOX);
+
+  document.getElementById('pName').textContent = `${pitcher.name} (${pTier.label})`;
+  document.getElementById('pInfo').innerHTML =
+    `Steam: <strong>${pitcher.steam}/${pitcher.maxSteam}</strong> &bull; ` +
+    `<span class="badge-plus">+1d ${pitcher.specialty}</span> <span class="badge-minus">-1d ${pitcher.weakness}</span>`;
+
+  document.getElementById('bName').textContent = `${batter.name} (${bTier.label})`;
+  document.getElementById('bInfo').innerHTML =
+    `${batter.chassis.name} &bull; ${batter.backgrounds[0]}<br>` +
+    `<span class="badge-plus">+1d ${batter.sweetSpot}</span> <span class="badge-minus">-1d ${batter.coldZone}</span>` +
+    (batter.physPenalty ? ` <span class="badge-minus">-1 INJ</span>` : '') +
+    (batter.lastAtBat === 'HOMER' ? ` <span class="badge-plus">+2d HOT</span>` : batter.lastAtBat === 'DOUBLE' ? ` <span class="badge-plus">+1d HOT</span>` : '');
+
+  if (state.screen === 'GAMEOVER') {
+    controlsContainer.innerHTML = `
+      <div class="btn-row" style="justify-content:center; padding:6px 0;">
+        <button class="brass-btn" onclick="openTitleScreen()">RETURN TO CLUBHOUSE</button>
+      </div>
+    `;
+    return;
+  }
+
+  if (isPlayerPitching()) {
+    // Player is on the Mound
+    const heatCost = getHeatSteamCost(pitcher, state.selectedPitch);
+    const canHeat = pitcher.steam >= heatCost;
+    controlsContainer.innerHTML = `
+      <div class="btn-row">
+        <span class="row-label">1. PITCH:</span>
+        ${PITCH_TYPES.map((p, idx) => `
+          <button class="brass-btn ${state.selectedPitch === p ? 'active' : ''}" onclick="selectPitch('${p}')">
+            [${idx+1}] ${p === 'CHANGE-UP' ? 'CHG' : p.slice(0,4)}
+          </button>
+        `).join('')}
+      </div>
+      <div class="btn-row">
+        <span class="row-label">2. MODS:</span>
+        <button class="brass-btn ${state.bringHeat ? 'active' : ''}" ${!canHeat ? 'disabled' : ''} onclick="toggleHeat()">
+          BRING HEAT (-${heatCost} STM)
+        </button>
+        <button class="brass-btn ${state.dirtyPlay ? 'active' : ''}" onclick="toggleDirty()">
+          BUY UMP (+1 ASSET / LEAK)
+        </button>
+        <button class="brass-btn" onclick="pullPitcher()">PULL ARM</button>
+        <button class="brass-btn" style="margin-left:auto; border-width:2px;" onclick="resolveAtBat()">THROW PITCH &raquo;</button>
+      </div>
+    `;
+  } else {
+    // Player is Batting & Running Bases
+    const canSteal = (state.bases[1] && !state.bases[2]) || (state.bases[0] && !state.bases[1]);
+    controlsContainer.innerHTML = `
+      <div class="btn-row">
+        <span class="row-label">1. STANCE:</span>
+        <button class="brass-btn ${state.batterApproach === 'SWING' ? 'active' : ''}" onclick="setApproach('SWING')">
+          [1] SWING AWAY
+        </button>
+        <button class="brass-btn ${state.batterApproach === 'IMPROVISE' ? 'active' : ''}" onclick="setApproach('IMPROVISE')">
+          [2] BUNT / IMPROVISE
+        </button>
+        <button class="brass-btn ${state.dirtyPlay ? 'active' : ''}" onclick="toggleDirty()">
+          [3] FIX CALL (+1 ASSET)
+        </button>
+      </div>
+      <div class="btn-row">
+        <span class="row-label">2. ACTION:</span>
+        <button class="brass-btn" ${!canSteal ? 'disabled' : ''} onclick="resolveSteal()">
+          [4] STEAL BASE
+        </button>
+        <button class="brass-btn" style="margin-left:auto; border-width:2px;" onclick="resolveAtBat()">STEP IN &amp; SWING &raquo;</button>
+      </div>
+    `;
+  }
+}
+
+// --- BUTTON HANDLERS ---
+window.selectPitch = (p) => { sfx.click(); state.selectedPitch = p; updateUI(); };
+window.toggleHeat = () => { sfx.click(); state.bringHeat = !state.bringHeat; updateUI(); };
+window.toggleDirty = () => { sfx.click(); state.dirtyPlay = !state.dirtyPlay; updateUI(); };
+window.setApproach = (a) => { sfx.click(); state.batterApproach = a; updateUI(); };
+window.pullPitcher = () => {
+  sfx.click();
+  swapPitcher();
+  setWire('BULLPEN CALL!', `Studd waves in ${getActivePitcher().name} from the Bywater bullpen.`);
+  updateUI();
+};
+window.resolveAtBat = resolveAtBat;
+window.resolveSteal = resolveSteal;
+window.openTitleScreen = () => {
+  sfx.click();
+  titleOverlay.classList.remove('hidden');
+};
+
+document.getElementById('btnStartGame').addEventListener('click', () => {
+  sfx.click();
+  const opp = document.getElementById('selOpponent').value;
+  const inn = parseInt(document.getElementById('selInnings').value, 10);
+  const rolled = document.getElementById('selRosterMode').value === 'ROLLED';
+
+  state.maxInnings = inn;
+  state.inning = 1;
+  state.half = 'TOP';
+  state.outs = 0;
+  state.bases = [null, null, null];
+  state.awayScore = 0;
+  state.homeScore = 0;
+  state.awayHits = 0;
+  state.homeHits = 0;
+  state.roadHeat = 0;
+  state.awayPitcherIdx = 0;
+  state.homePitcherIdx = 0;
+  state.awayBatterIdx = 0;
+  state.homeBatterIdx = 0;
+  state.inningRunsThisHalf = 0;
+  state.selectedPitch = 'FASTBALL';
+  state.bringHeat = false;
+  state.dirtyPlay = false;
+  state.batterApproach = 'SWING';
+  state.screen = 'DUEL';
+  state.anim.active = false;
+
+  state.homeClub = buildClub('CRANES', rolled);
+  state.awayClub = buildClub(opp, true);
+
+  titleOverlay.classList.add('hidden');
+  updateHeatDisplay();
+  setWire(`PLAY BALL! ${state.awayClub.name} AT CRANES`, `Top of the 1st. ${getActivePitcher().name} takes the mound.`);
+  updateUI();
+});
+
+document.getElementById('btnReset').addEventListener('click', openTitleScreen);
+
+document.getElementById('btnMathToggle').addEventListener('click', (e) => {
+  sfx.click();
+  mathTape.classList.toggle('visible');
+  e.target.classList.toggle('active');
+});
+
+document.getElementById('btnSoundToggle').addEventListener('click', (e) => {
+  sfx.enabled = !sfx.enabled;
+  e.target.textContent = sfx.enabled ? 'Sound: ON' : 'Sound: OFF';
+  e.target.classList.toggle('active', sfx.enabled);
+});
+
+// Keyboard shortcuts (Game Boy / Chromebook friendly)
+window.addEventListener('keydown', (e) => {
+  if (!titleOverlay.classList.contains('hidden')) return;
+  if (e.key === 'm' || e.key === 'M') {
+    document.getElementById('btnMathToggle').click();
+  } else if (e.code === 'Space' || e.key === 'Enter') {
+    e.preventDefault();
+    resolveAtBat();
+  } else if (isPlayerPitching() && ['1','2','3','4','5'].includes(e.key)) {
+    selectPitch(PITCH_TYPES[parseInt(e.key, 10) - 1]);
+  } else if (!isPlayerPitching()) {
+    if (e.key === '1') setApproach('SWING');
+    if (e.key === '2') setApproach('IMPROVISE');
+    if (e.key === '3') toggleDirty();
+    if (e.key === '4') resolveSteal();
+  }
+});
+
+// --- 1989 GAME BOY SPLIT-SCREEN CANVAS RENDERER (320x288) ---
+function drawCrosshatchRect(x, y, w, h, step = 4) {
+  ctx.fillStyle = PAL.paperDark;
+  ctx.fillRect(x, y, w, h);
+  ctx.strokeStyle = PAL.slate;
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  for (let i = -h; i < w; i += step) {
+    ctx.moveTo(x + Math.max(0, i), y + Math.max(0, -i));
+    ctx.lineTo(x + Math.min(w, i + h), y + Math.min(h, w - i));
+  }
+  ctx.stroke();
+}
+
+function drawHUD() {
+  // Top Brass & Ink Scoreboard Bar (Height: 46px)
+  ctx.fillStyle = PAL.ink;
+  ctx.fillRect(0, 0, 320, 46);
+  ctx.fillStyle = PAL.brass;
+  ctx.fillRect(0, 44, 320, 2);
+
+  // Club scores
+  ctx.fillStyle = PAL.paper;
+  ctx.font = 'bold 11px "Courier New", monospace';
+  const awayLabel = state.awayClub ? state.awayClub.short.padEnd(8, ' ') : 'AWAY    ';
+  const homeLabel = 'CRANES  ';
+  ctx.fillText(`${awayLabel} ${String(state.awayScore).padStart(2, '0')}  H:${state.awayHits}`, 8, 16);
+  ctx.fillText(`${homeLabel} ${String(state.homeScore).padStart(2, '0')}  H:${state.homeHits}`, 8, 34);
+
+  // Inning & Outs Box
+  ctx.strokeStyle = PAL.brass;
+  ctx.lineWidth = 1;
+  ctx.strokeRect(166, 6, 62, 34);
+  ctx.fillStyle = PAL.brassBright;
+  ctx.font = 'bold 10px "Courier New", monospace';
+  ctx.fillText(`${state.half === 'TOP' ? '▲' : '▼'} INN ${state.inning}/${state.maxInnings}`, 171, 18);
+
+  // Outs pips
+  ctx.fillStyle = PAL.paper;
+  ctx.fillText('OUT', 171, 33);
+  for (let i = 0; i < 3; i++) {
+    ctx.beginPath();
+    ctx.arc(198 + i * 10, 30, 3.5, 0, Math.PI * 2);
+    if (i < state.outs) {
+      ctx.fillStyle = PAL.brassBright;
+      ctx.fill();
+    } else {
+      ctx.strokeStyle = PAL.slate;
+      ctx.stroke();
+    }
+  }
+
+  // Mini Diamond Indicator in HUD
+  const dx = 276, dy = 23;
+  const baseCoords = [
+    [dx + 12, dy],      // 1st
+    [dx, dy - 12],      // 2nd
+    [dx - 12, dy]       // 3rd
+  ];
+  ctx.strokeStyle = PAL.slate;
+  ctx.beginPath();
+  ctx.moveTo(dx, dy + 12);
+  ctx.lineTo(dx + 12, dy);
+  ctx.lineTo(dx, dy - 12);
+  ctx.lineTo(dx - 12, dy);
+  ctx.closePath();
+  ctx.stroke();
+
+  baseCoords.forEach((pt, idx) => {
+    ctx.fillStyle = state.bases[idx] ? PAL.brassBright : PAL.ink;
+    ctx.strokeStyle = PAL.paper;
+    ctx.fillRect(pt[0] - 3.5, pt[1] - 3.5, 7, 7);
+    ctx.strokeRect(pt[0] - 3.5, pt[1] - 3.5, 7, 7);
+  });
+}
+
+function drawDuelScreen() {
+  // Sky / Backstop Engraved Wall
+  drawCrosshatchRect(0, 46, 320, 92, 6);
+
+  // Stadium Wooden Bleacher Horizon
+  ctx.fillStyle = PAL.ink;
+  ctx.fillRect(0, 124, 320, 14);
+  ctx.fillStyle = PAL.brass;
+  for (let x = 8; x < 320; x += 24) {
+    ctx.fillRect(x, 127, 16, 3);
+  }
+
+  // Dirt & Grass Infield Perspective
+  ctx.fillStyle = PAL.paper;
+  ctx.fillRect(0, 138, 320, 150);
+
+  // Dirt Mound Oval
+  ctx.fillStyle = PAL.paperDark;
+  ctx.beginPath();
+  ctx.ellipse(160, 166, 44, 14, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = PAL.ink;
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  // Pitcher's rubber
+  ctx.fillStyle = PAL.paper;
+  ctx.fillRect(152, 164, 16, 4);
+  ctx.strokeRect(152, 164, 16, 4);
+
+  // Home Plate Dirt Circle & Chalk Box
+  ctx.fillStyle = PAL.paperDark;
+  ctx.beginPath();
+  ctx.ellipse(160, 254, 86, 26, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = PAL.slate;
+  ctx.stroke();
+
+  // Batter's Boxes (Chalk)
+  ctx.strokeStyle = PAL.ink;
+  ctx.lineWidth = 2;
+  ctx.strokeRect(102, 232, 34, 42);
+  ctx.strokeRect(184, 232, 34, 42);
+
+  // Home Plate Pentagon
+  ctx.fillStyle = PAL.paper;
+  ctx.beginPath();
+  ctx.moveTo(152, 248);
+  ctx.lineTo(168, 248);
+  ctx.lineTo(168, 255);
+  ctx.lineTo(160, 261);
+  ctx.lineTo(152, 255);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  // --- CHUNKY 1989 GAME BOY SPRITES (Engraved Ink & Brass) ---
+  // 1. Pitcher on the Mound
+  const pBounce = state.anim.active && state.anim.timer < 20 ? -3 : 0;
+  drawBallplayerSprite(160, 158 + pBounce, 0.75, false, isPlayerPitching());
+
+  // 2. Batter in Left Box
+  const swingPose = state.anim.active && state.anim.timer >= 20;
+  drawBallplayerSprite(118, 246, 1.15, true, !isPlayerPitching(), swingPose);
+
+  // 3. Catcher crouching behind plate
+  drawCatcherSprite(160, 272);
+
+  // Pitching Ball Flight Animation
+  if (state.anim.active && state.anim.type === 'PITCH_RESULT') {
+    const t = Math.min(1, state.anim.timer / 28);
+    const bx = 160 + Math.sin(t * Math.PI) * 8;
+    const by = 152 + t * 98;
+    ctx.fillStyle = PAL.ink;
+    ctx.beginPath();
+    ctx.arc(bx, by, 3 + t * 2, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Steam Gauge on Left Edge
+  if (state.homeClub && state.awayClub) {
+    const p = getActivePitcher();
+    const pct = p.steam / p.maxSteam;
+    ctx.fillStyle = PAL.ink;
+    ctx.fillRect(10, 56, 14, 72);
+    ctx.fillStyle = PAL.paper;
+    ctx.fillRect(12, 58, 10, 68);
+    const fillH = Math.round(68 * pct);
+    ctx.fillStyle = pct > 0.4 ? PAL.brass : PAL.ink;
+    ctx.fillRect(12, 58 + (68 - fillH), 10, fillH);
+    ctx.fillStyle = PAL.ink;
+    ctx.font = 'bold 8px "Courier New", monospace';
+    ctx.fillText('STM', 9, 136);
+  }
+}
+
+function drawBallplayerSprite(x, y, scale, hasBat, isCranes, swung = false) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.scale(scale, scale);
+
+  // Shadow
+  ctx.fillStyle = PAL.slate;
+  ctx.beginPath();
+  ctx.ellipse(0, 2, 12, 4, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Legs
+  ctx.fillStyle = PAL.ink;
+  ctx.fillRect(-7, -14, 5, 14);
+  ctx.fillRect(2, -14, 5, 14);
+
+  // Torso (Cranes get cream flannel + brass trim; opponents get slate hatch)
+  ctx.fillStyle = isCranes ? PAL.paper : PAL.slate;
+  ctx.strokeStyle = PAL.ink;
+  ctx.lineWidth = 2;
+  ctx.fillRect(-9, -32, 18, 19);
+  ctx.strokeRect(-9, -32, 18, 19);
+
+  if (isCranes) {
+    ctx.fillStyle = PAL.brass;
+    ctx.fillRect(-1, -31, 2, 17);
+  }
+
+  // Head & Cap
+  ctx.fillStyle = PAL.paperDark;
+  ctx.fillRect(-6, -43, 12, 11);
+  ctx.strokeRect(-6, -43, 12, 11);
+  ctx.fillStyle = isCranes ? PAL.brass : PAL.ink;
+  ctx.fillRect(-7, -46, 14, 5);
+  ctx.fillRect(-2, -44, 11, 2); // Cap brim
+
+  // Bat
+  if (hasBat) {
+    ctx.strokeStyle = PAL.ink;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    if (!swung) {
+      ctx.moveTo(6, -26);
+      ctx.lineTo(-4, -48);
+    } else {
+      ctx.moveTo(8, -24);
+      ctx.lineTo(32, -22);
+    }
+    ctx.stroke();
+  }
+
+  ctx.restore();
+}
+
+function drawCatcherSprite(x, y) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.fillStyle = PAL.ink;
+  ctx.fillRect(-11, -22, 22, 18);
+  ctx.fillStyle = PAL.slate;
+  ctx.fillRect(-7, -31, 14, 10);
+  // Mask bars
+  ctx.strokeStyle = PAL.paper;
+  ctx.lineWidth = 1;
+  ctx.strokeRect(-5, -29, 10, 6);
+  // Mitt
+  ctx.fillStyle = PAL.brass;
+  ctx.beginPath();
+  ctx.arc(-14, -15, 6, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = PAL.ink;
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawOverheadDiamond() {
+  // Engraved Outfield Grass
+  drawCrosshatchRect(0, 46, 320, 242, 8);
+
+  // Wooden 800-Seat Outfield Wall Arc
+  ctx.strokeStyle = PAL.ink;
+  ctx.lineWidth = 6;
+  ctx.beginPath();
+  ctx.arc(160, 248, 178, Math.PI * 1.15, Math.PI * 1.85);
+  ctx.stroke();
+  ctx.strokeStyle = PAL.brass;
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Infield Dirt Diamond
+  ctx.fillStyle = PAL.paper;
+  ctx.strokeStyle = PAL.ink;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(160, 248); // Home
+  ctx.lineTo(232, 176); // 1st
+  ctx.lineTo(160, 104); // 2nd
+  ctx.lineTo(88, 176);  // 3rd
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  // Inner Grass Cutout
+  drawCrosshatchRect(132, 148, 56, 56, 5);
+  ctx.strokeStyle = PAL.ink;
+  ctx.strokeRect(132, 148, 56, 56);
+
+  // Pitcher's Mound
+  ctx.fillStyle = PAL.paper;
+  ctx.beginPath();
+  ctx.arc(160, 176, 8, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+
+  // Bases
+  const bases = [
+    { x: 232, y: 176, occ: state.bases[0] }, // 1st
+    { x: 160, y: 104, occ: state.bases[1] }, // 2nd
+    { x: 88, y: 176, occ: state.bases[2] }   // 3rd
+  ];
+
+  bases.forEach(b => {
+    ctx.fillStyle = PAL.paper;
+    ctx.strokeStyle = PAL.ink;
+    ctx.fillRect(b.x - 5, b.y - 5, 10, 10);
+    ctx.strokeRect(b.x - 5, b.y - 5, 10, 10);
+
+    if (b.occ) {
+      // Draw chunky runner token
+      ctx.fillStyle = PAL.brassBright;
+      ctx.beginPath();
+      ctx.arc(b.x, b.y - 6, 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = PAL.ink;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+  });
+
+  // Home plate
+  ctx.fillStyle = PAL.paper;
+  ctx.fillRect(155, 243, 10, 10);
+  ctx.strokeRect(155, 243, 10, 10);
+
+  // Animated Ball Arc on Hit
+  if (state.anim.active) {
+    const p = Math.min(1, state.anim.timer / state.anim.duration);
+    const arcY = Math.sin(p * Math.PI) * 45;
+    const bx = 160 + (p * 55 * (state.anim.bannerText.includes('GAP') || state.anim.bannerText.includes('WALL') ? 1.2 : 0.6));
+    const by = 244 - (p * 130) - arcY;
+
+    ctx.fillStyle = PAL.ink;
+    ctx.beginPath();
+    ctx.arc(bx, by, 4, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+function drawOutcomeBanner() {
+  if (!state.anim.active || !state.anim.bannerText) return;
+  ctx.fillStyle = PAL.ink;
+  ctx.fillRect(24, 62, 272, 26);
+  ctx.strokeStyle = PAL.brassBright;
+  ctx.lineWidth = 2;
+  ctx.strokeRect(24, 62, 272, 26);
+
+  ctx.fillStyle = PAL.paper;
+  ctx.font = 'bold 11px "Courier New", monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText(state.anim.bannerText, 160, 79);
+  ctx.textAlign = 'left';
+}
+
+// --- MAIN ANIMATION LOOP ---
+function gameLoop() {
+  ctx.clearRect(0, 0, 320, 288);
+
+  if (state.screen === 'DIAMOND') {
+    drawOverheadDiamond();
+  } else {
+    drawDuelScreen();
+  }
+
+  drawHUD();
+  drawOutcomeBanner();
+
+  if (state.anim.active) {
+    state.anim.timer += 1;
+    if (state.anim.timer >= state.anim.duration) {
+      state.anim.active = false;
+      state.anim.bannerText = '';
+      if (state.screen !== 'GAMEOVER') {
+        state.screen = 'DUEL';
+        checkHalfInningEnd();
+        updateUI();
+      }
+    }
+  }
+
+  requestAnimationFrame(gameLoop);
+}
+
+// Boot loop
+gameLoop();
+</script>
+</body>
+</html>
