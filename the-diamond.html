@@ -1561,6 +1561,29 @@ function drawHUD() {
   });
 }
 
+function drawBaseball(x, y, radius) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.fillStyle = PAL.paper;
+  ctx.strokeStyle = PAL.ink;
+  ctx.lineWidth = Math.max(0.8, radius * 0.22);
+  ctx.beginPath();
+  ctx.arc(0, 0, radius, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+
+  // Curved brass seams keep the ball recognizable against both dirt and grass.
+  ctx.strokeStyle = PAL.brass;
+  ctx.lineWidth = Math.max(0.7, radius * 0.18);
+  ctx.beginPath();
+  ctx.moveTo(-radius * 0.48, -radius * 0.86);
+  ctx.bezierCurveTo(radius * 0.06, -radius * 0.46, radius * 0.06, radius * 0.46, -radius * 0.48, radius * 0.86);
+  ctx.moveTo(radius * 0.48, -radius * 0.86);
+  ctx.bezierCurveTo(-radius * 0.06, -radius * 0.46, -radius * 0.06, radius * 0.46, radius * 0.48, radius * 0.86);
+  ctx.stroke();
+  ctx.restore();
+}
+
 function drawDuelScreen() {
   // Field-level view of the Bywater park; keep the older drawn field as a loading fallback.
   const hasDuelArt = spriteReady('duelBg');
@@ -1638,10 +1661,7 @@ function drawDuelScreen() {
     const t = Math.min(1, state.anim.timer / 28);
     const bx = 160 + Math.sin(t * Math.PI) * 8;
     const by = 152 + t * 98;
-    ctx.fillStyle = PAL.ink;
-    ctx.beginPath();
-    ctx.arc(bx, by, 3 + t * 2, 0, Math.PI * 2);
-    ctx.fill();
+    drawBaseball(bx, by, 3 + t * 2);
   }
 
   // Steam Gauge on Left Edge
@@ -1811,10 +1831,7 @@ function drawOverheadDiamond() {
     const arcY = Math.sin(p * Math.PI) * 45;
     const bx = 160 + (p * 55 * (state.anim.bannerText.includes('GAP') || state.anim.bannerText.includes('WALL') ? 1.2 : 0.6));
     const by = 244 - (p * 130) - arcY;
-    ctx.fillStyle = PAL.ink;
-    ctx.beginPath();
-    ctx.arc(bx, by, 4, 0, Math.PI * 2);
-    ctx.fill();
+    drawBaseball(bx, by, 4);
   }
 }
 
@@ -1833,19 +1850,31 @@ function drawOutcomeBanner() {
 }
 
 function drawStatusCard(title, detail) {
-  drawCrosshatchRect(0, 46, 320, 242, 8);
-  ctx.fillStyle = PAL.ink;
-  ctx.fillRect(24, 88, 272, 116);
+  ctx.fillStyle = PAL.paper;
+  ctx.fillRect(0, 46, 320, 242);
   ctx.strokeStyle = PAL.brass;
   ctx.lineWidth = 2;
-  ctx.strokeRect(24, 88, 272, 116);
-  ctx.fillStyle = PAL.brassBright;
-  ctx.font = 'bold 13px "Courier New", monospace';
+  ctx.strokeRect(5, 51, 310, 232);
+
+  ctx.fillStyle = PAL.paperDark;
+  ctx.fillRect(24, 82, 272, 122);
+  ctx.strokeStyle = PAL.slate;
+  ctx.lineWidth = 1;
+  ctx.strokeRect(24, 82, 272, 122);
+
+  ctx.fillStyle = PAL.ink;
+  ctx.font = 'bold 14px Georgia, serif';
   ctx.textAlign = 'center';
-  ctx.fillText(title, 160, 116);
-  ctx.fillStyle = PAL.paper;
+  ctx.fillText(title, 160, 108);
+  ctx.strokeStyle = PAL.brass;
+  ctx.beginPath();
+  ctx.moveTo(44, 117);
+  ctx.lineTo(276, 117);
+  ctx.stroke();
+
+  ctx.fillStyle = PAL.slate;
   ctx.font = '10px "Courier New", monospace';
-  ctx.fillText(detail, 160, 143, 250);
+  ctx.fillText(detail, 160, 143, 248);
   ctx.textAlign = 'left';
 }
 
@@ -1854,7 +1883,7 @@ function drawHalfInningScreen() {
   ctx.fillStyle = PAL.ink;
   ctx.font = 'bold 10px "Courier New", monospace';
   ctx.textAlign = 'center';
-  ctx.fillText(`${state.awayClub.short} ${state.awayScore}  —  CRANES ${state.homeScore}`, 160, 176);
+  ctx.fillText(`${state.awayClub.short}  ${state.awayScore}   —   CRANES  ${state.homeScore}`, 160, 177);
   ctx.textAlign = 'left';
 }
 
