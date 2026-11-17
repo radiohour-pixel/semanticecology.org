@@ -1619,8 +1619,8 @@ function drawDuelScreen() {
   const pBounce = state.anim.active && state.anim.timer < 20 ? -3 : 0;
   const pitchFrame = state.anim.active && state.anim.timer >= 20 ? 1 : 0;
   const pitcherKey = cranesPitching ? 'pitcherHome' : 'pitcherAway';
-  if (!drawSpriteFrame(pitcherKey, pitchFrame, 48, 64, 160, 158 + pBounce)) {
-    drawBallplayerSprite(160, 158 + pBounce, 0.75, false, cranesPitching);
+  if (!drawSpriteFrame(pitcherKey, pitchFrame, 48, 64, 160, 174 + pBounce)) {
+    drawBallplayerSprite(160, 174 + pBounce, 0.75, false, cranesPitching);
   }
 
   const swingPose = state.anim.active && state.anim.timer >= 20;
