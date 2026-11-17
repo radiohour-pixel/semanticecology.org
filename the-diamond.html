@@ -374,6 +374,7 @@
       </div>
 
       <button id="btnStartGame" class="brass-btn" style="font-size:0.95rem; padding:8px 24px; border-width:3px;">PLAY BALL</button>
+      <div style="font-size:0.68rem; color:var(--slate); letter-spacing:1px; margin-top:5px;">SIX-BATTER LINEUP • SHORT-FORM GAME</div>
     </div>
   </div>
 
@@ -405,8 +406,8 @@
     </div>
 
     <div class="footer-hint">
-      <span>[1-5] SELECT &bull; [SPACE] EXECUTE &bull; [M] MATH TAPE</span>
-      <span id="heatReadout">HEAT: 0/5 (CLEAN)</span>
+      <span id="keyHint">[1-5] PITCH &bull; [SPACE] EXECUTE &bull; [M] MATH TAPE</span>
+      <span id="leakReadout">LEAKS: 0</span>
     </div>
   </div>
 </div>
@@ -543,8 +544,8 @@ function rollV14Pool(numDice, isAsset = false) {
   };
 }
 
-const FIRST_NAMES = ['Buster', 'Booker', 'Dewey', 'Clyde', 'Otis', 'Hollis', 'Rufus', 'Virgil', 'Mack', 'Jules', 'Leroy', 'Percy', 'Bennie', 'Amos'];
-const LAST_NAMES = ['Broussard', 'Thibodeaux', 'Washington', 'Landry', 'Fontenot', 'Boudreaux', 'Guidry', 'Dufrene', 'Mouton', 'Arceneaux', 'Delacroix', 'Comeaux'];
+const FIRST_NAMES = ['Buster', 'Booker', 'Clyde', 'Rufus', 'Mack', 'Jules', 'Leroy', 'Percy', 'Bennie', 'Felix', 'Albert', 'Jasper'];
+const LAST_NAMES = ['Broussard', 'Landry', 'Fontenot', 'Boudreaux', 'Guidry', 'Dufrene', 'Mouton', 'Arceneaux', 'Delacroix', 'Comeaux', 'Mire', 'Pichon'];
 
 function generateBallplayer(customName, roleHint) {
   let stats = {
@@ -572,7 +573,7 @@ function generateBallplayer(customName, roleHint) {
   } else {
     chassis = { name: 'Slugger', speed: 1.4 };
     stats.TGH += 2;
-    stats.DRP = Math.max(4, stats.DRP - 3);
+    stats.DRP = Math.max(4, stats.DRP - 1);
   }
 
   // Backgrounds (8+)
@@ -581,7 +582,7 @@ function generateBallplayer(customName, roleHint) {
   if (stats.MOX >= 8) backgrounds.push('Passed-Over Schoolboy');
   if (stats.TGH >= 8) backgrounds.push(Math.random() < 0.5 ? 'Returning Serviceman' : 'Mill League Man');
   if (stats.SS >= 8) backgrounds.push(Math.random() < 0.5 ? 'Barnstormer' : 'Ex-Big Club Prospect');
-  if (backgrounds.length === 0) backgrounds.push('Sandlot Hand');
+  // No background is assigned unless a stat opens one.
 
   // Pitching & Batting specialties/weaknesses
   const pPool = [...PITCH_TYPES];
@@ -615,42 +616,46 @@ function generateBallplayer(customName, roleHint) {
     steam: pitchTier.dice * 10,
     physPenalty: 0, // -1 from Partial hit or tie steal
     lastAtBat: null, // 'DOUBLE', 'HOMER', 'K'
-    homeredOffPitcher: false
+    homeredOffPitcher: false,
+    hasPitched: false,
+    ejected: false,
+    steamLostThisHalf: 0
   };
 }
 
 function buildCanonCranes() {
-  const mk = (name, role, stats, chassisName, speed, bg, spec, weak, sweet, cold) => {
+  const mk = (name, role, stats, chassisName, speed, backgrounds, spec, weak, sweet, cold) => {
     const pTier = getTierInfo(stats.SS + stats.TGH);
     return {
       name, role, stats,
       chassis: { name: chassisName, speed },
-      backgrounds: [bg],
+      backgrounds: backgrounds ? [backgrounds] : [],
       specialty: spec, weakness: weak,
       sweetSpot: sweet, coldZone: cold,
       maxSteam: pTier.dice * 10,
       steam: pTier.dice * 10,
       physPenalty: 0,
       lastAtBat: null,
-      homeredOffPitcher: false
+      homeredOffPitcher: false,
+      hasPitched: false,
+      ejected: false,
+      steamLostThisHalf: 0
     };
   };
+
+  const cal = mk('Cal Dupuy', 'C', { MOX: 8, SS: 5, DRP: 6, TGH: 7 }, 'Plugger', 2, 'Passed-Over Schoolboy', null, null, 'FASTBALL', 'CURVE');
+  const bigAl = mk('Big Al Narcisse', '1B', { MOX: 8, SS: 5, DRP: 8, TGH: 9 }, 'Slugger', 1.4, 'Tremé Pickup Regular', null, null, 'FASTBALL', 'CHANGE-UP');
+  const sugar = mk('Sugar Dejean', '2B', { MOX: 6, SS: 6, DRP: 10, TGH: 4 }, 'Rabbit', 3, 'Tremé Pickup Regular', null, null, 'CHANGE-UP', 'KNUCKLER');
+  const raymond = mk('Raymond Thibodeaux', 'CF', { MOX: 8, SS: 7, DRP: 7, TGH: 5 }, 'Rabbit', 3, 'Passed-Over Schoolboy', null, null, 'FASTBALL', 'CURVE');
+  // Joe is the best available local starter; Book 2 leaves his pitch repertoire open.
+  const joe = mk('Joe Lastrapes', 'IF', { MOX: 7, SS: 7, DRP: 5, TGH: 9 }, 'Plugger', 2, 'Returning Serviceman', null, null, 'CURVE', 'SPITTER');
+  const deacon = mk('Deacon Augustine', 'RP', { MOX: 6, SS: 7, DRP: 6, TGH: 9 }, 'Ace', 2.5, 'Returning Serviceman', 'FASTBALL', 'CHANGE-UP', null, null);
 
   return {
     name: 'CRESCENT CITY CRANES',
     short: 'CRANES',
-    pitchers: [
-      mk('Darnell "Lefty" Moreau', 'P', { MOX: 8, SS: 9, DRP: 7, TGH: 9 }, 'Ace', 2.5, 'Returning Serviceman', 'CURVE', 'KNUCKLER', 'FASTBALL', 'CURVE'),
-      mk('Bennie "Iron" Duplessis', 'RP', { MOX: 7, SS: 8, DRP: 6, TGH: 10 }, 'Plugger', 2, 'Mill League Man', 'FASTBALL', 'CHANGE-UP', 'CHANGE-UP', 'FASTBALL')
-    ],
-    lineup: [
-      mk('Clarence "Scooter" Vance', '2B', { MOX: 7, SS: 8, DRP: 10, TGH: 6 }, 'Rabbit', 3.1, 'Tremé Pickup Regular', 'FASTBALL', 'SPITTER', 'FASTBALL', 'CURVE'),
-      mk('Willie "Hawk" St. Cyr', 'CF', { MOX: 8, SS: 7, DRP: 9, TGH: 7 }, 'Rabbit', 3.0, 'Passed-Over Schoolboy', 'CHANGE-UP', 'CURVE', 'CHANGE-UP', 'KNUCKLER'),
-      mk('Big Earl Thibodeaux', '1B', { MOX: 9, SS: 6, DRP: 6, TGH: 10 }, 'Slugger', 1.4, 'Tremé Pickup Regular', 'FASTBALL', 'CURVE', 'FASTBALL', 'SPITTER'),
-      mk('Studd Cantreux (Player-Mgr)', 'C', { MOX: 10, SS: 9, DRP: 7, TGH: 9 }, 'Plugger', 2.0, 'Barnstormer', 'CURVE', 'KNUCKLER', 'CURVE', 'CHANGE-UP'),
-      mk('Hollis "Sarge" Mercer', '3B', { MOX: 9, SS: 8, DRP: 8, TGH: 8 }, 'Ace', 2.4, 'Returning Serviceman', 'CHANGE-UP', 'SPITTER', 'KNUCKLER', 'FASTBALL'),
-      mk('Antoine "Kid" Baptiste', 'SS', { MOX: 7, SS: 8, DRP: 8, TGH: 6 }, 'Rabbit', 2.9, 'Passed-Over Schoolboy', 'FASTBALL', 'CHANGE-UP', 'CURVE', 'SPITTER')
-    ]
+    pitchers: [joe, deacon],
+    lineup: [cal, bigAl, sugar, raymond, joe, deacon]
   };
 }
 
@@ -665,6 +670,7 @@ function buildClub(clubKey, useRolled) {
     STOGIES: { name: 'BIRMINGHAM STOGIES', short: 'STOGIES' }
   };
   const info = clubNames[clubKey] || clubNames.MUDDERS;
+  // This is a deliberate six-batter short-form lineup, not a full nine-man order.
   const positions = ['2B', 'CF', '1B', 'C', '3B', 'SS'];
   return {
     name: info.name,
@@ -684,14 +690,17 @@ const state = {
   inning: 1,
   half: 'TOP', // 'TOP' (Opponent bats) | 'BOT' (Cranes bat)
   outs: 0,
-  balls: 0,
-  strikes: 0,
+  leaks: 0,
+  awayLine: [],
+  homeLine: [],
+  breakTimer: 0,
+  screenMessage: '',
   bases: [null, null, null], // 1st, 2nd, 3rd runner objects
   awayScore: 0,
   homeScore: 0,
   awayHits: 0,
   homeHits: 0,
-  roadHeat: 0,
+  // Baseball has no Heat track; Asset 1s from a fix are counted as leaks.
   awayClub: null,
   homeClub: null,
   awayPitcherIdx: 0,
@@ -702,7 +711,7 @@ const state = {
 
   // Tactical selections
   selectedPitch: 'FASTBALL',
-  bringHeat: false,
+  heatDice: 0,
   dirtyPlay: false,
   batterApproach: 'SWING', // 'SWING' | 'IMPROVISE'
 
@@ -741,19 +750,57 @@ function spriteReady(key) {
   return !!(img && img.complete && img.naturalWidth > 0);
 }
 
+const recoloredSprites = {};
+function getCreamBatterSheet(img) {
+  if (recoloredSprites.batterHome) return recoloredSprites.batterHome;
+  const surface = document.createElement('canvas');
+  surface.width = img.naturalWidth;
+  surface.height = img.naturalHeight;
+  const surfaceCtx = surface.getContext('2d', { willReadFrequently: true });
+  surfaceCtx.drawImage(img, 0, 0);
+  const pixels = surfaceCtx.getImageData(0, 0, surface.width, surface.height);
+  for (let i = 0; i < pixels.data.length; i += 4) {
+    const r = pixels.data[i], g = pixels.data[i + 1], b = pixels.data[i + 2];
+    const spread = Math.max(r, g, b) - Math.min(r, g, b);
+    if (pixels.data[i + 3] && spread < 35 && r >= 48 && r <= 225) {
+      const shade = r < 85 ? [86, 68, 46]
+        : r < 125 ? [128, 106, 71]
+        : r < 165 ? [177, 155, 111]
+        : r < 200 ? [211, 195, 153]
+        : [239, 226, 194];
+      pixels.data[i] = shade[0];
+      pixels.data[i + 1] = shade[1];
+      pixels.data[i + 2] = shade[2];
+    }
+  }
+  surfaceCtx.putImageData(pixels, 0, 0);
+  recoloredSprites.batterHome = surface;
+  return surface;
+}
+
 function drawSpriteFrame(key, frame, frameW, frameH, x, baselineY, drawW = frameW, drawH = frameH) {
   if (!spriteReady(key)) return false;
   const img = SPRITES[key];
+  const source = key === 'batterHome' ? getCreamBatterSheet(img) : img;
+  const dx = Math.round(x - drawW / 2);
+  const dy = Math.round(baselineY - drawH);
   ctx.imageSmoothingEnabled = false;
-  ctx.drawImage(img, frame * frameW, 0, frameW, frameH,
-    Math.round(x - drawW / 2), Math.round(baselineY - drawH), drawW, drawH);
+  if (key === 'batterAway') {
+    ctx.save();
+    ctx.translate(Math.round(2 * x), 0);
+    ctx.scale(-1, 1);
+    ctx.drawImage(source, frame * frameW, 0, frameW, frameH, dx, dy, drawW, drawH);
+    ctx.restore();
+  } else {
+    ctx.drawImage(source, frame * frameW, 0, frameW, frameH, dx, dy, drawW, drawH);
+  }
   return true;
 }
 const titleOverlay = document.getElementById('titleOverlay');
 const controlsContainer = document.getElementById('controlsContainer');
 const telegraphWire = document.getElementById('telegraphWire');
 const mathTape = document.getElementById('mathTape');
-const heatReadout = document.getElementById('heatReadout');
+const leakReadout = document.getElementById('leakReadout');
 
 // --- HELPER GETTERS ---
 function isPlayerPitching() {
@@ -774,30 +821,27 @@ function getActiveCatcher() {
   return club.lineup.find(p => p.role === 'C') || club.lineup[3];
 }
 
-function getEffectivePitchPool(pitcher, batter, pitchType, useHeat) {
+function getEffectivePitchPool(pitcher, batter, pitchType, heatDice) {
   const rawStat = pitcher.stats.SS + pitcher.stats.TGH;
   const baseTier = getTierInfo(rawStat);
   let dice = baseTier.dice;
 
-  // Steam penalty: every 10 Steam lost below max costs 1 die
+  // Steam penalty: every 10 Steam lost below max costs 1 die.
   const steamLost = pitcher.maxSteam - pitcher.steam;
-  const steamPenalty = Math.floor(steamLost / 10);
-  dice -= steamPenalty;
+  dice -= Math.floor(steamLost / 10);
 
-  // Specialty / Weakness
   if (pitchType === pitcher.specialty) dice += 1;
   if (pitchType === pitcher.weakness) dice -= 1;
+  dice += heatDice;
 
-  // Heat die
-  if (useHeat) dice += 1;
+  // A Barnstormer gets +2 on the road, represented by one whole die.
+  const pitchingClub = isPlayerPitching() ? state.homeClub : state.awayClub;
+  if (pitcher.backgrounds.includes('Barnstormer') && pitchingClub === state.awayClub) dice += 1;
 
-  // Pressure (-1 die each, stacking)
   let pressure = 0;
-  if (state.bases[0] && state.bases[1] && state.bases[2]) pressure += 1; // Bases loaded
+  if (state.bases[0] && state.bases[1] && state.bases[2]) pressure += 1;
   if (batter.homeredOffPitcher) pressure += 1;
-  if (pitcher.backgrounds.includes('Returning Serviceman') && pressure > 0) {
-    pressure -= 1; // Ignores 1 pressure die in a jam
-  }
+  if (pitcher.backgrounds.includes('Returning Serviceman') && pressure > 0) pressure -= 1;
   dice -= pressure;
 
   return Math.max(1, dice);
@@ -809,11 +853,31 @@ function getHeatSteamCost(pitcher, pitchType) {
   return 2;
 }
 
+function getBatterPressureCount(batter) {
+  const battingScore = isPlayerPitching() ? state.awayScore : state.homeScore;
+  const fieldingScore = isPlayerPitching() ? state.homeScore : state.awayScore;
+  let count = 0;
+  if (batter.lastAtBat === 'K') count++;
+  if (fieldingScore - battingScore >= 5) count++;
+  return count;
+}
+
+function rollLiabilityDice(count) {
+  const rolls = [];
+  let net = 0;
+  for (let i = 0; i < count; i++) {
+    const roll = rollD6();
+    rolls.push(roll);
+    if (roll === 1) net -= 2;
+    else if (roll === 2) net -= 1;
+  }
+  return { rolls, net };
+}
+
 function getEffectiveBatPool(batter, pitcher, pitchType, approach) {
   let effectiveMOX = batter.stats.MOX;
   let effectiveDRP = batter.stats.DRP;
 
-  // Background conditional nudges
   if (batter.backgrounds.includes('Passed-Over Schoolboy')) {
     const pTier = getTierInfo(pitcher.stats.SS + pitcher.stats.TGH);
     if (pTier.dice >= 6) effectiveMOX += 2;
@@ -822,27 +886,24 @@ function getEffectiveBatPool(batter, pitcher, pitchType, approach) {
   const baseTier = getTierInfo(effectiveDRP + effectiveMOX);
   let dice = baseTier.dice;
 
-  // Pitch matchup
   if (pitchType === batter.sweetSpot) dice += 1;
   if (pitchType === batter.coldZone) dice -= 1;
 
-  // Approach / Improvise
-  if (approach === 'IMPROVISE' && batter.backgrounds.includes('Tremé Pickup Regular')) {
-    dice += 1; // +2 stat equivalent -> +1 whole die
+  // Tremé pickup players trade formal technique for improvisation.
+  if (batter.backgrounds.includes('Tremé Pickup Regular')) {
+    dice += approach === 'IMPROVISE' ? 1 : -1;
   }
 
-  // Form
+  // Ex-Big Club prospects get +2 against Pro and Hall of Famer arms.
+  const pitcherTier = getTierInfo(pitcher.stats.SS + pitcher.stats.TGH);
+  if (batter.backgrounds.includes('Ex-Big Club Prospect') && pitcherTier.dice >= 6) dice += 1;
+
+  const battingClub = isPlayerPitching() ? state.awayClub : state.homeClub;
+  if (batter.backgrounds.includes('Barnstormer') && battingClub === state.awayClub) dice += 1;
+
   if (batter.lastAtBat === 'DOUBLE') dice += 1;
   if (batter.lastAtBat === 'HOMER') dice += 2;
-
-  // Physical penalty from prior Partial hit / tie steal
   if (batter.physPenalty > 0) dice -= batter.physPenalty;
-
-  // Batter Pressure (adds a Liability die each -> effectively -1 net die)
-  const myScore = isPlayerPitching() ? state.awayScore : state.homeScore;
-  const oppScore = isPlayerPitching() ? state.homeScore : state.awayScore;
-  if (batter.lastAtBat === 'K') dice -= 1;
-  if (oppScore - myScore >= 5) dice -= 1;
 
   return Math.max(1, dice);
 }
@@ -856,30 +917,28 @@ function setMathTape(text) {
   mathTape.innerHTML = `<strong>ARBITER MATH TAPE:</strong> ${text}`;
 }
 
-function updateHeatDisplay() {
-  let status = 'CLEAN';
-  if (state.roadHeat >= 5) status = 'CITY HALL RAID!';
-  else if (state.roadHeat >= 3) status = 'MAGNOLIA SOCIETY ALERT';
-  else if (state.roadHeat > 0) status = 'RUMORS ON THE WIRE';
-  heatReadout.textContent = `HEAT: ${state.roadHeat}/5 (${status})`;
+function updateLeakDisplay() {
+  leakReadout.textContent = `LEAKS: ${state.leaks}`;
 }
 
 // --- CORE AT-BAT & STEAL EXECUTION ---
 function resolveAtBat() {
-  if (state.anim.active || state.screen === 'GAMEOVER') return;
+  if (state.screen !== 'DUEL' || state.anim.active) return;
   sfx.pitch();
 
-  const pitcher = getActivePitcher();
+  let pitcher = getActivePitcher();
   const batter = getActiveBatter();
 
-  // Determine pitch & heat (AI chooses if CPU is pitching)
+  // The visiting manager pulls a spent arm before it can pitch at 0 Steam.
+  if (!isPlayerPitching() && pitcher.steam <= 0 && changePitcher('automatic')) return;
+  pitcher = getActivePitcher();
+
   let pitchType = state.selectedPitch;
-  let useHeat = state.bringHeat;
+  let heatDice = state.heatDice;
   let useDirty = state.dirtyPlay;
   let approach = state.batterApproach;
 
   if (!isPlayerPitching()) {
-    // AI Pitcher logic: weighs specialty vs batter sweet spot
     const options = PITCH_TYPES.filter(p => p !== 'SPITTER');
     options.sort((a, b) => {
       const scoreA = (a === pitcher.specialty ? 2 : 0) - (a === pitcher.weakness ? 2 : 0) - (a === batter.sweetSpot ? 2 : 0) + (a === batter.coldZone ? 2 : 0);
@@ -888,97 +947,84 @@ function resolveAtBat() {
     });
     pitchType = Math.random() < 0.72 ? options[0] : options[1];
     const cost = getHeatSteamCost(pitcher, pitchType);
-    useHeat = (pitcher.steam >= cost + 12 && (state.outs === 2 || state.bases[1] || state.bases[2])) && Math.random() < 0.45;
+    heatDice = (pitcher.steam >= cost + 12 && (state.outs === 2 || state.bases[1] || state.bases[2]) && Math.random() < 0.45) ? 1 : 0;
     useDirty = false;
+    approach = state.batterApproach;
   } else {
-    // AI Batter logic
     approach = (batter.backgrounds.includes('Tremé Pickup Regular') && Math.random() < 0.35) ? 'IMPROVISE' : 'SWING';
   }
 
-  // Pay Steam for Heat
-  let heatCost = 0;
-  if (useHeat) {
-    heatCost = getHeatSteamCost(pitcher, pitchType);
-    if (pitcher.steam >= heatCost) {
-      pitcher.steam -= heatCost;
-    } else {
-      useHeat = false;
-      heatCost = 0;
-    }
-  }
+  pitcher.hasPitched = true;
 
-  // 4th inning onward: 1 Steam lost per batter
-  if (state.inning >= 4) {
-    pitcher.steam = Math.max(0, pitcher.steam - 1);
-  }
+  const heatCostPerDie = getHeatSteamCost(pitcher, pitchType);
+  const totalHeatCost = heatCostPerDie * heatDice;
+  if (pitcher.steam < totalHeatCost) heatDice = Math.floor(pitcher.steam / heatCostPerDie);
+  const steamBeforePitch = pitcher.steam;
+  pitcher.steam = Math.max(0, pitcher.steam - (heatCostPerDie * heatDice));
+  if (state.inning >= 4) pitcher.steam = Math.max(0, pitcher.steam - 1);
+  pitcher.steamLostThisHalf += steamBeforePitch - pitcher.steam;
 
-  // Check Spitter ejection (22% chance if spitter thrown)
   if (pitchType === 'SPITTER') {
     const umpCheck = rollD6();
     if (umpCheck === 1) {
       sfx.foulBlowback();
-      state.roadHeat = Math.min(5, state.roadHeat + 1);
-      updateHeatDisplay();
-      swapPitcher();
-      setWire('SPITTER CAUGHT! PITCHER TOSSED!', `The home plate umpire wipes grease off the cowhide and ejects ${pitcher.name}! Reliever enters.`);
-      setMathTape(`Spitter Ejection Check: Rolled 1 on 1d6. Road Heat +1.`);
+      pitcher.ejected = true;
+      state.heatDice = 0;
+      state.dirtyPlay = false;
+      const replaced = changePitcher('ejection');
+      setWire('SPITTER CAUGHT! PITCHER TOSSED!', replaced
+        ? `The home plate umpire catches the spitter and ejects ${pitcher.name}. A fresh arm takes the mound.`
+        : `The home plate umpire catches the spitter and ejects ${pitcher.name}. No unused reliever remains.`);
+      setMathTape(`Spitter caught: ${pitcher.name} tossed (umpire roll 1 on 1d6).`);
       updateUI();
       return;
     }
   }
 
-  // Calculate pools
-  const pDice = getEffectivePitchPool(pitcher, batter, pitchType, useHeat);
+  const pDice = getEffectivePitchPool(pitcher, batter, pitchType, heatDice);
   const bDice = getEffectiveBatPool(batter, pitcher, pitchType, approach);
-
   const pRoll = rollV14Pool(pDice, false);
   const bRoll = rollV14Pool(bDice, false);
 
-  // Dirty Play Asset Die (bought umpire / rigged ball)
+  let pitchNet = pRoll.net;
+  let batterNet = bRoll.net;
   let dirtyRoll = null;
-  let dirtyBonus = 0;
   if (useDirty) {
     dirtyRoll = rollV14Pool(1, true);
-    if (isPlayerPitching()) {
-      dirtyBonus = -Math.max(0, dirtyRoll.net); // Hurts batter
-    } else {
-      dirtyBonus = Math.max(0, dirtyRoll.net); // Helps Cranes batter
-    }
+    if (isPlayerPitching()) pitchNet += dirtyRoll.net;
+    else batterNet += dirtyRoll.net;
     if (dirtyRoll.ones > 0) {
-      state.roadHeat = Math.min(5, state.roadHeat + dirtyRoll.ones);
-      updateHeatDisplay();
+      state.leaks += dirtyRoll.ones;
+      updateLeakDisplay();
     }
   }
 
-  // Clear one-time physical penalty on batter after swing
+  const liability = rollLiabilityDice(getBatterPressureCount(batter));
+  const netDiff = (batterNet - pitchNet) + liability.net;
+
   batter.physPenalty = 0;
 
-  const netDiff = (bRoll.net - pRoll.net) + dirtyBonus;
-
-  // Read Outcome Bands
   let band = 'FAILURE';
   if (netDiff >= 10) band = 'EXECUTION';
   else if (netDiff >= 6) band = 'SUCCESS';
   else if (netDiff >= 4) band = 'PARTIAL';
   else if (netDiff <= -14) band = 'CRITICAL';
-  else band = 'FAILURE';
 
-  const mathSummary = `${pitcher.name} (${pitchType}${useHeat ? ' +HEAT' : ''}) rolled ${pDice}d6 [${pRoll.rolls.join(',')}] = Net ${pRoll.net >= 0 ? '+'+pRoll.net : pRoll.net} | ` +
-    `${batter.name} (${approach}) rolled ${bDice}d6 [${bRoll.rolls.join(',')}] = Net ${bRoll.net >= 0 ? '+'+bRoll.net : bRoll.net}` +
-    (dirtyRoll ? ` | Dirty Asset [${dirtyRoll.rolls.join(',')}]` : '') +
+  const mathSummary =
+    `${pitcher.name} (${pitchType}${heatDice ? ` +${heatDice} HEAT` : ''}) rolled ${pDice}d6 [${pRoll.rolls.join(',')}] = Net ${pitchNet >= 0 ? '+'+pitchNet : pitchNet} | ` +
+    `${batter.name} (${approach}) rolled ${bDice}d6 [${bRoll.rolls.join(',')}] = Net ${batterNet >= 0 ? '+'+batterNet : batterNet}` +
+    (dirtyRoll ? ` | Ump Asset [${dirtyRoll.rolls.join(',')}] ${dirtyRoll.net >= 0 ? '+'+dirtyRoll.net : dirtyRoll.net}` : '') +
+    (liability.rolls.length ? ` | Batter Liability [${liability.rolls.join(',')}] ${liability.net}` : '') +
     ` => Diff: ${netDiff >= 0 ? '+'+netDiff : netDiff} (${band})`;
   setMathTape(mathSummary);
 
-  // Reset per-pitch toggles
-  state.bringHeat = false;
+  state.heatDice = 0;
   state.dirtyPlay = false;
-
-  // Trigger Animation & Outcome
   startPlayAnimation(band, pitchType, pitcher, batter);
 }
 
 function resolveSteal() {
-  if (state.anim.active || state.screen === 'GAMEOVER') return;
+  if (state.anim.active || state.screen !== 'DUEL') return;
   // Find lead stealable runner (2nd -> 3rd, or 1st -> 2nd)
   let fromBase = -1;
   if (state.bases[1] && !state.bases[2]) fromBase = 1;
@@ -996,7 +1042,7 @@ function resolveSteal() {
   runner.physPenalty = 0;
 
   const catchTier = getTierInfo(catcher.stats.DRP + catcher.stats.TGH);
-  const catchDice = catchTier.dice;
+  const catchDice = Math.max(1, catchTier.dice - (catcher.backgrounds.includes('Tremé Pickup Regular') ? 1 : 0));
 
   const rRoll = rollV14Pool(runDice, false);
   const cRoll = rollV14Pool(catchDice, false);
@@ -1104,6 +1150,10 @@ function startPlayAnimation(band, pitchType, pitcher, batter) {
 
     advanceRunnersOnHit(batter, basesAdvanced);
     advanceBatter();
+    if (state.half === 'BOT' && state.inning >= state.maxInnings && state.homeScore > state.awayScore) {
+      recordHalfInningScore();
+      finishGame();
+    }
   }
 
   updateUI();
@@ -1111,27 +1161,25 @@ function startPlayAnimation(band, pitchType, pitcher, batter) {
 
 function advanceRunnersOnHit(batter, basesToAdvance) {
   let runsScored = 0;
-  let newBases = [null, null, null];
+  const newBases = [null, null, null];
 
-  // Move existing runners
-  for (let b = 2; b >= 0; b--) {
-    const r = state.bases[b];
-    if (r) {
-      const dest = b + basesToAdvance;
-      if (dest >= 3) {
-        runsScored++;
-      } else {
-        newBases[dest] = r;
-      }
+  for (let base = 2; base >= 0; base--) {
+    const runner = state.bases[base];
+    if (!runner) continue;
+
+    if (basesToAdvance >= 4) {
+      runsScored++;
+    } else if (basesToAdvance === 1) {
+      if (base >= 1) runsScored++; // A runner on second or third scores on a single.
+      else newBases[1] = runner;
+    } else {
+      if (base >= 1) runsScored++; // A runner on second or third scores on a double.
+      else newBases[2] = runner;
     }
   }
 
-  // Place batter
-  if (basesToAdvance >= 4) {
-    runsScored++;
-  } else {
-    newBases[basesToAdvance - 1] = batter;
-  }
+  if (basesToAdvance >= 4) runsScored++;
+  else newBases[basesToAdvance - 1] = batter;
 
   state.bases = newBases;
   if (runsScored > 0) {
@@ -1139,8 +1187,8 @@ function advanceRunnersOnHit(batter, basesToAdvance) {
     if (isPlayerPitching()) state.awayScore += runsScored;
     else state.homeScore += runsScored;
   }
+  return runsScored;
 }
-
 function advanceBatter() {
   if (isPlayerPitching()) {
     state.awayBatterIdx = (state.awayBatterIdx + 1) % state.awayClub.lineup.length;
@@ -1149,34 +1197,61 @@ function advanceBatter() {
   }
 }
 
-function swapPitcher() {
-  if (isPlayerPitching()) {
-    state.homePitcherIdx = (state.homePitcherIdx + 1) % state.homeClub.pitchers.length;
-  } else {
-    state.awayPitcherIdx = (state.awayPitcherIdx + 1) % state.awayClub.pitchers.length;
-  }
-  // Reset homered-off flags for new arm
-  state.awayClub.lineup.forEach(p => p.homeredOffPitcher = false);
-  state.homeClub.lineup.forEach(p => p.homeredOffPitcher = false);
+function changePitcher(reason = 'manual') {
+  const club = isPlayerPitching() ? state.homeClub : state.awayClub;
+  const indexKey = isPlayerPitching() ? 'homePitcherIdx' : 'awayPitcherIdx';
+  const currentIndex = state[indexKey];
+  const current = club.pitchers[currentIndex];
+  if (reason === 'ejection') current.ejected = true;
+
+  const nextIndex = club.pitchers.findIndex((arm, index) =>
+    index !== currentIndex && !arm.hasPitched && !arm.ejected
+  );
+  if (nextIndex < 0) return false;
+
+  current.hasPitched = true;
+  club.pitchers[nextIndex].hasPitched = true;
+  state[indexKey] = nextIndex;
+  state.heatDice = 0;
+
+  [state.homeClub, state.awayClub].forEach(team => team.lineup.forEach(player => { player.homeredOffPitcher = false; }));
+  state.screen = 'BULLPEN';
+  state.breakTimer = 48;
+  state.screenMessage = `${club.pitchers[nextIndex].name} takes the ball from ${current.name}.`;
+  setWire('BULLPEN CALL!', state.screenMessage);
+  updateUI();
+  return true;
 }
 
-function checkHalfInningEnd() {
-  // Check Road Heat raid trigger
-  if (state.roadHeat >= 5) {
-    state.screen = 'GAMEOVER';
-    setWire('CITY HALL SHUTDOWN!', 'Heat hit 5! Police sirens surround Lot 635 and padlock the gates. Game forfeited.');
-    updateUI();
-    return;
+function recordHalfInningScore() {
+  const line = state.half === 'TOP' ? state.awayLine : state.homeLine;
+  line[state.inning - 1] = state.inningRunsThisHalf;
+}
+
+function refundShutoutSteam() {
+  const club = state.half === 'TOP' ? state.homeClub : state.awayClub;
+  if (state.inningRunsThisHalf === 0) {
+    club.pitchers.forEach(arm => {
+      if (arm.steamLostThisHalf > 0) {
+        arm.steam = Math.min(arm.maxSteam, arm.steam + arm.steamLostThisHalf);
+      }
+      arm.steamLostThisHalf = 0;
+    });
+  } else {
+    club.pitchers.forEach(arm => { arm.steamLostThisHalf = 0; });
   }
+}
 
+function resetHalfSteamTracking() {
+  [state.homeClub, state.awayClub].forEach(club => {
+    if (club) club.pitchers.forEach(arm => { arm.steamLostThisHalf = 0; });
+  });
+}
+function checkHalfInningEnd() {
   if (state.outs >= 3) {
-    // Shutout inning Steam refund (from 4th inning on, shutout gives back lost Steam)
-    const pitcher = getActivePitcher();
-    if (state.inning >= 4 && state.inningRunsThisHalf === 0) {
-      pitcher.steam = Math.min(pitcher.maxSteam, pitcher.steam + 3);
-    }
+    recordHalfInningScore();
+    refundShutoutSteam();
 
-    // Check walk-off or end of final inning
     if (state.half === 'TOP' && state.inning >= state.maxInnings && state.homeScore > state.awayScore) {
       finishGame();
       return;
@@ -1186,7 +1261,6 @@ function checkHalfInningEnd() {
       return;
     }
 
-    // Flip half-inning
     state.outs = 0;
     state.bases = [null, null, null];
     state.inningRunsThisHalf = 0;
@@ -1199,9 +1273,15 @@ function checkHalfInningEnd() {
       state.inning += 1;
       setWire(`TOP OF INNING ${state.inning}`, `${state.awayClub.name} coming to bat.`);
     }
+
+    resetHalfSteamTracking();
+    state.screen = 'BREAK';
+    state.breakTimer = 66;
+    state.screenMessage = state.half === 'BOT'
+      ? `Bottom of the ${state.inning}${state.inning === 1 ? 'st' : state.inning === 2 ? 'nd' : state.inning === 3 ? 'rd' : 'th'} — the Cranes come to bat.`
+      : `Top of the ${state.inning}${state.inning === 1 ? 'st' : state.inning === 2 ? 'nd' : state.inning === 3 ? 'rd' : 'th'} — the visitors take the field.`;
   }
 }
-
 function finishGame() {
   state.screen = 'GAMEOVER';
   const cranesWon = state.homeScore > state.awayScore;
@@ -1222,15 +1302,21 @@ function updateUI() {
 
   document.getElementById('pName').textContent = `${pitcher.name} (${pTier.label})`;
   document.getElementById('pInfo').innerHTML =
-    `Steam: <strong>${pitcher.steam}/${pitcher.maxSteam}</strong> &bull; ` +
-    `<span class="badge-plus">+1d ${pitcher.specialty}</span> <span class="badge-minus">-1d ${pitcher.weakness}</span>`;
+    `Steam: <strong>${pitcher.steam}/${pitcher.maxSteam}</strong>` +
+    (pitcher.specialty ? ` &bull; <span class="badge-plus">+1d ${pitcher.specialty}</span>` : '') +
+    (pitcher.weakness ? ` <span class="badge-minus">-1d ${pitcher.weakness}</span>` : '');
 
   document.getElementById('bName').textContent = `${batter.name} (${bTier.label})`;
   document.getElementById('bInfo').innerHTML =
-    `${batter.chassis.name} &bull; ${batter.backgrounds[0]}<br>` +
-    `<span class="badge-plus">+1d ${batter.sweetSpot}</span> <span class="badge-minus">-1d ${batter.coldZone}</span>` +
+    `${batter.chassis.name} &bull; ${batter.backgrounds[0] || 'No background modifier'}<br>` +
+    (batter.sweetSpot ? `<span class="badge-plus">+1d ${batter.sweetSpot}</span> ` : '') +
+    (batter.coldZone ? `<span class="badge-minus">-1d ${batter.coldZone}</span>` : '') +
     (batter.physPenalty ? ` <span class="badge-minus">-1 INJ</span>` : '') +
     (batter.lastAtBat === 'HOMER' ? ` <span class="badge-plus">+2d HOT</span>` : batter.lastAtBat === 'DOUBLE' ? ` <span class="badge-plus">+1d HOT</span>` : '');
+
+  document.getElementById('keyHint').textContent = isPlayerPitching()
+    ? '[1-5] PITCH | [SPACE] THROW | [M] MATH TAPE'
+    : '[1-4] BAT / RUN | [SPACE] SWING | [M] MATH TAPE';
 
   if (state.screen === 'GAMEOVER') {
     controlsContainer.innerHTML = `
@@ -1240,11 +1326,18 @@ function updateUI() {
     `;
     return;
   }
+  if (state.screen === 'BREAK' || state.screen === 'BULLPEN') {
+    controlsContainer.innerHTML = `<div class="btn-row" style="justify-content:center;">${state.screenMessage}</div>`;
+    return;
+  }
 
   if (isPlayerPitching()) {
     // Player is on the Mound
     const heatCost = getHeatSteamCost(pitcher, state.selectedPitch);
-    const canHeat = pitcher.steam >= heatCost;
+    const canAddHeat = pitcher.steam >= heatCost * (state.heatDice + 1);
+    const team = isPlayerPitching() ? state.homeClub : state.awayClub;
+    const activeIndex = isPlayerPitching() ? state.homePitcherIdx : state.awayPitcherIdx;
+    const hasReliever = team.pitchers.some((arm, i) => i !== activeIndex && !arm.hasPitched && !arm.ejected);
     controlsContainer.innerHTML = `
       <div class="btn-row">
         <span class="row-label">1. PITCH:</span>
@@ -1256,13 +1349,14 @@ function updateUI() {
       </div>
       <div class="btn-row">
         <span class="row-label">2. MODS:</span>
-        <button class="brass-btn ${state.bringHeat ? 'active' : ''}" ${!canHeat ? 'disabled' : ''} onclick="toggleHeat()">
-          BRING HEAT (-${heatCost} STM)
+        <button class="brass-btn ${state.heatDice ? 'active' : ''}" ${!canAddHeat ? 'disabled' : ''} onclick="addHeatDie()">
+          ADD HEAT DIE ${state.heatDice ? `(${state.heatDice} SELECTED)` : ''} (-${heatCost} STM)
         </button>
+        <button class="brass-btn" ${!state.heatDice ? 'disabled' : ''} onclick="removeHeatDie()">REMOVE DIE</button>
         <button class="brass-btn ${state.dirtyPlay ? 'active' : ''}" onclick="toggleDirty()">
-          BUY UMP (+1 ASSET / LEAK)
+          BUY UMP (+1 ASSET; 1s LEAK)
         </button>
-        <button class="brass-btn" onclick="pullPitcher()">PULL ARM</button>
+        <button class="brass-btn" ${!hasReliever ? 'disabled' : ''} onclick="pullPitcher()">PULL ARM</button>
         <button class="brass-btn" style="margin-left:auto; border-width:2px;" onclick="resolveAtBat()">THROW PITCH &raquo;</button>
       </div>
     `;
@@ -1276,7 +1370,7 @@ function updateUI() {
           [1] SWING AWAY
         </button>
         <button class="brass-btn ${state.batterApproach === 'IMPROVISE' ? 'active' : ''}" onclick="setApproach('IMPROVISE')">
-          [2] BUNT / IMPROVISE
+          [2] BUNT / IMPROVISE (TREMÉ BONUS)
         </button>
         <button class="brass-btn ${state.dirtyPlay ? 'active' : ''}" onclick="toggleDirty()">
           [3] FIX CALL (+1 ASSET)
@@ -1295,14 +1389,19 @@ function updateUI() {
 
 // --- BUTTON HANDLERS ---
 window.selectPitch = (p) => { sfx.click(); state.selectedPitch = p; updateUI(); };
-window.toggleHeat = () => { sfx.click(); state.bringHeat = !state.bringHeat; updateUI(); };
+window.addHeatDie = () => {
+  sfx.click();
+  const pitcher = getActivePitcher();
+  const cost = getHeatSteamCost(pitcher, state.selectedPitch);
+  if (pitcher.steam >= cost * (state.heatDice + 1)) state.heatDice++;
+  updateUI();
+};
+window.removeHeatDie = () => { sfx.click(); state.heatDice = Math.max(0, state.heatDice - 1); updateUI(); };
 window.toggleDirty = () => { sfx.click(); state.dirtyPlay = !state.dirtyPlay; updateUI(); };
 window.setApproach = (a) => { sfx.click(); state.batterApproach = a; updateUI(); };
 window.pullPitcher = () => {
   sfx.click();
-  swapPitcher();
-  setWire('BULLPEN CALL!', `Studd waves in ${getActivePitcher().name} from the Bywater bullpen.`);
-  updateUI();
+  if (!changePitcher('manual')) setWire('NO RELIEVER READY', 'Every unused arm has already been called.');
 };
 window.resolveAtBat = resolveAtBat;
 window.resolveSteal = resolveSteal;
@@ -1326,24 +1425,29 @@ document.getElementById('btnStartGame').addEventListener('click', () => {
   state.homeScore = 0;
   state.awayHits = 0;
   state.homeHits = 0;
-  state.roadHeat = 0;
   state.awayPitcherIdx = 0;
   state.homePitcherIdx = 0;
   state.awayBatterIdx = 0;
   state.homeBatterIdx = 0;
   state.inningRunsThisHalf = 0;
+  state.awayLine = [];
+  state.homeLine = [];
+  state.leaks = 0;
   state.selectedPitch = 'FASTBALL';
-  state.bringHeat = false;
+  state.heatDice = 0;
   state.dirtyPlay = false;
   state.batterApproach = 'SWING';
   state.screen = 'DUEL';
+  state.breakTimer = 0;
+  state.screenMessage = '';
   state.anim.active = false;
 
   state.homeClub = buildClub('CRANES', rolled);
   state.awayClub = buildClub(opp, true);
+  state.homeClub.pitchers[0].hasPitched = true;
 
   titleOverlay.classList.add('hidden');
-  updateHeatDisplay();
+  updateLeakDisplay();
   setWire(`PLAY BALL! ${state.awayClub.name} AT CRANES`, `Top of the 1st. ${getActivePitcher().name} takes the mound.`);
   updateUI();
 });
@@ -1370,9 +1474,9 @@ window.addEventListener('keydown', (e) => {
   } else if (e.code === 'Space' || e.key === 'Enter') {
     e.preventDefault();
     resolveAtBat();
-  } else if (isPlayerPitching() && ['1','2','3','4','5'].includes(e.key)) {
+  } else if (state.screen === 'DUEL' && isPlayerPitching() && ['1','2','3','4','5'].includes(e.key)) {
     selectPitch(PITCH_TYPES[parseInt(e.key, 10) - 1]);
-  } else if (!isPlayerPitching()) {
+  } else if (state.screen === 'DUEL' && !isPlayerPitching()) {
     if (e.key === '1') setApproach('SWING');
     if (e.key === '2') setApproach('IMPROVISE');
     if (e.key === '3') toggleDirty();
@@ -1722,7 +1826,6 @@ function drawOutcomeBanner() {
   ctx.strokeStyle = PAL.brassBright;
   ctx.lineWidth = 2;
   ctx.strokeRect(24, 62, 272, 26);
-
   ctx.fillStyle = PAL.paper;
   ctx.font = 'bold 11px "Courier New", monospace';
   ctx.textAlign = 'center';
@@ -1730,18 +1833,121 @@ function drawOutcomeBanner() {
   ctx.textAlign = 'left';
 }
 
+function drawStatusCard(title, detail) {
+  drawCrosshatchRect(0, 46, 320, 242, 8);
+  ctx.fillStyle = PAL.ink;
+  ctx.fillRect(24, 88, 272, 116);
+  ctx.strokeStyle = PAL.brass;
+  ctx.lineWidth = 2;
+  ctx.strokeRect(24, 88, 272, 116);
+  ctx.fillStyle = PAL.brassBright;
+  ctx.font = 'bold 13px "Courier New", monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText(title, 160, 116);
+  ctx.fillStyle = PAL.paper;
+  ctx.font = '10px "Courier New", monospace';
+  ctx.fillText(detail, 160, 143, 250);
+  ctx.textAlign = 'left';
+}
+
+function drawHalfInningScreen() {
+  drawStatusCard('BETWEEN INNINGS', state.screenMessage);
+  ctx.fillStyle = PAL.ink;
+  ctx.font = 'bold 10px "Courier New", monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText(`${state.awayClub.short} ${state.awayScore}  —  CRANES ${state.homeScore}`, 160, 176);
+  ctx.textAlign = 'left';
+}
+
+function drawBullpenScreen() {
+  drawStatusCard('FROM THE BULLPEN', state.screenMessage);
+  ctx.fillStyle = PAL.ink;
+  ctx.font = 'bold 10px "Courier New", monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('A fresh arm takes the mound.', 160, 176);
+  ctx.textAlign = 'left';
+}
+
+function drawGameOverScreen() {
+  drawCrosshatchRect(0, 46, 320, 242, 8);
+  ctx.fillStyle = PAL.ink;
+  ctx.font = 'bold 16px Georgia, serif';
+  ctx.textAlign = 'center';
+  const cranesWon = state.homeScore > state.awayScore;
+  ctx.fillText(cranesWon ? 'FINAL — CRANES WIN' : `FINAL — ${state.awayClub.short} WIN`, 160, 72);
+
+  const columns = Math.min(11, Math.max(state.maxInnings, state.inning));
+  const cell = 14;
+  const firstX = 58;
+  const totalX = firstX + columns * cell + 8;
+  ctx.fillStyle = PAL.ink;
+  ctx.font = 'bold 8px "Courier New", monospace';
+  ctx.textAlign = 'left';
+  ctx.fillText('CLUB', 10, 101);
+  for (let i = 0; i < columns; i++) ctx.fillText(String(i + 1), firstX + i * cell, 101);
+  ctx.fillText('R', totalX, 101);
+  ctx.fillText('H', totalX + 20, 101);
+
+  const rows = [
+    { label: state.awayClub.short, line: state.awayLine, runs: state.awayScore, hits: state.awayHits, y: 122 },
+    { label: 'CRANES', line: state.homeLine, runs: state.homeScore, hits: state.homeHits, y: 143 }
+  ];
+  rows.forEach(row => {
+    ctx.fillText(row.label.slice(0, 7), 10, row.y);
+    for (let i = 0; i < columns; i++) {
+      const value = row.line[i];
+      ctx.fillText(value === undefined ? '—' : String(value), firstX + i * cell, row.y);
+    }
+    ctx.fillText(String(row.runs), totalX, row.y);
+    ctx.fillText(String(row.hits), totalX + 20, row.y);
+  });
+
+  // Studd tips his cap from the dugout.
+  ctx.fillStyle = PAL.paperDark;
+  ctx.fillRect(218, 171, 72, 81);
+  ctx.strokeStyle = PAL.ink;
+  ctx.strokeRect(218, 171, 72, 81);
+  ctx.fillStyle = PAL.ink;
+  ctx.beginPath();
+  ctx.arc(254, 199, 14, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillRect(240, 211, 28, 33);
+  ctx.fillRect(231, 222, 12, 24);
+  ctx.fillRect(266, 220, 9, 20);
+  ctx.fillRect(246, 243, 8, 8);
+  ctx.fillRect(262, 243, 8, 8);
+  // Cap lifted in salute.
+  ctx.fillRect(276, 180, 12, 4);
+  ctx.fillRect(280, 174, 8, 6);
+  ctx.font = 'bold 8px "Courier New", monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('STUDD TIPS HIS CAP', 254, 266);
+  ctx.textAlign = 'left';
+}
+
+
 // --- MAIN ANIMATION LOOP ---
 function gameLoop() {
   ctx.clearRect(0, 0, 320, 288);
 
-  if (state.screen === 'DIAMOND') {
+  if (state.screen === 'GAMEOVER') {
+    drawGameOverScreen();
+    drawHUD();
+  } else if (state.screen === 'BREAK') {
+    drawHalfInningScreen();
+    drawHUD();
+  } else if (state.screen === 'BULLPEN') {
+    drawBullpenScreen();
+    drawHUD();
+  } else if (state.screen === 'DIAMOND') {
     drawOverheadDiamond();
+    drawHUD();
   } else {
     drawDuelScreen();
+    drawHUD();
   }
 
-  drawHUD();
-  drawOutcomeBanner();
+  if (state.screen !== 'GAMEOVER') drawOutcomeBanner();
 
   if (state.anim.active) {
     state.anim.timer += 1;
@@ -1753,6 +1959,14 @@ function gameLoop() {
         checkHalfInningEnd();
         updateUI();
       }
+    }
+  }
+
+  if ((state.screen === 'BREAK' || state.screen === 'BULLPEN') && state.breakTimer > 0) {
+    state.breakTimer--;
+    if (state.breakTimer === 0) {
+      state.screen = 'DUEL';
+      updateUI();
     }
   }
 
